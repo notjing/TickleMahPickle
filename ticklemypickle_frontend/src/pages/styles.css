@@ -1,0 +1,43 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.dashboard{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 15% 85%;
+}
+
+.main-content{
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    padding-top: 5vh;
+}
+
+.card-stats{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    font-size: 2rem;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+}
+
+
+.MuiCard-root {
+    width: 100%;
+    height: 100%;
+}
+
+.MuiCardContent-root {
+    width: 100%;
+    height: 100%;
+}
+
+.balance-summary {
+   padding-right: 5vw;
+}

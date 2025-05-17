@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 1rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 1rem;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 0rem;
+}
+
+.title {
+    font-size: 30px;
+}
