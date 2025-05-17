@@ -4,6 +4,7 @@ import './Layout.css';
 
 const Layout = () => {
   return (
+    
     <div className="layout">
       <nav className="sidebar">
         <ul>

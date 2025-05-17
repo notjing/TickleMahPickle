@@ -9,6 +9,9 @@
   padding: 1rem;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -20,7 +23,7 @@
 
 .content {
   flex-grow: 1;
-  padding: 2rem;
+  padding: 0rem;
 }
 
 .title {
