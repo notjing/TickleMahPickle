@@ -15,10 +15,6 @@ function Dashboard() {
   return (
     <div className="dashboard">
 
-        <div className="sidebar">
-            sidebar
-        </div>
-
         <div className="main-content">
                 <div className="balance-summary">
                     <Card sx={{borderRadius: "32px"}}>
