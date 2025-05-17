@@ -104,6 +104,57 @@
   margin-bottom: 2rem;
 }
 
+.create-jar-btn {
+  background: #9EBC8A;
+  border: none;
+  border-radius: 18px;
+  width: 180px;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px 0 rgba(83, 125, 93, 0.18);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  gap: 18px;
+}
+.create-jar-btn:hover, .create-jar-btn:focus {
+  background: #e8e8c8 !important;
+  color: #537D5D !important;
+}
+.create-jar-btn span {
+  transition: color 0.2s;
+}
+.create-jar-btn:hover span, .create-jar-btn:focus span {
+  color: #537D5D !important;
+}
+.create-jar-btn:active {
+  background: #b7d1a7;
+}
+
+.create-jar-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(83, 125, 93, 0.18);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-jar-modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(39, 54, 42, 0.18);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
 
 @media (max-width: 700px) {
   .sidebar {
@@ -119,5 +170,13 @@
   .sidebar a {
     font-size: 0.95rem;
     padding: 0.5rem 0.5rem;
+  }
+  .create-jar-btn {
+    width: 56px;
+    height: 56px;
+  }
+  .create-jar-modal {
+    min-width: 220px;
+    padding: 1.2rem 1rem 1rem 1rem;
   }
 }
