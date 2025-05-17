@@ -266,7 +266,7 @@ export default function SignInCard({returnToSignIn}) {
               mt: 1
             }}
           >
-            Sign in
+            Sign Up
           </Button>
           
           <Typography variant="body2" sx={{ textAlign: 'center', mt: 1 }}>

@@ -120,7 +120,7 @@ export default function SignInCard() {
           variant="h5"
           sx={{ width: '100%', textAlign: 'center', mb: 1, fontSize: '1.5rem' }}
         >
-          Sign in
+          Sign In
         </Typography>
         <Box
           component="form"
