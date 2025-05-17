@@ -528,14 +528,16 @@ function Jars() {
               {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
             </Typography>
             <TextField
-              label="Amount"
+              label="Amount ($)"
               type="number"
               value={requestAmount}
               onChange={e => setRequestAmount(e.target.value)}
               fullWidth
               margin="normal"
+              placeholder="Enter amount"
               InputProps={{
-                inputProps: { min: 0, step: 0.01 },
+                inputProps: { min: 0, step: 1 }, // Only allow whole dollars
+                startAdornment: <span style={{ color: colors.dark, fontWeight: 700, marginRight: 4 }}>$</span>,
                 sx: {
                   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
                     borderColor: colors.dark,
@@ -549,6 +551,10 @@ function Jars() {
                   '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
                     borderColor: colors.dark,
                   },
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  background: '#f7fbe7',
+                  borderRadius: '8px',
                 }
               }}
               sx={{
@@ -564,6 +570,22 @@ function Jars() {
                 '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
                   borderColor: colors.dark,
                 },
+                fontSize: '1.3rem',
+                fontWeight: 700,
+                background: '#f7fbe7',
+                borderRadius: '8px',
+              }}
+              inputProps={{
+                min: 0,
+                step: 1,
+                style: {
+                  textAlign: 'left',
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: colors.dark,
+                  letterSpacing: '0.03em',
+                  padding: '12px 8px',
+                }
               }}
             />
             <Box
