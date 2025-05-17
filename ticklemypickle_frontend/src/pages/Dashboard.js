@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   Box,
   Grid,
@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { TrendingUp, Group, AttachMoney, AccessTime, History } from "@mui/icons-material";
-
+import useUser from "../context/DatabaseUsers";
 
 const colors = {
   dark: "#537D5D",
@@ -96,9 +96,21 @@ const StyledDescription = styled("Typography")({
 });
 
 export default function Dashboard() {
+
+  const { users, addUser, refresh, checkUserByCredentials, userExistsByEmail } = useUser();
+  const userId = localStorage.getItem('userId');
+  const user = users.find(user => user._id === userId);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("Current user:", user);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [user]);
+
   return (
     <Box sx={{ padding: 2 }}>
-      <StyledHeading>Welcome back! 🥒</StyledHeading>
+      <StyledHeading>Welcome back {user && user.firstName ? user.firstName : "[first name]"}! 🥒</StyledHeading>
       <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
           <br></br>
 
@@ -123,7 +135,7 @@ export default function Dashboard() {
               }}>
                 <span role="img" aria-label="money with wings">💸</span>
               </div>
-        <StyledH2>$69696969</StyledH2>
+        <StyledH2>${user && user.moneyOwed !== undefined && user.moneyOwed !== null ? user.moneyOwed : "[moneyOwed]"}</StyledH2>
         <StyledDescription>Total Money Owed</StyledDescription>
       </CardContent>
     </Card>
@@ -147,7 +159,7 @@ export default function Dashboard() {
               }}>
                 <span role="img" aria-label="money bag">💰</span>
               </div>
-        <StyledH2>$69420</StyledH2>
+        <StyledH2>${user && user.moneyOwedTo !== undefined && user.moneyOwedTo !== null ? user.moneyOwedTo : "[moneyOwedTo]"}</StyledH2>
         <StyledDescription>Total Money Owed To You</StyledDescription>
       </CardContent>
     </Card>
@@ -172,7 +184,7 @@ export default function Dashboard() {
                 <span role="img" aria-label="balance scale">⚖️</span>
               </div>
 
-        <StyledH2>$42069</StyledH2>
+        <StyledH2>${user && user.moneyOwedTo && user.moneyOwed !== undefined? user.moneyOwedTo - user.moneyOwed: "[user.moneyOwedTo - user.moneyOwed]"}</StyledH2>
         <StyledDescription>Net Balance</StyledDescription>
       </CardContent>
     </Card>
