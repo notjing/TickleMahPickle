@@ -15,7 +15,6 @@ import './styles.css'
 function Dashboard() {
 //   const users = DatabaseUsers();
 
-
   return (
     <div className="dashboard">
       {/* {users.map((user, idx) => (
