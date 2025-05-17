@@ -17,7 +17,12 @@ import { styled } from "@mui/system";
 import * as icons from "@mui/icons-material";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Mood, TrendingUp, BarChart } from '@mui/icons-material';
-
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import BasicDatePicker from '../Components/calendar';
 
 const colors = {
   dark: "#537D5D",
@@ -223,8 +228,44 @@ const stats = [
 function Jars() {
   const [tabValue, setTabValue] = React.useState(0);
 
+  const [openTickle, setOpenTickle] = React.useState(false);
+  const [tickleTarget, setTickleTarget] = React.useState(null);
+  const [openKick, setOpenKick] = React.useState(false);
+  const [kickTarget, setKickTarget] = React.useState(null);
+  const [openRequest, setOpenRequest] = React.useState(false);
+  const [requestTarget, setRequestTarget] = React.useState(null);
+  const [requestAmount, setRequestAmount] = React.useState('');
+  const [requestDate, setRequestDate] = React.useState(null);
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
+  };
+
+  const handleOpenTickle = (member) => {
+    setTickleTarget(member);
+    setOpenTickle(true);
+  };
+  const handleCloseTickle = () => {
+    setOpenTickle(false);
+    setTickleTarget(null);
+  };
+  const handleOpenKick = (member) => {
+    setKickTarget(member);
+    setOpenKick(true);
+  };
+  const handleCloseKick = () => {
+    setOpenKick(false);
+    setKickTarget(null);
+  };
+  const handleOpenRequest = (member) => {
+    setRequestTarget(member);
+    setOpenRequest(true);
+  };
+  const handleCloseRequest = () => {
+    setOpenRequest(false);
+    setRequestTarget(null);
+    setRequestAmount('');
+    setRequestDate(null);
   };
 
   return (
@@ -279,8 +320,23 @@ function Jars() {
                   <StyledTd>{member.owedToMe}</StyledTd>
                   <StyledTd>{member.iOwe}</StyledTd>
                   <StyledTd>
-                    <TickleButton variant="outlined" size="small">😉 Tickle</TickleButton>
-                    <KickButton variant="outlined" size="small">Kick</KickButton>
+                    <TickleButton variant="outlined" size="small" onClick={() => handleOpenTickle(member)}>😉 Tickle</TickleButton>
+                    <KickButton variant="outlined" size="small" onClick={() => handleOpenKick(member)}>Kick</KickButton>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontFamily: 'Raleway, sans-serif',
+                        color: colors.dark,
+                        borderColor: colors.dark,
+                        marginLeft: '0.5rem',
+                        textTransform: 'none',
+                        fontWeight: 600
+                      }}
+                      onClick={() => handleOpenRequest(member)}
+                    >
+                      💸 Request Money
+                    </Button>
                   </StyledTd>
                 </TableRow>
               ))}
@@ -419,6 +475,114 @@ function Jars() {
   </Box>
 </TabPanel>
 
+        {/* Tickle Dialog */}
+        <Dialog open={openTickle} onClose={handleCloseTickle}>
+          <DialogTitle>Send a Tickle</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {tickleTarget ? `Send a tickle to ${tickleTarget.name}?` : ''}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseTickle} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={handleCloseTickle} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Send Tickle</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Kick Dialog */}
+        <Dialog open={openKick} onClose={handleCloseKick}>
+          <DialogTitle>Kick Member</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {kickTarget ? `Are you sure you want to kick ${kickTarget.name}?` : ''}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseKick} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={handleCloseKick} color="error" variant="contained">Kick</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Request Money Dialog */}
+        <Dialog open={openRequest} onClose={handleCloseRequest}>
+          <DialogTitle>Request Money</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+            </Typography>
+            <TextField
+              label="Amount"
+              type="number"
+              value={requestAmount}
+              onChange={e => setRequestAmount(e.target.value)}
+              fullWidth
+              margin="normal"
+              InputProps={{
+                inputProps: { min: 0, step: 0.01 },
+                sx: {
+                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  '& label.Mui-focused': {
+                    color: colors.dark,
+                  },
+                  '& .MuiInputBase-input:focus': {
+                    color: colors.dark,
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                }
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiInputBase-input:focus': {
+                  color: colors.dark,
+                },
+                '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+              }}
+            />
+            <Box
+              sx={{
+                mt: 2,
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected:hover': {
+                  backgroundColor: '#40634a',
+                },
+                '& .MuiPickersDay-root:focus': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected.Mui-focusVisible': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root:hover': {
+                  backgroundColor: '#e8e8c8',
+                },
+              }}
+            >
+              <BasicDatePicker />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={handleCloseRequest} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+          </DialogActions>
+        </Dialog>
 
       </MainContent>
     </Container>
