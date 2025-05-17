@@ -52,10 +52,6 @@ async function connectToMongo() {
       console.log(`Server listening on http://localhost:${PORT}`);
     });
 
-    // await users.updateOne(
-    //     { _id: new ObjectId("682822f3b888dbe6840581a6") },
-    //     { $set: { money: 250 } }
-    // );
 
 
   } catch (err) {

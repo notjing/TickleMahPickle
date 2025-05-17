@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import useUsers from '../../pages/DatabaseUsers';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -54,7 +55,8 @@ export default function SignInCard({returnToSignIn}) {
   const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
   const [phoneError, setPhoneError] = React.useState(false);
   const [phoneErrorMessage, setPhoneErrorMessage] = React.useState('');
-
+  const { users, addUser, refresh } = useUsers();
+  
   const handleSubmit = (event) => {
     if (emailError || passwordError || firstNameError || lastNameError || phoneError) {
       event.preventDefault();
@@ -68,6 +70,15 @@ export default function SignInCard({returnToSignIn}) {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    const newUser = {
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      phone: data.get('phone'),
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+    addUser(newUser);
   };
 
   const validateInputs = () => {

@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import SignUpCard from './SignUpCard';
 import { useState } from 'react';
+import useUsers from '../../pages/DatabaseUsers';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -52,6 +53,7 @@ export default function SignInCard() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   const [signUpOpen, setSignUpOpen] = useState(false);
+  const { users, addUser, refresh, checkUserByCredentials  } = useUsers();
 
   const handleSubmit = (event) => {
     if (emailError || passwordError) {
@@ -63,6 +65,16 @@ export default function SignInCard() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    // const signedInUser = {
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // } 
+
+    checkUserByCredentials(data.get('email'), data.get('password')); 
+    
+    
+
   };
 
   const validateInputs = () => {
