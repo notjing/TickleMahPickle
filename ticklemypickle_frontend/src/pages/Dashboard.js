@@ -55,76 +55,139 @@ function Dashboard() {
       <div style={{
         display: 'flex',
         flexDirection: 'row',
-        gap: '1rem',
+        gap: '1.5rem',
         justifyContent: 'space-between',
         alignItems: 'stretch',
-        marginTop: '-9.5vh',
-        marginBottom: '0.25rem', // further reduced from 1rem
+        marginTop: '-8vh',
+        marginBottom: '0.5rem',
         width: '100%'
       }}>
         {/* Total Money Owed Card */}
-        <div style={{ flex: 1, minWidth: '180px', maxWidth: '400px' }}>
+        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.78)', // lighter green with transparency
+            background: 'rgba(158, 188, 138, 0.88)',
             border: 'none',
-            minHeight: '120px',
-            height: '22vw', // dynamic height based on viewport width
-            maxHeight: '220px',
+            minHeight: '160px',
+            height: '22vw',
+            maxHeight: '240px',
+            width: '100%',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
-            p: 3
+            p: 0
           }}>
-            <CardContent sx={{ width: '100%', p: 0, textAlign: 'center' }}>
-              <div style={{ fontSize: '1.1rem', color: '#537D5D', fontWeight: 700 }}>Total Money Owed</div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#193b02', marginTop: '0.5rem' }}>*Insert from Database*</div>
+            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
+              <div style={{
+                background: 'rgba(83,125,93,0.13)',
+                borderRadius: '50%',
+                width: 56,
+                height: 56,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1.2rem',
+                fontSize: '2.2rem',
+                color: '#537D5D',
+                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+              }}>
+                <span role="img" aria-label="money with wings">💸</span>
+              </div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
+                  <b>*Insert from Database*</b>
+                </div>
+                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
+                  Total Money Owed
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
         {/* Total Money Owed To You Card */}
-        <div style={{ flex: 1, minWidth: '180px', maxWidth: '400px' }}>
+        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.78)', // lighter green with transparency
+            background: 'rgba(158, 188, 138, 0.88)',
             border: 'none',
-            minHeight: '120px',
+            minHeight: '160px',
             height: '22vw',
-            maxHeight: '220px',
+            maxHeight: '240px',
+            width: '100%',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
-            p: 3
+            p: 0
           }}>
-            <CardContent sx={{ width: '100%', p: 0, textAlign: 'center' }}>
-              <div style={{ fontSize: '1.1rem', color: '#537D5D', fontWeight: 700 }}>Total Money Owed To You</div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#193b02', marginTop: '0.5rem' }}>*Insert from Database*</div>
+            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
+              <div style={{
+                background: 'rgba(83,125,93,0.13)',
+                borderRadius: '50%',
+                width: 56,
+                height: 56,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1.2rem',
+                fontSize: '2.2rem',
+                color: '#537D5D',
+                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+              }}>
+                <span role="img" aria-label="money bag">💰</span>
+              </div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
+                  <b>*Insert from Database*</b>
+                </div>
+                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
+                  Total Money Owed To You
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
         {/* Net Balance Card */}
-        <div style={{ flex: 1, minWidth: '180px', maxWidth: '400px' }}>
+        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.78)', // lighter green with transparency
+            background: 'rgba(158, 188, 138, 0.88)',
             border: 'none',
-            minHeight: '120px',
+            minHeight: '160px',
             height: '22vw',
-            maxHeight: '220px',
+            maxHeight: '240px',
+            width: '100%',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
-            p: 3
+            p: 0
           }}>
-            <CardContent sx={{ width: '100%', p: 0, textAlign: 'center' }}>
-              <div style={{ fontSize: '1.1rem', color: '#537D5D', fontWeight: 700 }}>Net Balance</div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, color: '#193b02', marginTop: '0.5rem' }}>*Insert from Database*</div>
+            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
+              <div style={{
+                background: 'rgba(83,125,93,0.13)',
+                borderRadius: '50%',
+                width: 56,
+                height: 56,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1.2rem',
+                fontSize: '2.2rem',
+                color: '#537D5D',
+                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+              }}>
+                <span role="img" aria-label="balance scale">⚖️</span>
+              </div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
+                  <b>*Insert from Database*</b>
+                </div>
+                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
+                  Net Balance
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
