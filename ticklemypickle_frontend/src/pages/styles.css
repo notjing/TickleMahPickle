@@ -6,7 +6,7 @@
 .dashboard{
     display: grid;
     height: 100vh;
-    grid-template-columns: 15% 85%;
+    width: 100%;
 }
 
 .main-content{
@@ -14,6 +14,7 @@
     grid-template-columns: 3fr 2fr;
     grid-template-rows: 1fr 1fr;
     padding-top: 5vh;
+    width: 100%;
 }
 
 .card-stats{
