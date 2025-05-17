@@ -2,18 +2,25 @@
   display: flex;
   height: 100vh;
   flex-direction: row;
+  background: #f9f9f9 url('https://i.ibb.co/d0W13q5W/bg.png') center center / cover no-repeat;
+  background-attachment: fixed; /* make background image fixed on scroll */
 }
 
 .sidebar {
   width: 220px;
-  background: linear-gradient(135deg, #537D5D 0%, #9EBC8A 100%); /* pickle green gradient */
+  background: rgba(83, 125, 93, 0.96); /* solid dark green, slightly transparent */
   box-shadow: 2px 0 12px 0 rgba(83, 125, 93, 0.08);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
+  border-radius: 24px; /* round all 4 corners */
   font-family: 'Raleway', sans-serif;
+  position: sticky; /* fix navbar on scroll */
+  top: 24px; /* move sidebar off the top of the screen */
+  left: 24px; /* move sidebar off the left side of the screen */
+  height: calc(100vh - 48px); /* adjust height to account for top and bottom offset */
+  margin-bottom: 24px;
+  z-index: 10;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -23,6 +30,9 @@
   list-style: none;
   padding: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center all nav items horizontally */
 }
 
 .sidebar li {
@@ -30,6 +40,7 @@
   width: 100%;
   transition: background 0.2s, color 0.2s;
   border-radius: 12px;
+  text-align: center; /* center text in each nav item */
 }
 
 .sidebar li.title {
@@ -38,6 +49,7 @@
   margin-bottom: 2.5rem;
   color: #193b02;
   background: none;
+  text-align: center; /* ensure title is centered */
 }
 
 .sidebar a {
@@ -49,8 +61,8 @@
   padding: 0.75rem 1rem;
   border-radius: 8px;
   transition: background 0.2s, color 0.2s;
+  text-align: center; /* center link text */
 }
-
 
 .sidebar a:hover:has(img){
   background: transparent;
@@ -63,7 +75,7 @@
 
 .content {
   flex-grow: 1;
-  background: #f9f9f9;
+  background: transparent; /* remove background color so image shows through */
   min-height: 100vh;
 }
 
