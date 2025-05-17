@@ -37,7 +37,7 @@ function Dashboard() {
 
             <div className="upcoming-transactions"> 
                     <Card sx={{borderRadius: "32px"}}>
-            
+                        <CardHeader title="Upcoming Transactions" sx={{backgroundColor: "#73946B"}}/>
                         <CardContent sx={{backgroundColor: "#73946B"}}>
                            <TableContainer>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -59,7 +59,22 @@ function Dashboard() {
             </div>
             
              <div className="transaction-history"> 
-                transaction history
+                <Card sx={{borderRadius: "32px"}}>
+                        <CardHeader title="Your Transaction History" sx={{backgroundColor: "#73946B"}}/>
+                        <CardContent sx={{backgroundColor: "#73946B"}}>
+                           <TableContainer>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableCell> Type </TableCell>
+                                    <TableCell> Jar </TableCell>
+                                    <TableCell> Name </TableCell>
+                                    <TableCell> Date </TableCell>
+                                </TableHead>
+                            </Table>
+                           </TableContainer>
+                        </CardContent>
+                        
+                    </Card>
              </div>
 
 

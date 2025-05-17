@@ -10,13 +10,12 @@ import Profile from './pages/Profile';
 
 function App() {
   return (
-        // <div className="App">
-    //   <SignUpCard />
-    // </div>
+    
     <BrowserRouter>
       <Routes>
+        <Route index element={<SignInCard />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          {/* <Route path="" element={<Home />} /> */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="jars" element={<Jars/>} />
           <Route path="profile" element={<Profile/>}/>
