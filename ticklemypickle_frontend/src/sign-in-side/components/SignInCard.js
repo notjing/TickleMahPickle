@@ -57,24 +57,22 @@ export default function SignInCard() {
 
   const handleSubmit = (event) => {
     if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+         return;
     }
+
+    event.preventDefault();
     const data = new FormData(event.currentTarget);
+    
+    const userEmail = data.get('email');
+    const userPswd = data.get('password');
+
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: userEmail,
+      password: userPswd,
     });
-
-    // const signedInUser = {
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // } 
-
-    checkUserByCredentials(data.get('email'), data.get('password')); 
     
+    checkUserByCredentials(userEmail, userPswd);
     
-
   };
 
   const validateInputs = () => {

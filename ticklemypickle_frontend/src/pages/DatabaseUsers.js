@@ -32,24 +32,8 @@ const DatabaseUsers = () => {
     .then(() => refresh());
   };
 
-  const checkUserByEmail = async (email) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/users?email=${encodeURIComponent(email)}`);
-      if (!response.ok) throw new Error("Failed to fetch user");
-
-      const user = await response.json();
-      if (user) {
-        navigate('/dashboard');
-        return true;
-      }
-      return false;
-    } catch (err) {
-      console.error("Error checking user:", err);
-      return false;
-    }
-  };
-
   const checkUserByCredentials = async (email, password) => {
+    
     try {
       const response = await fetch("http://localhost:5000/api/users/check", {
         method: "POST",
@@ -60,12 +44,14 @@ const DatabaseUsers = () => {
       if (!response.ok) throw new Error("Failed to check user");
 
       const result = await response.json();
+      console.log("entered")
       if (result.exists) {
         navigate('/dashboard');
         return true;
       }
 
       return false;
+      console.log("failed")
     } catch (err) {
       console.error("Error verifying user credentials:", err);
       return false;

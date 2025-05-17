@@ -46,6 +46,41 @@ async function connectToMongo() {
         }
     });
 
+    // Check if user with email and password exists
+    app.post("/api/users/check", async (req, res) => {
+      try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+          return res.status(400).json({ error: "Email and password required" });
+        }
+
+        // Find user by email
+        const user = await usersCollection.findOne({ email: email });
+
+        if (!user) {
+          // No user with this email
+        console.log("Email does not exist. Log in failed!");
+          return res.json({ exists: false });
+        }
+
+        // For now, plaintext password check
+        if (user.password === password) {
+            console.log("log in good!");
+          return res.json({ exists: true });
+        } else {
+            console.log("Password incorrect. Log in failed!");
+
+          return res.json({ exists: false });
+        }
+      } catch (err) {
+        console.error("Error checking user credentials:", err);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
+
+
 
     // Start server after Mongo connection
     app.listen(PORT, () => {
