@@ -7,6 +7,13 @@ const Layout = () => {
   const [jarName, setJarName] = useState("");
   const [inviteEmails, setInviteEmails] = useState([]);
   const [emailInput, setEmailInput] = useState("");
+  const [jarsMenuOpen, setJarsMenuOpen] = useState(false);
+  const [jarsMenuAnchor, setJarsMenuAnchor] = useState(null);
+  const userJars = [
+    { name: 'Roommates', id: 1 },
+    { name: 'Vacation Fund', id: 2 },
+    { name: 'Pickleball Club', id: 3 }
+  ];
 
   return (
     <div className="layout">
@@ -18,7 +25,72 @@ const Layout = () => {
             </Link>
           </li>
           <li className="title"><Link to="/dashboard">TMP Dashboard</Link></li>
-          <li><Link to="/Jars">Pickle Jars</Link></li>
+          <li style={{ position: 'relative' }}>
+            <button
+              className="jars-menu-btn"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#193b02',
+                fontSize: '1.15rem',
+                fontWeight: 500,
+                width: '100%',
+                padding: '0.75rem 1rem',
+                borderRadius: 8,
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'background 0.2s, color 0.2s',
+                position: 'relative',
+                zIndex: 2
+              }}
+              onClick={e => {
+                setJarsMenuOpen(v => !v);
+                setJarsMenuAnchor(e.currentTarget);
+              }}
+              onBlur={() => setTimeout(() => setJarsMenuOpen(false), 150)}
+              aria-haspopup="true"
+              aria-expanded={jarsMenuOpen}
+            >
+              Pickle Jars ▾
+            </button>
+            {jarsMenuOpen && (
+              <div
+                className="jars-dropdown-menu"
+                style={{
+                  position: 'absolute',
+                  left: '100%',
+                  top: 0,
+                  marginLeft: 8,
+                  minWidth: 180,
+                  background: '#fff',
+                  border: '1px solid #9EBC8A',
+                  borderRadius: 12,
+                  boxShadow: '0 4px 16px 0 rgba(83, 125, 93, 0.10)',
+                  padding: '0.5rem 0',
+                  zIndex: 10,
+                }}
+              >
+                {userJars.map(jar => (
+                  <Link
+                    key={jar.id}
+                    to="/Jars"
+                    style={{
+                      display: 'block',
+                      padding: '0.7rem 1.2rem',
+                      color: '#537D5D',
+                      textDecoration: 'none',
+                      fontWeight: 600,
+                      borderRadius: 8,
+                      transition: 'background 0.2s, color 0.2s',
+                    }}
+                    onClick={() => setJarsMenuOpen(false)}
+                  >
+                    🥒 {jar.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </li>
           <li><Link to="/Profile">Profile</Link></li>
         </ul>
         {/* Create Jar Button at the bottom */}
