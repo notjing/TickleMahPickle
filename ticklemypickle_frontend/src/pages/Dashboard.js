@@ -1,94 +1,113 @@
-import React, { useContext, useEffect } from 'react'
-import { Box } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import useUsers, { UserContext } from "../context/DatabaseUsers.js";
-import useTransactions from "../context/TransactionContext.js";
-import './styles.css'
-
-function Dashboard() {
-  const { users, addUser, checkUserByCredentials  } = useUsers();
-  const { userId, setUserId } = useContext(UserContext);
-  const user = users.find(user => user._id === userId);
-  const{transactions, addTransaction, refresh} = useTransactions();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log(user);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [user]);
+import React from "react";
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  Divider
+} from "@mui/material";
+import { styled } from "@mui/system";
+import { TrendingUp, Group, AttachMoney, AccessTime, History } from "@mui/icons-material";
 
 
+const colors = {
+  dark: "#537D5D",
+  lighter: "#73946B",
+  notSoLight: "#485e42",
+  medium: "#9EBC8A",
+  background: "#D2D0A0",
+  tableHeader: "#73946B",
+  tableRowLight: "#E8E8C8",
+  tableRowDark: "#DCDCAA",
+  tableBorder: "#999",
+  auraFilledHeading: "#193b02"
+};
+
+const cardStyle = {
+  borderRadius: "32px",
+  boxShadow: "0 8px 32px 0 rgba(39, 54, 42, 0.18)",
+  background: "rgba(158, 188, 138, 0.78)",
+  border: "none",
+  minHeight: "150px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: '1rem',
+  transition: "box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out, background 0.5s ease-in-out",
+  width: "100%",
+  boxSizing: "border-box",
+  "&:hover": {
+    boxShadow: "0 12px 20px rgba(36, 52, 40, 0.35)",
+    transform: "translateY(-4px)",
+    background: "rgba(158, 188, 138, 1)",
+  },
+};
+
+const StyledHeading = styled(Typography)({
+  fontFamily: "Alumni Sans Pinstripe, sans-serif",
+  fontSize: "5rem",
+  fontWeight: 600,
+  marginBottom: "-1rem",
+  color: "#193b02"
+});
+
+const StyledH2 = styled(Typography)({
+  fontFamily: "Alumni Sans Pinstripe, sans-serif",
+  fontSize: "3rem",
+  fontWeight: 600,
+  color: "#193b02"
+});
+const StyledTable = styled("table")({
+  width: "100%",
+  borderCollapse: "collapse",
+  borderRadius: "12px",
+  overflow: "hidden",
+  fontFamily: "Raleway"
+});
+
+const StyledTh = styled("th")({
+  backgroundColor: colors.tableHeader,
+  padding: "12px",
+  border: `1px solid ${colors.tableBorder}`,
+  fontWeight: 600,
+  textAlign: "left",
+  fontFamily: "Raleway"
+});
+
+const StyledTd = styled("td")({
+  padding: "12px",
+  border: `1px solid ${colors.tableBorder}`,
+  fontFamily: "Raleway"
+});
+
+const TableRow = styled("tr")(({ index }) => ({
+  backgroundColor: index % 2 === 0 ? colors.tableRowLight : colors.tableRowDark,
+  fontFamily: "Raleway"
+}));
+
+const StyledTypography = styled("Typography")({
+  fontFamily: "Raleway"
+});
+const StyledDescription = styled("Typography")({
+    fontFamily: "Raleway",
+    color: colors.notSoLight
+});
+
+export default function Dashboard() {
   return (
+    <Box sx={{ padding: 2 }}>
+      <StyledHeading>Welcome back! 🥒</StyledHeading>
+      <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
+          <br></br>
 
-    <div className="dashboard" style={{ minHeight: '100vh', padding: '0 2.5rem', background: 'none' }}>
-      {/* Personalized greeting */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        marginTop: '2.5rem',
-        marginBottom: '0.5rem',
-        paddingLeft: '0.25rem',
-      }}>
-        <h1 style={{
-          fontWeight: 900,
-          color: '#193b02',
-          fontSize: '2.5rem',
-          margin: 0,
-          letterSpacing: '0.01em',
-          textShadow: '0 2px 12px rgba(83,125,93,0.10)'
-        }}>
-            {user && user.firstName
-            ? `Welcome back, ${user.firstName}!`
-            : "Welcome back!"} <span role="img" aria-label="pickle">🥒</span>
-        </h1>
-      </div>
-      {/* return all the people in the database */}
-
-      {/* <ul>
-        {users.map((user, idx) => (
-          <li key={idx}>{user.firstName} {user.lastName}</li>
-        ))}
-      </ul> */}
-
-      {/* Top row: 3 summary cards */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '1.5rem',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        marginTop: '-8vh',
-        marginBottom: '0.5rem',
-        width: '100%'
-      }}>
-        {/* Total Money Owed Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
-          <Card sx={{
-            borderRadius: '32px',
-            boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.88)',
-            border: 'none',
-            minHeight: '160px',
-            height: '22vw',
-            maxHeight: '240px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            p: 0
-          }}>
-            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
-              <div style={{
+      {/* Top Row - 3 Cards */}
+      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+  <Box sx={{ flex: 1 }}>
+    <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
+      <CardContent sx={{ textAlign: "center" }}>
+        <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
                 width: 56,
@@ -99,40 +118,20 @@ function Dashboard() {
                 marginRight: '1.2rem',
                 fontSize: '2.2rem',
                 color: '#537D5D',
-                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)',
+                margin: "auto",
               }}>
                 <span role="img" aria-label="money with wings">💸</span>
               </div>
-              <div style={{ flex: 1, textAlign: 'left' }}>
-                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
-
-                </div>
-                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
-                  Total Money Owed
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        {/* Total Money Owed To You Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
-          <Card sx={{
-            borderRadius: '32px',
-            boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.88)',
-            border: 'none',
-            minHeight: '160px',
-            height: '22vw',
-            maxHeight: '240px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            p: 0
-          }}>
-            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
-              <div style={{
+        <StyledH2>$69696969</StyledH2>
+        <StyledDescription>Total Money Owed</StyledDescription>
+      </CardContent>
+    </Card>
+  </Box>
+  <Box sx={{ flex: 1 }}>
+    <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
+      <CardContent sx={{ textAlign: "center" }}>
+        <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
                 width: 56,
@@ -143,39 +142,20 @@ function Dashboard() {
                 marginRight: '1.2rem',
                 fontSize: '2.2rem',
                 color: '#537D5D',
+                margin: "auto",
                 boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
               }}>
                 <span role="img" aria-label="money bag">💰</span>
               </div>
-              <div style={{ flex: 1, textAlign: 'left' }}>
-                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
-                </div>
-                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
-                  Total Money Owed To You
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        {/* Net Balance Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
-          <Card sx={{
-            borderRadius: '32px',
-            boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.88)',
-            border: 'none',
-            minHeight: '160px',
-            height: '22vw',
-            maxHeight: '240px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            p: 0
-          }}>
-            <CardContent sx={{ width: '100%', display: 'flex', alignItems: 'center', p: '1.5rem 1.2rem' }}>
-              <div style={{
+        <StyledH2>$69420</StyledH2>
+        <StyledDescription>Total Money Owed To You</StyledDescription>
+      </CardContent>
+    </Card>
+  </Box>
+  <Box sx={{ flex: 1 }}>
+    <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
+      <CardContent sx={{ textAlign: "center" }}>
+        <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
                 width: 56,
@@ -185,98 +165,87 @@ function Dashboard() {
                 justifyContent: 'center',
                 marginRight: '1.2rem',
                 fontSize: '2.2rem',
+                margin: "auto",
                 color: '#537D5D',
                 boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
               }}>
                 <span role="img" aria-label="balance scale">⚖️</span>
               </div>
-              <div style={{ flex: 1, textAlign: 'left' }}>
-                <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
-                </div>
-                <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
-                  Net Balance
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-      {/* Bottom row: 2 cards side by side */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '1rem',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        width: '100%',
-        marginBottom: '3rem' // add space at the bottom of the screen
-      }}>
-        {/* Upcoming Transactions Card */}
-        <div className="upcoming-transactions" style={{ flex: 1, minWidth: '340px' }}>
-          <Card sx={{
-            borderRadius: '32px',
-            boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.78)', // lighter green with transparency
-            border: 'none',
-            minHeight: '320px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            p: 3
-          }}>
-            <CardHeader title="Upcoming Transactions" sx={{ background: 'none', color: '#193b02', fontWeight: 700, fontSize: '1.3rem', textAlign: 'center', p: 0, mb: 2 }} />
-            <CardContent sx={{ width: '100%', p: 0 }}>
-              <TableContainer>
-                <Table sx={{ minWidth: 200 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Jar</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Date</TableCell>
-                    </TableRow>
-                  </TableHead>
-                </Table>
-              </TableContainer>
-            </CardContent>
-          </Card>
-        </div>
-        {/* Transaction History Card */}
-        <div className="transaction-history" style={{ flex: 1, minWidth: '340px' }}>
-          <Card sx={{
-            borderRadius: '32px',
-            boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
-            background: 'rgba(158, 188, 138, 0.78)', // lighter green with transparency
-            border: 'none',
-            minHeight: '320px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            p: 3
-          }}>
-            <CardHeader title="Your Transaction History" sx={{ background: 'none', color: '#193b02', fontWeight: 700, fontSize: '1.3rem', textAlign: 'center', p: 0, mb: 2 }} />
-            <CardContent sx={{ width: '100%', p: 0 }}>
-              <TableContainer>
-                <Table sx={{ minWidth: 200 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Jar</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Date</TableCell>
-                    </TableRow>
-                  </TableHead>
-                </Table>
-              </TableContainer>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  )
-}
+        <StyledH2>$42069</StyledH2>
+        <StyledDescription>Net Balance</StyledDescription>
+      </CardContent>
+    </Card>
+  </Box>
+</Box>
 
-export default Dashboard
+
+    {/* Bottom Row - 2 Cards with Tables */}
+      
+    <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+    <Box sx={{ flex: 1 }}>
+    <Card sx={{ ...cardStyle, padding: 2, width: "100%", height: "100%" }}>
+      <CardContent>
+        <Box display="inline-flex" alignItems="center" gap={1}>
+            <AccessTime sx={{ fontSize: "2.5rem" }} />
+            <StyledH2>Due Soon</StyledH2>
+        </Box>
+          <StyledTable>
+            <thead>
+              <tr>
+                <StyledTh>Amount</StyledTh>
+                <StyledTh>Jar</StyledTh>
+                <StyledTh>Name</StyledTh>
+                <StyledTh>Date</StyledTh>
+              </tr>
+            </thead>
+            <tbody>
+              {[{ type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"},
+                { type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"}].map((row, i) => (
+                <TableRow key={i} index={i}>
+                  <StyledTd>{row.type}</StyledTd>
+                  <StyledTd>{row.jar}</StyledTd>
+                  <StyledTd>{row.name}</StyledTd>
+                  <StyledTd>{row.date}</StyledTd>
+                </TableRow>
+              ))}
+            </tbody>
+          </StyledTable>
+        </CardContent>
+    </Card>
+  </Box>
+  <Box sx={{ flex: 1 }}>
+    <Card sx={{ ...cardStyle, padding: 2, width: "100%", height: "100%" }}>
+      <CardContent>
+        <Box display="inline-flex" alignItems="center" gap={1}>
+            <History sx={{ fontSize: "2.5rem" }} />
+            <StyledH2>Transaction History</StyledH2>
+        </Box>
+          <StyledTable>
+            <thead>
+              <tr>
+                <StyledTh>Amount</StyledTh>
+                <StyledTh>Jar</StyledTh>
+                <StyledTh>Name</StyledTh>
+                <StyledTh>Date</StyledTh>
+              </tr>
+            </thead>
+            <tbody>
+              {[{ type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"},
+                { type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"}].map((row, i) => (
+                <TableRow key={i} index={i}>
+                  <StyledTd>{row.type}</StyledTd>
+                  <StyledTd>{row.jar}</StyledTd>
+                  <StyledTd>{row.name}</StyledTd>
+                  <StyledTd>{row.date}</StyledTd>
+                </TableRow>
+              ))}
+            </tbody>
+          </StyledTable>
+        </CardContent>
+    </Card>
+  </Box>
+</Box>
+
+    </Box>
+  );
+}
