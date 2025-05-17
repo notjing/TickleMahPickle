@@ -11,8 +11,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import SignUpCard from './SignUpCard';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useUsers from '../../context/DatabaseUsers';
+import { UserContext } from '../../context/DatabaseUsers';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -54,6 +55,7 @@ export default function SignInCard() {
 
   const [signUpOpen, setSignUpOpen] = useState(false);
   const { users, addUser, refresh, checkUserByCredentials  } = useUsers();
+  const { userId, setUserId } = useContext(UserContext);
 
   const handleSubmit = (event) => {
     if (emailError || passwordError) {
@@ -66,13 +68,18 @@ export default function SignInCard() {
     const userEmail = data.get('email');
     const userPswd = data.get('password');
 
-    console.log({
-      email: userEmail,
-      password: userPswd,
-    });
+    console.log(Object.fromEntries(data.entries()));
+    
     
     checkUserByCredentials(userEmail, userPswd);
-    
+
+    for(let i = 0; i < users.length; i++) {
+      if(users[i].email === userEmail && users[i].password === userPswd) {
+        console.log("User found, id: ", users[i]._id);
+        setUserId(users[i]._id);
+        break;
+      }
+    }
   };
 
   const validateInputs = () => {
