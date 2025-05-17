@@ -1,5 +1,5 @@
 // UserDashboard.js
-import useUsers from './DatabaseUsers';
+import useUsers from '../context/DatabaseUsers';
 
 const UserDashboard = () => {
   const { users, addUser, refresh } = useUsers();
