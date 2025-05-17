@@ -1,12 +1,20 @@
 .layout {
   display: flex;
   height: 100vh;
+  flex-direction: row;
 }
 
 .sidebar {
-  width: 200px;
-  background-color: #f0f0f0;
-  padding: 1rem;
+  width: 220px;
+  background: linear-gradient(135deg, #537D5D 0%, #9EBC8A 100%); /* pickle green gradient */
+  box-shadow: 2px 0 12px 0 rgba(83, 125, 93, 0.08);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  font-family: 'Raleway', sans-serif;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -15,17 +23,86 @@
 .sidebar ul {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 
 .sidebar li {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 12px;
+}
+
+.sidebar li.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #193b02;
+  background: none;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #193b02;
+  font-size: 1.15rem;
+  font-weight: 500;
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+
+.sidebar a:hover:has(img){
+  background: transparent;
+}
+
+.sidebar a:hover {
+  background: #e8e8c8;
+  color: #537D5D;
 }
 
 .content {
   flex-grow: 1;
-  padding: 0rem;
+  padding: 2rem 2rem 2rem 2.5rem; /* add left padding for spacing from navbar */
+  background: #f9f9f9;
+  min-height: 100vh;
 }
 
-.title {
-    font-size: 30px;
+.logo-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.logo-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 16px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.logo-nav-item {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 100px;
+    padding: 1rem 0.5rem;
+  }
+  .sidebar li.title {
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .sidebar a {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.5rem;
+  }
 }
