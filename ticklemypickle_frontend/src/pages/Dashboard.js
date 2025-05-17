@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import DatabaseUsers from "../context/DatabaseUsers.js";
 import useTransactions from "../context/TransactionContext.js";
-
+import TableRow from '@mui/material/TableRow';
 import './styles.css'
 
 function Dashboard() {
@@ -21,15 +21,18 @@ function Dashboard() {
 
   return (
 
-    <div className="dashboard" style={{ minHeight: '100vh', padding: '0 2.5rem', background: 'none' }}>
+    <div className="dashboard" style={{ minHeight: '100vh', padding: '0 2.5rem', background: 'none', position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
       {/* Personalized greeting */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         marginTop: '2.5rem',
-        marginBottom: '0.5rem',
+        marginBottom: '4rem', // increased gap for all screens
         paddingLeft: '0.25rem',
+        zIndex: 2,
+        background: 'rgba(255,255,255,0.01)',
+        position: 'relative',
       }}>
         <h1 style={{
           fontWeight: 900,
@@ -44,23 +47,36 @@ function Dashboard() {
       </div>
       {/* return all the people in the database */}
       <ul>
-        {users.map((user, idx) => (
+        {/* {users.map((user, idx) => (
           <li key={idx}>{user.firstName} {user.lastName}</li>
-        ))}
+        ))} */}
       </ul>
       {/* Top row: 3 summary cards */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '1.5rem',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        marginTop: '-8vh',
-        marginBottom: '0.5rem',
-        width: '100%'
-      }}>
+      <div
+        className="dashboard-summary-row"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '1.5rem',
+          justifyContent: 'space-between',
+          alignItems: 'stretch',
+          marginTop: '-8vh',
+          marginBottom: '0.5rem',
+          width: '100%',
+          flexWrap: 'wrap', // allow wrapping on small screens
+        }}
+      >
         {/* Total Money Owed Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            flex: '1 1 260px',
+            minWidth: '220px',
+            maxWidth: '400px',
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem', // add spacing when wrapped
+          }}
+        >
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
@@ -79,17 +95,17 @@ function Dashboard() {
               <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
-                width: 56,
-                height: 56,
+                width: 72,
+                height: 72,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginRight: '1.2rem',
-                fontSize: '2.2rem',
+                fontSize: '2.8rem',
                 color: '#537D5D',
                 boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
               }}>
-                <span role="img" aria-label="money with wings">💸</span>
+                <img src="/debt.png" alt="Debt Icon" style={{ width: 48, height: 48, objectFit: 'contain', display: 'block' }} />
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
@@ -104,7 +120,16 @@ function Dashboard() {
           </Card>
         </div>
         {/* Total Money Owed To You Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            flex: '1 1 260px',
+            minWidth: '220px',
+            maxWidth: '400px',
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem',
+          }}
+        >
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
@@ -123,17 +148,17 @@ function Dashboard() {
               <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
-                width: 56,
-                height: 56,
+                width: 72,
+                height: 72,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginRight: '1.2rem',
-                fontSize: '2.2rem',
+                fontSize: '2.8rem',
                 color: '#537D5D',
                 boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
               }}>
-                <span role="img" aria-label="money bag">💰</span>
+                <img src="/moneyGain.png" alt="Money Gain Icon" style={{ width: 48, height: 48, objectFit: 'contain', display: 'block' }} />
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
@@ -147,7 +172,16 @@ function Dashboard() {
           </Card>
         </div>
         {/* Net Balance Card */}
-        <div style={{ flex: 1, minWidth: '200px', maxWidth: '400px', display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            flex: '1 1 260px',
+            minWidth: '220px',
+            maxWidth: '400px',
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '1rem',
+          }}
+        >
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
@@ -166,17 +200,17 @@ function Dashboard() {
               <div style={{
                 background: 'rgba(83,125,93,0.13)',
                 borderRadius: '50%',
-                width: 56,
-                height: 56,
+                width: 72,
+                height: 72,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginRight: '1.2rem',
-                fontSize: '2.2rem',
+                fontSize: '2.8rem',
                 color: '#537D5D',
                 boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
               }}>
-                <span role="img" aria-label="balance scale">⚖️</span>
+                <img src="/bank.png" alt="Bank Icon" style={{ width: 48, height: 48, objectFit: 'contain', display: 'block' }} />
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
@@ -191,17 +225,29 @@ function Dashboard() {
         </div>
       </div>
       {/* Bottom row: 2 cards side by side */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: '1rem',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        width: '100%',
-        marginBottom: '3rem' // add space at the bottom of the screen
-      }}>
+      <div
+        className="dashboard-bottom-row"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '1rem',
+          justifyContent: 'space-between',
+          alignItems: 'stretch',
+          width: '100%',
+          marginBottom: '3rem',
+          flexWrap: 'wrap', // allow wrapping on small screens
+        }}
+      >
         {/* Upcoming Transactions Card */}
-        <div className="upcoming-transactions" style={{ flex: 1, minWidth: '340px' }}>
+        <div
+          className="upcoming-transactions"
+          style={{
+            flex: '1 1 340px',
+            minWidth: '260px',
+            maxWidth: '600px',
+            marginBottom: '1rem',
+          }}
+        >
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
@@ -232,7 +278,15 @@ function Dashboard() {
           </Card>
         </div>
         {/* Transaction History Card */}
-        <div className="transaction-history" style={{ flex: 1, minWidth: '340px' }}>
+        <div
+          className="transaction-history"
+          style={{
+            flex: '1 1 340px',
+            minWidth: '260px',
+            maxWidth: '600px',
+            marginBottom: '1rem',
+          }}
+        >
           <Card sx={{
             borderRadius: '32px',
             boxShadow: '0 8px 32px 0 rgba(83,125,93,0.18)',
@@ -263,6 +317,34 @@ function Dashboard() {
           </Card>
         </div>
       </div>
+      {/* Responsive CSS for stacking bottom cards below summary cards on small screens */}
+      <style>{`
+        @media (max-width: 900px) {
+          .dashboard-summary-row, .dashboard-bottom-row {
+            flex-direction: column !important;
+            gap: 1.2rem !important;
+          }
+          .dashboard {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .dashboard-summary-row > div,
+          .dashboard-bottom-row > div {
+            min-width: 0 !important;
+            max-width: 100% !important;
+          }
+          .dashboard > div:first-child {
+            margin-bottom: 4rem !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .dashboard > div:first-child {
+            margin-bottom: 4rem !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
