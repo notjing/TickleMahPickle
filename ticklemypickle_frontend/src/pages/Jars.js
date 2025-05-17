@@ -187,7 +187,7 @@ function TabPanel(props) {
 
 const cardStyle = {
   borderRadius: "32px",
-  boxShadow: "0 8px 32px 0 rgba(83,125,93,0.18)",
+  boxShadow: "0 8px 32px 0 rgba(39, 54, 42, 0.18)",
   background: "rgba(158, 188, 138, 0.78)",
   border: "none",
   minHeight: "150px",
@@ -195,8 +195,15 @@ const cardStyle = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  padding: 3
+  padding: '1rem',
+  transition: "box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out, background 0.5s ease-in-out",
+  "&:hover": {
+    boxShadow: "0 12px 20px rgba(36, 52, 40, 0.35)",
+    transform: "translateY(-4px)",
+    background: "rgba(158, 188, 138, 1)",
+  }
 };
+
 
 const debtHistory = [
   { date: "2025-01-01", John: 50, Jane: 30 },
@@ -352,7 +359,7 @@ function Jars() {
     {stats.map(({ title, value }) => (
       <Grid item xs={12} md={3} key={title}>
         <Card sx={cardStyle}>
-          <CardContent sx={{ width: "100%", padding: 2, textAlign: "center" }}>
+          <CardContent sx={{ width: "100%", padding: 0.4, textAlign: "center" }}>
             <Typography
               sx={{
                 fontSize: "1.1rem",
