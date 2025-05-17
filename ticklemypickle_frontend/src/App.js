@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Jars from './pages/Jars';
 import Profile from './pages/Profile';
+import UserDashboard from './pages/UserDashboard';
 
 function App() {
 
@@ -32,6 +33,8 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="jars" element={<Jars/>} />
           <Route path="profile" element={<Profile/>}/>
+          <Route path="test" element={<UserDashboard/>}/>
+
         </Route>
       </Routes>
     </BrowserRouter>
