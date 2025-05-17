@@ -21,6 +21,9 @@
   height: calc(100vh - 48px); /* adjust height to account for top and bottom offset */
   margin-bottom: 24px;
   z-index: 10;
+  min-width: 220px;
+  max-width: 220px;
+  box-sizing: border-box;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -105,6 +108,8 @@
 @media (max-width: 700px) {
   .sidebar {
     width: 100px;
+    min-width: 100px;
+    max-width: 100px;
     padding: 1rem 0.5rem;
   }
   .sidebar li.title {
