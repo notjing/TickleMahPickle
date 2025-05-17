@@ -33,14 +33,35 @@ async function connectToMongo() {
       }
     });
 
+    app.post("/api/users", async (req, res) => {
+        try {
+            const user = req.body;
+            console.log("Received user to add:", user);
+            const result = await usersCollection.insertOne(user);
+            console.log("Insert result:", result);
+            res.status(201).json(result);
+        } catch (err) {
+            console.error('Insert error:', err);
+            res.status(500).json({ error: 'Insert failed' });
+        }
+    });
+
+
     // Start server after Mongo connection
     app.listen(PORT, () => {
       console.log(`Server listening on http://localhost:${PORT}`);
     });
 
+    // await users.updateOne(
+    //     { _id: new ObjectId("682822f3b888dbe6840581a6") },
+    //     { $set: { money: 250 } }
+    // );
+
+
   } catch (err) {
     console.error("MongoDB connection failed:", err);
   }
+
 }
 
 connectToMongo();
