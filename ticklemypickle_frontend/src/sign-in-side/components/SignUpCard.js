@@ -58,11 +58,16 @@ export default function SignInCard({returnToSignIn}) {
   const { users, addUser, refresh } = useUsers();
   
   const handleSubmit = (event) => {
+    event.preventDefault();
+    validateInputs(); 
     if (emailError || passwordError || firstNameError || lastNameError || phoneError) {
-      event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
+    
+
+    returnToSignIn();
+    
     console.log({
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
@@ -253,7 +258,6 @@ export default function SignInCard({returnToSignIn}) {
             type="submit" 
             fullWidth 
             variant="contained" 
-            onClick={validateInputs}
             sx={{ 
               borderRadius: '6px', 
               backgroundColor: "green",
