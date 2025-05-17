@@ -6,12 +6,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const BRAND_GREEN = '#537D5D';
 
-export default function BasicDatePicker() {
+export default function BasicDatePicker({value, onChange}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DatePicker']}>
         <DatePicker 
           label="Payment Deadline"
+          value={value}
+          onChange={onChange}
           slotProps={{
             textField: {
               sx: {
