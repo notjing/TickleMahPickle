@@ -322,29 +322,29 @@ function Jars() {
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}> {/* Other Content Tab */}
-  {/* Row 1: Mood Tracker */}
-  <Grid container spacing={2}>
-    <Grid item xs={12} sx={{ mb: 2 }}>
-      <Card sx={{ ...cardStyle, minHeight: 150 }}>
-        <CardContent>
-          <Typography
-            sx={{
-              fontSize: "1.3rem",
-              fontWeight: 700,
-              color: "#193b02",
-              textAlign: "center",
-              marginBottom: 1
-            }}
-          >
-            How are we feeling?
-          </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center" }}>
-            This is a placeholder for a mood tracker, sentiment analysis, or general group vibes summary.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
+      {/* Row 1: Mood Tracker */}
+<Grid container spacing={2}>
+  <Grid item xs={12}>
+    <Card sx={{ ...cardStyle, minHeight: 150 }}>
+      <CardContent>
+        <Typography
+          sx={{
+            fontSize: "1.3rem",
+            fontWeight: 700,
+            color: "#193b02",
+            textAlign: "center",
+            marginBottom: 1
+          }}
+        >
+          How are we feeling?
+        </Typography>
+        <Typography variant="body1" sx={{ textAlign: "center" }}>
+          This is a placeholder for a mood tracker, sentiment analysis, or general group vibes summary.
+        </Typography>
+      </CardContent>
+    </Card>
   </Grid>
+</Grid>
 
   {/* Row 2: Stats Cards */}
   <Grid container spacing={2} sx={{ mb: 2 }}>
