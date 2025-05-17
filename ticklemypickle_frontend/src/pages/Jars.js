@@ -346,66 +346,63 @@ function Jars() {
   </Grid>
 </Grid>
 
-{/* Row 2: Stats Cards */}
-<Grid container spacing={2} sx={{ marginTop: 0.5 }}>
-  {stats.map(({ title, value }) => (
-    <Grid item xs={12} md={3} key={title}>
-      <Card sx={cardStyle}>
-        <CardContent sx={{ width: "100%", padding: 0, textAlign: "center" }}>
-          <Typography
-            sx={{ fontSize: "1.1rem", color: "#537D5D", fontWeight: 700 }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "2.2rem",
-              fontWeight: 800,
-              color: "#193b02",
-              marginTop: "0.5rem"
-            }}
-          >
-            {value}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-  ))}
-</Grid>
-
-{/* Row 3: Debts Over Time Chart */}
-<Box sx={{ width: '100%' }}>
-<Grid container spacing={2} sx={{ marginTop: 0.5 }}>
-  <Grid item xs={12}>
-    <Card sx={{ ...cardStyle, minHeight: 320, width: "100%" }}>
-      <CardHeader
-        title="Debts Over Time"
-        sx={{
-          color: "#193b02",
-          fontWeight: 700,
-          fontSize: "1.3rem",
-          textAlign: "center",
-          paddingBottom: 0,
-          marginBottom: 2
-        }}
-      />
-      <CardContent sx={{ width: "100%", paddingTop: 0 }}>
-        <ResponsiveContainer width="100%" height={250}>
-          <LineChart data={debtHistory}>
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="John" stroke="#8884d8" />
-            <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+  {/* Row 2: Stats Cards */}
+  <Grid container spacing={2} sx={{ mb: 2 }}>
+    {stats.map(({ title, value }) => (
+      <Grid item xs={12} md={3} key={title}>
+        <Card sx={cardStyle}>
+          <CardContent sx={{ width: "100%", padding: 0, textAlign: "center" }}>
+            <Typography sx={{ fontSize: "1.1rem", color: "#537D5D", fontWeight: 700 }}>
+              {title}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "2.2rem",
+                fontWeight: 800,
+                color: "#193b02",
+                marginTop: "0.5rem"
+              }}
+            >
+              {value}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    ))}
   </Grid>
-</Grid>
-</Box>
-        </TabPanel>
+
+  {/* Row 3: Debts Over Time chart (full width, boxed) */}
+  <Box xs={12}>
+      <Grid item xs={12}>
+        <Card sx={{ ...cardStyle, minHeight: 320, width: "100%" }}>
+          <CardHeader
+            title="Debts Over Time"
+            sx={{
+              color: "#193b02",
+              fontWeight: 700,
+              fontSize: "1.3rem",
+              textAlign: "center",
+              paddingBottom: 0,
+              marginBottom: 2
+            }}
+          />
+          <CardContent sx={{ width: "100%", paddingTop: 0 }}>
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={debtHistory}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="John" stroke="#8884d8" />
+                <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </Grid>
+  </Box>
+</TabPanel>
+
       </MainContent>
     </Container>
   );
