@@ -1,0 +1,16 @@
+*{
+    box-sizing: border-box;
+}
+
+.dashboard{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 15% 85%;
+}
+
+.main-content{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding-top: 5vh;
+}
