@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import SignUpCard from './SignUpCard';
 import { useState } from 'react';
-import useUsers from '../../pages/DatabaseUsers';
+import useUsers from '../../context/DatabaseUsers';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',

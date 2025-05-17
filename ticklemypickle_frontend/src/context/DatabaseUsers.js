@@ -1,5 +1,5 @@
 // useUsers.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const DatabaseUsers = () => {
@@ -62,5 +62,16 @@ const DatabaseUsers = () => {
 
   return { users, addUser, refresh, checkUserByCredentials  };
 };
+
+export const UserContext = createContext();
+
+export function UserProvider({ children }) {
+  const [userId, setUserId] = useState(null);
+  return (
+    <UserContext.Provider value={{ userId, setUserId }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
 
 export default DatabaseUsers;

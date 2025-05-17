@@ -8,13 +8,20 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import DatabaseUsers from "./DatabaseUsers.js";
+import DatabaseUsers from "../context/DatabaseUsers.js";
+import useTransactions from "../context/TransactionContext.js";
 
 import './styles.css'
 
 function Dashboard() {
 //   const users = DatabaseUsers();
 
+<<<<<<< HEAD
+=======
+    const{transactions, addTransaction, refresh} = useTransactions();
+
+
+>>>>>>> d708be5072df1b116f82268fd1215020fece12ef
   return (
     <div className="dashboard">
       {/* {users.map((user, idx) => (
