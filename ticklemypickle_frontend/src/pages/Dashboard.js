@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-const Dashboard = () => {
-    return (
-        <h1>Dashboard</h1>
-    )
-}
-
-export default Dashboard;
-=======
 import React from 'react'
 import './styles.css'
 
@@ -45,4 +36,3 @@ function Dashboard() {
 }
 
 export default Dashboard
->>>>>>> a8f448ca916c28d50076520512fc021270167678
