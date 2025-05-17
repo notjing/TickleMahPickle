@@ -66,7 +66,16 @@ const DatabaseUsers = () => {
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(() => localStorage.getItem('userId'));
+
+  useEffect(() => {
+  if (userId) {
+    localStorage.setItem('userId', userId);
+  } else {
+    localStorage.removeItem('userId');
+  }
+}, [userId]);
+
   return (
     <UserContext.Provider value={{ userId, setUserId }}>
       {children}

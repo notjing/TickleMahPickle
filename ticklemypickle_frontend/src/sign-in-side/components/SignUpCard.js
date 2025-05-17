@@ -77,6 +77,8 @@ export default function SignInCard({returnToSignIn}) {
       phone: data.get('phone'),
       email: data.get('email'),
       password: data.get('password'),
+      moneyOwed: 0,
+      moneyOwedTo: 0,
     };
     addUser(newUser);
   };
