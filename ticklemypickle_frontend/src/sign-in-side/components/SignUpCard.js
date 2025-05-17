@@ -59,11 +59,21 @@ export default function SignInCard({returnToSignIn}) {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    validateInputs(); 
     if (emailError || passwordError || firstNameError || lastNameError || phoneError) {
       return;
     }
     const data = new FormData(event.currentTarget);
+    const newUser = {
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      phone: data.get('phone'),
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+
+    returnToSignIn();
+    
     console.log({
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
@@ -72,14 +82,7 @@ export default function SignInCard({returnToSignIn}) {
       password: data.get('password'),
     });
 
-    const newUser = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      phone: data.get('phone'),
-      email: data.get('email'),
-      password: data.get('password'),
-    };
-    addUser(newUser);
+    
   };
 
   const validateInputs = () => {
@@ -252,7 +255,6 @@ export default function SignInCard({returnToSignIn}) {
             type="submit" 
             fullWidth 
             variant="contained" 
-            onClick={validateInputs}
             sx={{ 
               borderRadius: '6px', 
               backgroundColor: "green",
