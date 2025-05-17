@@ -16,12 +16,9 @@ import './styles.css'
 function Dashboard() {
 //   const users = DatabaseUsers();
 
-<<<<<<< HEAD
-=======
-    const{transactions, addTransaction, refresh} = useTransactions();
+const{transactions, addTransaction, refresh} = useTransactions();
 
 
->>>>>>> d708be5072df1b116f82268fd1215020fece12ef
   return (
     <div className="dashboard">
       {/* {users.map((user, idx) => (

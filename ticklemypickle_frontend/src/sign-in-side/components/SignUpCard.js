@@ -58,8 +58,9 @@ export default function SignInCard({returnToSignIn}) {
   const { users, addUser, refresh } = useUsers();
   
   const handleSubmit = (event) => {
+    event.preventDefault();
+
     if (emailError || passwordError || firstNameError || lastNameError || phoneError) {
-      event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);

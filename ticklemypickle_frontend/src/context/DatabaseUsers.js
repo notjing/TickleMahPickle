@@ -22,14 +22,34 @@ const DatabaseUsers = () => {
       .catch(err => console.error(err));
   };
 
+  const userExistsByEmail = async (email) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/email/${encodeURIComponent(email)}`);
+      if (!response.ok) throw new Error("Failed to check email");
+      const result = await response.json();
+      return result.exists; // Assumes your backend returns { exists: true/false }
+    } catch (err) {
+      console.error("Error checking if user exists by email:", err);
+      return false;
+    }
+  };
+
+
   // Function to insert a user
-  const addUser = (newUser) => {
+  const addUser = async (newUser) => {
+    const exists = await userExistsByEmail(newUser.email);
+    if (exists) {
+      alert("An account with this email already exists.");
+      return false;
+    }
+  
     fetch("http://localhost:5000/api/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUser),
     })
     .then(() => refresh());
+    return true;
   };
 
   const checkUserByCredentials = async (email, password) => {
@@ -60,7 +80,7 @@ const DatabaseUsers = () => {
 
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
-  return { users, addUser, refresh, checkUserByCredentials  };
+  return { users, addUser, refresh, checkUserByCredentials, userExistsByEmail  };
 };
 
 export const UserContext = createContext();
