@@ -76,6 +76,7 @@ export default function SignInCard() {
     for(let i = 0; i < users.length; i++) {
       if(users[i].email === userEmail && users[i].password === userPswd) {
         console.log("User found, id: ", users[i]._id);
+        console.log("name: ", users[i].firstName);
         setUserId(users[i]._id);
         break;
       }

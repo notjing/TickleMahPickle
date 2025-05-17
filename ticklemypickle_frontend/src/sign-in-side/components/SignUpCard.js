@@ -64,13 +64,7 @@ export default function SignInCard({returnToSignIn}) {
       return;
     }
     const data = new FormData(event.currentTarget);
-    const newUser = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      phone: data.get('phone'),
-      email: data.get('email'),
-      password: data.get('password'),
-    };
+    
 
     returnToSignIn();
     
@@ -82,7 +76,16 @@ export default function SignInCard({returnToSignIn}) {
       password: data.get('password'),
     });
 
-    
+    const newUser = {
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      phone: data.get('phone'),
+      email: data.get('email'),
+      password: data.get('password'),
+      moneyOwed: 0,
+      moneyOwedTo: 0,
+    };
+    addUser(newUser);
   };
 
   const validateInputs = () => {

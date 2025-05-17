@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Box } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,18 +6,27 @@ import CardHeader from '@mui/material/CardHeader';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import DatabaseUsers from "../context/DatabaseUsers.js";
+import useUsers, { UserContext } from "../context/DatabaseUsers.js";
 import useTransactions from "../context/TransactionContext.js";
-import TableRow from '@mui/material/TableRow';
 import './styles.css'
+import TableRow from '@mui/material/TableRow';
+
 
 function Dashboard() {
-  const users = DatabaseUsers();
+  const { users, addUser, checkUserByCredentials  } = useUsers();
+  const { userId, setUserId } = useContext(UserContext);
+  const user = users.find(user => user._id === userId);
+  const{transactions, addTransaction, refresh} = useTransactions();
 
-
-const{transactions, addTransaction, refresh} = useTransactions();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log(user);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [user]);
 
 
   return (
@@ -40,15 +49,19 @@ const{transactions, addTransaction, refresh} = useTransactions();
           letterSpacing: '0.01em',
           textShadow: '0 2px 12px rgba(83,125,93,0.10)'
         }}>
-          Welcome back, Kaibo! <span role="img" aria-label="pickle">🥒</span>
+            {user && user.firstName
+            ? `Welcome back, ${user.firstName}!`
+            : "Welcome back!"} <span role="img" aria-label="pickle">🥒</span>
         </h1>
       </div>
       {/* return all the people in the database */}
-      <ul>
-        {/* {users.map((user, idx) => (
+
+      {/* <ul>
+        {users.map((user, idx) => (
           <li key={idx}>{user.firstName} {user.lastName}</li>
-        ))} */}
-      </ul>
+        ))}
+      </ul> */}
+
       {/* Top row: 3 summary cards */}
       <div style={{
         display: 'flex',
