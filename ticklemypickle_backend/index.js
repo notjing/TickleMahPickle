@@ -11,7 +11,6 @@ app.use(express.json());
 const uri = "mongodb+srv://ethanlinsy:mongo@cluster0.vtbrvp2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 
-
 const PORT = 5000;
 
 async function connectToMongo() {
@@ -22,7 +21,7 @@ async function connectToMongo() {
     const db = client.db("testdatabase");
     const usersCollection = db.collection("testcollection");
     const transactionCollection = db.collection("testTransactions");
-
+    const jarsCollection = db.collection("testJars");
 
     //GET FUNCTIONS
     // API endpoint to get all users
@@ -37,15 +36,15 @@ async function connectToMongo() {
     });
 
     app.get("/api/users/email/:email", async (req, res) => {
-        try {
-            const email = decodeURIComponent(req.params.email);
-            console.log(email);
-            const user = await usersCollection.findOne({ email: email });
-            res.json({ exists: !!user });
-        } catch (err) {
-            console.error("Error checking user by email:", err);
-            res.status(500).json({ error: "Internal server error" });
-        }
+      try {
+        const email = decodeURIComponent(req.params.email);
+        console.log(email);
+        const user = await usersCollection.findOne({ email: email });
+        res.json({ exists: !!user });
+      } catch (err) {
+        console.error("Error checking user by email:", err);
+        res.status(500).json({ error: "Internal server error" });
+      }
     });
 
     //transactions
@@ -59,19 +58,35 @@ async function connectToMongo() {
       }
     });
 
-
     //POST FUNCTIONS
+
+    // app.post("/api/users/ids-by-emails", async (req, res) => {
+    //   try {
+    //     const { emails } = req.body; // expects { emails: [ ... ] }
+    //     if (!Array.isArray(emails)) {
+    //       return res.status(400).json({ error: "Emails must be an array" });
+    //     }
+    //     const users = await usersCollection.find({ email: { $in: emails } }).toArray();
+    //     // Return only the list of _id's
+    //     const result = users.map(user => user._id);
+    //     res.json(result);
+    //   } catch (err) {
+    //     console.error("Error fetching user IDs by emails:", err);
+    //     res.status(500).json({ error: "Internal server error" });
+    //   }
+    // });
+
     app.post("/api/users", async (req, res) => {
-        try {
-            const user = req.body;
-            console.log("Received user to add:", user);
-            const result = await usersCollection.insertOne(user);
-            console.log("Insert result:", result);
-            res.status(201).json(result);
-        } catch (err) {
-            console.error('Insert error:', err);
-            res.status(500).json({ error: 'Insert failed' });
-        }
+      try {
+        const user = req.body;
+        console.log("Received user to add:", user);
+        const result = await usersCollection.insertOne(user);
+        console.log("Insert result:", result);
+        res.status(201).json(result);
+      } catch (err) {
+        console.error("Insert error:", err);
+        res.status(500).json({ error: "Insert failed" });
+      }
     });
 
     // Check if user with email and password exists
@@ -88,16 +103,16 @@ async function connectToMongo() {
 
         if (!user) {
           // No user with this email
-        console.log("Email does not exist. Log in failed!");
+          console.log("Email does not exist. Log in failed!");
           return res.json({ exists: false });
         }
 
         // For now, plaintext password check
         if (user.password === password) {
-            console.log("log in good!");
+          console.log("log in good!");
           return res.json({ exists: true });
         } else {
-            console.log("Password incorrect. Log in failed!");
+          console.log("Password incorrect. Log in failed!");
 
           return res.json({ exists: false });
         }
@@ -107,18 +122,40 @@ async function connectToMongo() {
       }
     });
 
+    // Create a new jar with member emails (convert to user IDs)
+    app.post("/api/jars", async (req, res) => {
+      try {
+        const { name, emails } = req.body; // expects { name: 'Jar Name', emails: [ ... ] }
+        if (!name || !Array.isArray(emails)) {
+          return res.status(400).json({ error: "Name and emails are required" });
+        }
+        // Find users by email
+        const users = await usersCollection.find({ email: { $in: emails } }).toArray();
+        const userIds = users.map(user => user._id);
+        console.log("GOODDD, userIds: ", userIds);
+        // Insert new jar document
+        const jarDoc = {
+          name,
+          members: userIds,
+          createdAt: new Date()
+        };
+        const result = await jarsCollection.insertOne(jarDoc);
+        console.log("WAHTS GOOD");
+        res.status(201).json({ success: true, jarId: result.insertedId });
+      } catch (err) {
+        console.error("Error creating jar:", err);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
 
     // Start server after Mongo connection
     app.listen(PORT, () => {
       console.log(`Server listening on http://localhost:${PORT}`);
     });
 
-
-
   } catch (err) {
     console.error("MongoDB connection failed:", err);
   }
-
 }
 
 connectToMongo();
