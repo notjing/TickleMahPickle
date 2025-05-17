@@ -219,8 +219,12 @@
     font-size: 0.95rem;
     padding: 0.5rem 0.5rem;
   }
-}
-
-* {
-  margin: 0;
+  .create-jar-btn {
+    width: 56px;
+    height: 56px;
+  }
+  .create-jar-modal {
+    min-width: 220px;
+    padding: 1.2rem 1rem 1rem 1rem;
+  }
 }
