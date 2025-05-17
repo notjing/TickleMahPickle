@@ -10,7 +10,6 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { SitemarkIcon } from './CustomIcons';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -44,7 +43,7 @@ const CompactTextField = styled(TextField)(({ theme }) => ({
   marginBottom: theme.spacing(0.5),
 }));
 
-export default function SignInCard() {
+export default function SignInCard({returnToSignIn}) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -131,9 +130,6 @@ export default function SignInCard() {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', top: '-90px' }}>
       <Card variant="outlined">
-        <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mb: 1 }}>
-          <SitemarkIcon sx={{ height: 32 }} />
-        </Box>
         <Typography
           component="h1"
           variant="h5"
@@ -154,7 +150,7 @@ export default function SignInCard() {
               helperText={firstNameErrorMessage}
               id="firstName"
               name="firstName"
-              placeholder="John"
+              // placeholder="John"
               autoComplete="given-name"
               required
               fullWidth
@@ -171,7 +167,7 @@ export default function SignInCard() {
               helperText={lastNameErrorMessage}
               id="lastName"
               name="lastName"
-              placeholder="Doe"
+              // placeholder="Doe"
               autoComplete="family-name"
               required
               fullWidth
@@ -188,7 +184,7 @@ export default function SignInCard() {
               helperText={phoneErrorMessage}
               id="phone"
               name="phone"
-              placeholder="(123) 456-7890"
+              // placeholder="(123) 456-7890"
               autoComplete="tel"
               required
               fullWidth
@@ -206,7 +202,7 @@ export default function SignInCard() {
               id="email"
               type="email"
               name="email"
-              placeholder="your@email.com"
+              // placeholder="your@email.com"
               autoComplete="email"
               required
               fullWidth
@@ -222,7 +218,7 @@ export default function SignInCard() {
               error={passwordError}
               helperText={passwordErrorMessage}
               name="password"
-              placeholder="••••••"
+              //placeholder="••••••"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -234,11 +230,11 @@ export default function SignInCard() {
             />
           </FormControl>
           
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox size="small" value="remember" color="primary" />}
             label={<Typography variant="body2">Remember me</Typography>}
             sx={{ mt: 0.5, mb: 0.5 }}
-          />
+          /> */}
           
           <Button 
             type="submit" 
@@ -262,6 +258,9 @@ export default function SignInCard() {
               href="#"
               variant="body2"
               sx={{ color: "green" }}
+              onClick={() => {
+                returnToSignIn();
+              }}
             >
               Sign In
             </Link>

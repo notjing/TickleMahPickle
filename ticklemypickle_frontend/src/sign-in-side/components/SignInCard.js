@@ -10,7 +10,8 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { SitemarkIcon } from './CustomIcons';
+import SignUpCard from './SignUpCard';
+import { useState } from 'react';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -45,10 +46,12 @@ const CompactTextField = styled(TextField)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+
+  const [signUpOpen, setSignUpOpen] = useState(false);
 
   const handleSubmit = (event) => {
     if (emailError || passwordError) {
@@ -67,33 +70,33 @@ export default function SignInCard() {
     const password = document.getElementById('password');
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
+    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    //   setEmailError(true);
+    //   setEmailErrorMessage('Please enter a valid email address.');
+    //   isValid = false;
+    // } else {
+    //   setEmailError(false);
+    //   setEmailErrorMessage('');
+    // }
 
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
+    // if (!password.value || password.value.length < 6) {
+    //   setPasswordError(true);
+    //   setPasswordErrorMessage('Password must be at least 6 characters long.');
+    //   isValid = false;
+    // } else {
+    //   setPasswordError(false);
+    //   setPasswordErrorMessage('');
+    // }
 
     return isValid;
   };
 
   return (
+    signUpOpen ? (
+      <SignUpCard returnToSignIn={() => {setSignUpOpen(false)}}></SignUpCard>
+    ) : (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', top: '-90px' }}>
       <Card variant="outlined">
-        <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mb: 1 }}>
-          <SitemarkIcon sx={{ height: 32 }} />
-        </Box>
         <Typography
           component="h1"
           variant="h5"
@@ -115,7 +118,7 @@ export default function SignInCard() {
               id="email"
               type="email"
               name="email"
-              placeholder="your@email.com"
+              // placeholder="your@email.com"
               autoComplete="email"
               required
               fullWidth
@@ -130,7 +133,7 @@ export default function SignInCard() {
               error={passwordError}
               helperText={passwordErrorMessage}
               name="password"
-              placeholder="••••••"
+              // placeholder="••••••"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -141,11 +144,11 @@ export default function SignInCard() {
               color={passwordError ? 'error' : 'primary'}
             />
           </FormControl>
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox size="small" value="remember" color="primary" />}
             label={<Typography variant="body2">Remember me</Typography>}
             sx={{ mt: 0.5, mb: 0.5 }}
-          />
+          /> */}
           <Button 
             type="submit" 
             fullWidth 
@@ -167,6 +170,9 @@ export default function SignInCard() {
               href="#"
               variant="body2"
               sx={{ color: "green" }}
+              onClick={() => {
+                setSignUpOpen(true);
+              }}
             >
               Sign up
             </Link>
@@ -174,5 +180,6 @@ export default function SignInCard() {
         </Box>
       </Card>
     </Box>
+    )
   );
 }
