@@ -12,7 +12,6 @@ import TableHead from '@mui/material/TableHead';
 import useUsers, { UserContext } from "../context/DatabaseUsers.js";
 import useTransactions from "../context/TransactionContext.js";
 import './styles.css'
-import TableRow from '@mui/material/TableRow';
 
 
 function Dashboard() {
@@ -228,13 +227,13 @@ function Dashboard() {
             alignItems: 'center',
             p: 3
           }}>
-            <CardHeader title="Upcoming Transactions" sx={{ background: 'none', color: '#193b02', fontWeight: 700, fontSize: '1.3rem', textAlign: 'center', p: 0, mb: 2 }} />
+            <CardHeader title="Upcoming Transactions" sx={{ background: 'none', color: '#193b02', fontWeight: 700, fontSize: '1rem', textAlign: 'center', p: 0, mb: 2 }} />
             <CardContent sx={{ width: '100%', p: 0 }}>
               <TableContainer>
                 <Table sx={{ minWidth: 200 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Type</TableCell>
+                      <TableCell>Pay</TableCell>
                       <TableCell>Jar</TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Date</TableCell>
@@ -265,7 +264,7 @@ function Dashboard() {
                 <Table sx={{ minWidth: 200 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Type</TableCell>
+                      <TableCell>Pay</TableCell>
                       <TableCell>Jar</TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Date</TableCell>
