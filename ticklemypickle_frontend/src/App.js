@@ -1,10 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/home";
-import Dashboard from "./pages/dashboard";
-import Layout from "./pages/layout";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Layout from "./pages/Layout";
 
 function App() {
   return (
