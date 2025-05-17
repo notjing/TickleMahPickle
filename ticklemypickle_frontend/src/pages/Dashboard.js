@@ -20,12 +20,6 @@ function Dashboard() {
   const user = users.find(user => user._id === userId);
   const{transactions, addTransaction, refresh} = useTransactions();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log(user);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [user]);
 
 
   return (
@@ -49,7 +43,7 @@ function Dashboard() {
           textShadow: '0 2px 12px rgba(83,125,93,0.10)'
         }}>
             {user && user.firstName
-            ? `Welcome back, ${user.firstName}!`
+            ? `Welcome back, ${user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)}!`
             : "Welcome back!"} <span role="img" aria-label="pickle">🥒</span>
         </h1>
       </div>
@@ -104,7 +98,7 @@ function Dashboard() {
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
+                  <b>{user && user.moneyOwed !== undefined ? `$${user.moneyOwed}` : 'N/A'}</b>
 
                 </div>
                 <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
@@ -148,7 +142,7 @@ function Dashboard() {
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
+                  <b>{user && user.moneyOwedTo !== undefined ? `$${user.moneyOwedTo}` : 'N/A'}</b>
                 </div>
                 <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
                   Total Money Owed To You
@@ -191,7 +185,7 @@ function Dashboard() {
               </div>
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
-                  <b>*Insert from Database*</b>
+                  <b>{user && user.moneyOwedTo !== undefined && user.moneyOwed !== undefined ? `$${user.moneyOwedTo - user.moneyOwed}` : 'N/A'}</b>
                 </div>
                 <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
                   Net Balance
