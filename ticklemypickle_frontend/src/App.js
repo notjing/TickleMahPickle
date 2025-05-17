@@ -1,3 +1,5 @@
+import SignInCard from './sign-in-side/SignInSide';
+import SignUpCard from './sign-in-side/SignUpSide';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './pages/Layout';
@@ -8,6 +10,9 @@ import Profile from './pages/Profile';
 
 function App() {
   return (
+        // <div className="App">
+    //   <SignUpCard />
+    // </div>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -18,6 +23,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+
   );
 }
 
