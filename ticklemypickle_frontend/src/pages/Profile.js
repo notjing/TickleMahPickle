@@ -79,15 +79,51 @@ const Profile = () => {
 
   return (
     <MainContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-      <StyledHeading>
-        Name: {currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : "Not signed in"}
-      </StyledHeading>
-      <StyledHeading>
-        Email: {currentUser ? currentUser.email : "Not signed in"}
-      </StyledHeading>
-      <StyledHeading>
-        Phone: {currentUser ? currentUser.phone : "Not signed in"}
-      </StyledHeading>
+      <Paper elevation={3} sx={{
+        padding: '2.5rem 3.5rem',
+        borderRadius: '32px',
+        background: 'rgba(255,255,255,0.95)',
+        boxShadow: '0 8px 32px 0 rgba(39, 54, 42, 0.18)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        maxWidth: 420,
+        width: '100%',
+        margin: '3rem auto',
+      }}>
+        <Avatar
+          src={require('./pfp.jpeg')}
+          alt="Profile Picture"
+          sx={{ width: 120, height: 120, marginBottom: 2, boxShadow: '0 2px 12px 0 rgba(83, 125, 93, 0.18)' }}
+        />
+        <StyledHeading sx={{ fontSize: '2.2rem', margin: '1.2rem 0 0.5rem 0', fontWeight: 700, color: colors.auraFilledHeading, textAlign: 'center' }}>
+          {currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : "[Full Name]"}
+        </StyledHeading>
+        <Typography sx={{ color: '#537D5D', fontSize: '1.15rem', marginBottom: 1, fontWeight: 500, textAlign: 'center' }}>
+          {currentUser ? currentUser.email : "[Email]"}
+        </Typography>
+        <Typography sx={{ color: '#537D5D', fontSize: '1.1rem', marginBottom: 2, textAlign: 'center' }}>
+          {currentUser ? currentUser.phone : "[Phone Number]"}
+        </Typography>
+        <Divider sx={{ width: '100%', my: 2, background: colors.medium }} />
+        <Button
+          variant="contained"
+          sx={{
+            background: colors.dark,
+            color: '#fff',
+            borderRadius: 8,
+            fontWeight: 700,
+            fontSize: 16,
+            textTransform: 'none',
+            boxShadow: '0 2px 8px 0 rgba(83, 125, 93, 0.10)',
+            width: '100%',
+            py: 1.2,
+            mt: 1
+          }}
+        >
+          Manage your TickleMahPickle Account
+        </Button>
+      </Paper>
     </MainContent>
   );
 };
