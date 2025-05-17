@@ -6,6 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import DatabaseUsers from "../context/DatabaseUsers.js";
@@ -14,7 +15,7 @@ import TableRow from "@mui/material/TableRow";
 import './styles.css'
 
 function Dashboard() {
-//   const users = DatabaseUsers();
+   const users = DatabaseUsers();
 
     const{transactions, addTransaction, refresh} = useTransactions();
 
@@ -43,11 +44,13 @@ function Dashboard() {
         </h1>
       </div>
       {/* return all the people in the database */}
-      <ul>
-        {/* {users.map((user, idx) => (
+
+      {/* <ul>
+        {users.map((user, idx) => (
           <li key={idx}>{user.firstName} {user.lastName}</li>
-        ))} */}
-      </ul>
+        ))}
+      </ul> */}
+
       {/* Top row: 3 summary cards */}
       <div style={{
         display: 'flex',

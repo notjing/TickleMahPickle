@@ -346,6 +346,7 @@ function Jars() {
       </Card>
     </Grid>
   </Grid>
+</Grid>
 
   {/* Row 2: Stats Cards */}
   <Grid container spacing={2} sx={{ mb: 2 }}>
