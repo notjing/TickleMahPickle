@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Box,
   Tabs,
@@ -23,6 +24,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
+
+import useTransactions from "../context/TransactionContext";
 
 const colors = {
   dark: "#537D5D",
@@ -226,16 +229,18 @@ const stats = [
 
 
 function Jars() {
-  const [tabValue, setTabValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
 
-  const [openTickle, setOpenTickle] = React.useState(false);
-  const [tickleTarget, setTickleTarget] = React.useState(null);
-  const [openKick, setOpenKick] = React.useState(false);
-  const [kickTarget, setKickTarget] = React.useState(null);
-  const [openRequest, setOpenRequest] = React.useState(false);
-  const [requestTarget, setRequestTarget] = React.useState(null);
-  const [requestAmount, setRequestAmount] = React.useState('');
-  const [requestDate, setRequestDate] = React.useState(null);
+  const [openTickle, setOpenTickle] = useState(false);
+  const [tickleTarget, setTickleTarget] = useState(null);
+  const [openKick, setOpenKick] = useState(false);
+  const [kickTarget, setKickTarget] = useState(null);
+  const [openRequest, setOpenRequest] = useState(false);
+  const [requestTarget, setRequestTarget] = useState(null);
+  const [requestAmount, setRequestAmount] = useState('');
+  const [requestDate, setRequestDate] = useState(null);
+
+  const { transactions, addTransaction, refresh } = useTransactions();
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -267,6 +272,18 @@ function Jars() {
     setRequestAmount('');
     setRequestDate(null);
   };
+
+  const createTransaction = () => {
+    console.log("Creating transaction...");
+    console.log("Date," + requestDate);
+    addTransaction({
+      from: localStorage.getItem('userId'),
+      to: "toID",
+      date: requestDate,
+      amt: requestAmount,
+      type: "Request",
+    })
+  }
 
   return (
     <Container>
@@ -597,12 +614,12 @@ function Jars() {
                 },
               }}
             >
-              <BasicDatePicker />
+              <BasicDatePicker value={requestDate} onChange={setRequestDate} />
             </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={handleCloseRequest} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 

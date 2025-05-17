@@ -22,7 +22,6 @@ async function connectToMongo() {
     const usersCollection = db.collection("testcollection");
     const transactionCollection = db.collection("testTransactions");
     const jarsCollection = db.collection("testJars");
-
     //GET FUNCTIONS
     // API endpoint to get all users
     app.get("/api/users", async (req, res) => {
@@ -46,35 +45,6 @@ async function connectToMongo() {
         res.status(500).json({ error: "Internal server error" });
       }
     });
-
-    //transactions
-    app.get("/api/transactions", async (req, res) => {
-      try {
-        const transactions = await transactionCollection.find({}).toArray();
-        res.json(transactions);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to fetch transactions" });
-      }
-    });
-
-    //POST FUNCTIONS
-
-    // app.post("/api/users/ids-by-emails", async (req, res) => {
-    //   try {
-    //     const { emails } = req.body; // expects { emails: [ ... ] }
-    //     if (!Array.isArray(emails)) {
-    //       return res.status(400).json({ error: "Emails must be an array" });
-    //     }
-    //     const users = await usersCollection.find({ email: { $in: emails } }).toArray();
-    //     // Return only the list of _id's
-    //     const result = users.map(user => user._id);
-    //     res.json(result);
-    //   } catch (err) {
-    //     console.error("Error fetching user IDs by emails:", err);
-    //     res.status(500).json({ error: "Internal server error" });
-    //   }
-    // });
 
     app.post("/api/users", async (req, res) => {
       try {
@@ -146,6 +116,29 @@ async function connectToMongo() {
         console.error("Error creating jar:", err);
         res.status(500).json({ error: "Internal server error" });
       }
+    });
+
+    app.get("/api/transactions", async (req, res) => {
+      try {
+        const transactions = await transactionCollection.find({}).toArray();
+        res.json(transactions);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch transactions" });
+      }
+    });
+
+     app.post("/api/transactions", async (req, res) => {
+        try {
+            const transaction = req.body;
+            console.log("Received transaction to add:", transaction);
+            const result = await transactionCollection.insertOne(transaction);
+            console.log("Insert result:", result);
+            res.status(201).json(result);
+        } catch (err) {
+            console.error('Insert error:', err);
+            res.status(500).json({ error: 'Insert failed' });
+        }
     });
 
     // Start server after Mongo connection
