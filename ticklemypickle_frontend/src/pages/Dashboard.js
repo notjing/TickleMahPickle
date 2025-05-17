@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import useUsers, { UserContext } from "../context/DatabaseUsers.js";
-import useTransactions from "../context/TransactionContext.js";
+import useTransactions from "../context/TransactionContext.js"; //transactions
 import './styles.css'
 
 

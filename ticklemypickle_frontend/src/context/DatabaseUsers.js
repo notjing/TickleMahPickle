@@ -83,6 +83,8 @@ const DatabaseUsers = () => {
   return { users, addUser, refresh, checkUserByCredentials, userExistsByEmail  };
 };
 
+
+
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
