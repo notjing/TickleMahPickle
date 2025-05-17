@@ -7,9 +7,9 @@ const Layout = () => {
     <div className="layout">
       <nav className="sidebar">
         <ul>
-          <li style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <Link to="/dashboard">
-              <img className='nav-img' src="./logo.png" alt="TickleMahPickle Logo" style={{ width: '90px', height: '90px', borderRadius: '16px', boxShadow: '0 2px 8px rgba(83,125,93,0.15)', objectFit: 'contain' }} />
+          <li style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem' }}>
+            <Link to="/dashboard" style={{ display: 'inline-block', padding: 0, borderRadius: 0, background: 'none' }}>
+              <img className='logo-img' src="/logo.png" alt="TickleMahPickle Logo" />
             </Link>
           </li>
           <li className="title"><Link to="/dashboard">TMP Dashboard</Link></li>
