@@ -20,7 +20,7 @@ const TransactionContext = () => {
       .catch(err => console.error(err));
   };
 
-  // Function to insert a user
+  // Function to insert a transaction
   const addTransaction = (newTransaction) => {
     fetch("http://localhost:5000/api/transactions", {
       method: "POST",

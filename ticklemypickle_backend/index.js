@@ -21,7 +21,7 @@ async function connectToMongo() {
 
     const db = client.db("testdatabase");
     const usersCollection = db.collection("testcollection");
-    const transactionCollection = db.collection("testTransactions");
+    const transactionCollection = db.collection("testTransaction");
 
     // API endpoint to get all users
     app.get("/api/users", async (req, res) => {
@@ -92,6 +92,20 @@ async function connectToMongo() {
         res.status(500).json({ error: "Failed to fetch transactions" });
       }
     });
+
+     app.post("/api/transactions", async (req, res) => {
+        try {
+            const transaction = req.body;
+            console.log("Received transaction to add:", transaction);
+            const result = await transactionCollection.insertOne(transaction);
+            console.log("Insert result:", result);
+            res.status(201).json(result);
+        } catch (err) {
+            console.error('Insert error:', err);
+            res.status(500).json({ error: 'Insert failed' });
+        }
+    });
+
 
 
     // Start server after Mongo connection
