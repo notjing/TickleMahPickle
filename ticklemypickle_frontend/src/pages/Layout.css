@@ -21,6 +21,9 @@
   height: calc(100vh - 48px); /* adjust height to account for top and bottom offset */
   margin-bottom: 24px;
   z-index: 10;
+  min-width: 220px;
+  max-width: 220px;
+  box-sizing: border-box;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -101,10 +104,111 @@
   margin-bottom: 2rem;
 }
 
+.create-jar-btn {
+  background: #9EBC8A;
+  border: none;
+  border-radius: 18px;
+  width: 180px;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px 0 rgba(83, 125, 93, 0.18);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  gap: 18px;
+}
+.create-jar-btn:hover, .create-jar-btn:focus {
+  background: #e8e8c8 !important;
+  color: #537D5D !important;
+}
+.create-jar-btn span {
+  transition: color 0.2s;
+}
+.create-jar-btn:hover span, .create-jar-btn:focus span {
+  color: #537D5D !important;
+}
+.create-jar-btn:active {
+  background: #b7d1a7;
+}
+
+.create-jar-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(83, 125, 93, 0.18);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-jar-modal {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(39, 54, 42, 0.18);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+.jars-menu-btn {
+  background: none;
+  border: none;
+  color: #193b02;
+  font-size: 1.15rem;
+  font-weight: 500;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.18s;
+  position: relative;
+  z-index: 2;
+}
+.jars-menu-btn:hover, .jars-menu-btn:focus {
+  background: #e8e8c8;
+  color: #537D5D;
+  box-shadow: 0 2px 8px 0 rgba(83, 125, 93, 0.10);
+  transform: translateY(-2px) scale(1.04);
+}
+.jars-dropdown-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 8px;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #9EBC8A;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px 0 rgba(83, 125, 93, 0.10);
+  padding: 0.5rem 0;
+  z-index: 10;
+}
+.jars-dropdown-menu a {
+  display: block;
+  padding: 0.7rem 1.2rem;
+  color: #537D5D;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.jars-dropdown-menu a:hover {
+  background: #e8e8c8;
+  color: #193b02;
+}
 
 @media (max-width: 700px) {
   .sidebar {
     width: 100px;
+    min-width: 100px;
+    max-width: 100px;
     padding: 1rem 0.5rem;
   }
   .sidebar li.title {

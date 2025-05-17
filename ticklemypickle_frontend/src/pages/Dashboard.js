@@ -171,13 +171,13 @@ export default function Dashboard() {
               }}>
                 <span role="img" aria-label="balance scale">⚖️</span>
               </div>
+
         <StyledH2>$42069</StyledH2>
         <StyledDescription>Net Balance</StyledDescription>
       </CardContent>
     </Card>
   </Box>
 </Box>
-
 
     {/* Bottom Row - 2 Cards with Tables */}
       

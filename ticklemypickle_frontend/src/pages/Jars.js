@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Box,
   Tabs,
@@ -17,7 +18,14 @@ import { styled } from "@mui/system";
 import * as icons from "@mui/icons-material";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Mood, TrendingUp, BarChart } from '@mui/icons-material';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import BasicDatePicker from '../Components/calendar';
 
+import useTransactions from "../context/TransactionContext";
 
 const colors = {
   dark: "#537D5D",
@@ -221,11 +229,61 @@ const stats = [
 
 
 function Jars() {
-  const [tabValue, setTabValue] = React.useState(0);
+  const [tabValue, setTabValue] = useState(0);
+
+  const [openTickle, setOpenTickle] = useState(false);
+  const [tickleTarget, setTickleTarget] = useState(null);
+  const [openKick, setOpenKick] = useState(false);
+  const [kickTarget, setKickTarget] = useState(null);
+  const [openRequest, setOpenRequest] = useState(false);
+  const [requestTarget, setRequestTarget] = useState(null);
+  const [requestAmount, setRequestAmount] = useState('');
+  const [requestDate, setRequestDate] = useState(null);
+
+  const { transactions, addTransaction, refresh } = useTransactions();
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
+
+  const handleOpenTickle = (member) => {
+    setTickleTarget(member);
+    setOpenTickle(true);
+  };
+  const handleCloseTickle = () => {
+    setOpenTickle(false);
+    setTickleTarget(null);
+  };
+  const handleOpenKick = (member) => {
+    setKickTarget(member);
+    setOpenKick(true);
+  };
+  const handleCloseKick = () => {
+    setOpenKick(false);
+    setKickTarget(null);
+  };
+  const handleOpenRequest = (member) => {
+    setRequestTarget(member);
+    setOpenRequest(true);
+  };
+  const handleCloseRequest = () => {
+    setOpenRequest(false);
+    setRequestTarget(null);
+    setRequestAmount('');
+    setRequestDate(null);
+  };
+
+  const createTransaction = () => {
+    console.log("Creating transaction...");
+    console.log("Date," + requestDate);
+    addTransaction({
+      from: localStorage.getItem('userId'),
+      to: "toID",
+      date: requestDate,
+      amt: requestAmount,
+      type: "Request",
+    })
+  }
 
   return (
     <Container>
@@ -279,8 +337,23 @@ function Jars() {
                   <StyledTd>{member.owedToMe}</StyledTd>
                   <StyledTd>{member.iOwe}</StyledTd>
                   <StyledTd>
-                    <TickleButton variant="outlined" size="small">😉 Tickle</TickleButton>
-                    <KickButton variant="outlined" size="small">Kick</KickButton>
+                    <TickleButton variant="outlined" size="small" onClick={() => handleOpenTickle(member)}>😉 Tickle</TickleButton>
+                    <KickButton variant="outlined" size="small" onClick={() => handleOpenKick(member)}>Kick</KickButton>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontFamily: 'Raleway, sans-serif',
+                        color: colors.dark,
+                        borderColor: colors.dark,
+                        marginLeft: '0.5rem',
+                        textTransform: 'none',
+                        fontWeight: 600
+                      }}
+                      onClick={() => handleOpenRequest(member)}
+                    >
+                      💸 Request Money
+                    </Button>
                   </StyledTd>
                 </TableRow>
               ))}
@@ -419,6 +492,136 @@ function Jars() {
   </Box>
 </TabPanel>
 
+        {/* Tickle Dialog */}
+        <Dialog open={openTickle} onClose={handleCloseTickle}>
+          <DialogTitle>Send a Tickle</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {tickleTarget ? `Send a tickle to ${tickleTarget.name}?` : ''}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseTickle} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={handleCloseTickle} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Send Tickle</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Kick Dialog */}
+        <Dialog open={openKick} onClose={handleCloseKick}>
+          <DialogTitle>Kick Member</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {kickTarget ? `Are you sure you want to kick ${kickTarget.name}?` : ''}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseKick} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={handleCloseKick} color="error" variant="contained">Kick</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Request Money Dialog */}
+        <Dialog open={openRequest} onClose={handleCloseRequest}>
+          <DialogTitle>Request Money</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+            </Typography>
+            <TextField
+              label="Amount ($)"
+              type="number"
+              value={requestAmount}
+              onChange={e => setRequestAmount(e.target.value)}
+              fullWidth
+              margin="normal"
+              placeholder="Enter amount"
+              InputProps={{
+                inputProps: { min: 0, step: 1 }, // Only allow whole dollars
+                startAdornment: <span style={{ color: colors.dark, fontWeight: 700, marginRight: 4 }}>$</span>,
+                sx: {
+                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  '& label.Mui-focused': {
+                    color: colors.dark,
+                  },
+                  '& .MuiInputBase-input:focus': {
+                    color: colors.dark,
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  background: '#f7fbe7',
+                  borderRadius: '8px',
+                }
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiInputBase-input:focus': {
+                  color: colors.dark,
+                },
+                '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                fontSize: '1.3rem',
+                fontWeight: 700,
+                background: '#f7fbe7',
+                borderRadius: '8px',
+              }}
+              inputProps={{
+                min: 0,
+                step: 1,
+                style: {
+                  textAlign: 'left',
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: colors.dark,
+                  letterSpacing: '0.03em',
+                  padding: '12px 8px',
+                }
+              }}
+            />
+            <Box
+              sx={{
+                mt: 2,
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected:hover': {
+                  backgroundColor: '#40634a',
+                },
+                '& .MuiPickersDay-root:focus': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected.Mui-focusVisible': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root:hover': {
+                  backgroundColor: '#e8e8c8',
+                },
+              }}
+            >
+              <BasicDatePicker value={requestDate} onChange={setRequestDate} />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+          </DialogActions>
+        </Dialog>
 
       </MainContent>
     </Container>
