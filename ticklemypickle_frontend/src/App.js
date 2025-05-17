@@ -1,23 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
-import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import Layout from "./pages/Layout";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+         
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }
 
