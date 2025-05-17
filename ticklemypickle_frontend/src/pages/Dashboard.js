@@ -8,22 +8,19 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import { useEffect, useState } from "react";
+import DatabaseUsers from "../context/DatabaseUsers.js";
+import useTransactions from "../context/TransactionContext.js";
+
 import './styles.css'
 
 function Dashboard() {
+//   const users = DatabaseUsers();
 
-    //database logic.
-    const [users, setUsers] = useState([]);
-    useEffect(() => {
-        fetch("http://localhost:5000/api/users") 
-        .then(res => res.json())
-        .then(data => setUsers(data))
-        .catch(err => console.error(err));
-    }, []);
+    const{transactions, addTransaction, refresh} = useTransactions();
+
 
   return (
+
     <div className="dashboard" style={{ minHeight: '100vh', padding: '0 2.5rem', background: 'none' }}>
       {/* Personalized greeting */}
       <div style={{
@@ -97,6 +94,7 @@ function Dashboard() {
               <div style={{ flex: 1, textAlign: 'left' }}>
                 <div style={{ fontSize: '2.1rem', fontWeight: 800, color: '#193b02', marginBottom: '0.2rem', lineHeight: 1.1 }}>
                   <b>*Insert from Database*</b>
+
                 </div>
                 <div style={{ fontSize: '1.13rem', color: '#537D5D', fontWeight: 500, letterSpacing: '0.01em', marginTop: '0.1rem' }}>
                   Total Money Owed

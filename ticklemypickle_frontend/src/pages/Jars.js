@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Tabs, Tab, Typography, Paper, Avatar } from "@mui/material";
+import { Box, Tabs, Tab, Typography, Paper, Avatar, Button } from "@mui/material";
 import { styled } from "@mui/system";
-import { Group, AccountCircle, Receipt, MoreHoriz } from "@mui/icons-material";
+import { AccountCircle, Receipt, MoreHoriz } from "@mui/icons-material";
 
 const colors = {
   dark: "#537D5D",
@@ -91,6 +91,21 @@ const GroupName = styled(Typography)({
 
 const PlaceholderDetails = styled(Box)({
   textAlign: "right",
+  fontFamily: "Raleway, sans-serif"
+});
+
+const StyledGroupInfo = styled(Typography)({
+  fontFamily: "Raleway, sans-serif"
+});
+
+const CompactTab = styled(Tab)({
+  minHeight: 32,
+  paddingTop: 10,
+  paddingBottom: 4
+});
+
+const StyledTabs = styled(Tabs)({
+  padding: 0
 });
 
 function TabPanel(props) {
@@ -124,21 +139,22 @@ function Jars() {
             <GroupName>Group Name</GroupName>
           </GroupInfo>
           <PlaceholderDetails>
-            <Typography>Placeholder Info A</Typography>
-            <Typography>Placeholder Info B</Typography>
+            <StyledGroupInfo>Placeholder Info A</StyledGroupInfo>
+            <StyledGroupInfo>Placeholder Info B</StyledGroupInfo>
           </PlaceholderDetails>
         </HeaderBar>
-        <Paper sx={{ backgroundColor: colors.medium }}>
-          <Tabs
+        <Paper sx={{ backgroundColor: colors.medium, py: 0}}>
+          <StyledTabs
             value={tabValue}
             onChange={handleTabChange}
             indicatorColor="secondary"
             textColor="inherit"
           >
-            <Tab icon={<AccountCircle />} iconPosition="start" label="Members" />
-            <Tab icon={<Receipt />} iconPosition="start" label="Transactions" />
-            <Tab icon={<MoreHoriz />} iconPosition="start" label="Other" />
-          </Tabs>
+            <CompactTab icon={<AccountCircle />} iconPosition="start" label="Members" />
+            <CompactTab icon={<Receipt />} iconPosition="start" label="Transactions" />
+            <CompactTab icon={<MoreHoriz />} iconPosition="start" label="Other" />
+
+          </StyledTabs>
         </Paper>
         <TabPanel value={tabValue} index={0}>
           <StyledHeading>Members</StyledHeading>
@@ -147,13 +163,22 @@ function Jars() {
               <tr>
                 <StyledTh>Name</StyledTh>
                 <StyledTh>Email</StyledTh>
+                <StyledTh>Owed to Me</StyledTh>
+                <StyledTh>I Owe</StyledTh>
+                <StyledTh>Actions</StyledTh>
               </tr>
             </thead>
             <tbody>
-              {[{ name: "John Doe", email: "john@example.com" }, { name: "Jane Smith", email: "jane@example.com" }].map((member, i) => (
+              {[
+                { name: "John Doe", email: "john@example.com", owedToMe: "$15.00", iOwe: "$0.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" }
+              ].map((member, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{member.name}</StyledTd>
                   <StyledTd>{member.email}</StyledTd>
+                  <StyledTd>{member.owedToMe}</StyledTd>
+                  <StyledTd>{member.iOwe}</StyledTd>
+                  <StyledTd><Button variant="outlined" size="small">😉 Tickle</Button></StyledTd>
                 </TableRow>
               ))}
             </tbody>
@@ -161,10 +186,29 @@ function Jars() {
         </TabPanel>
         <TabPanel value={tabValue} index={1}>
           <StyledHeading>Transactions</StyledHeading>
-          <ul>
-            <li>John paid $50 for dinner</li>
-            <li>Jane paid $30 for groceries</li>
-          </ul>
+          <StyledTable>
+            <thead>
+              <tr>
+                <StyledTh>Date</StyledTh>
+                <StyledTh>Description</StyledTh>
+                <StyledTh>Amount</StyledTh>
+                <StyledTh>Payer</StyledTh>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { date: "2025-05-01", description: "Dinner", amount: "$50", payer: "John" },
+                { date: "2025-05-02", description: "Groceries", amount: "$30", payer: "Jane" }
+              ].map((tx, i) => (
+                <TableRow key={i} index={i}>
+                  <StyledTd>{tx.date}</StyledTd>
+                  <StyledTd>{tx.description}</StyledTd>
+                  <StyledTd>{tx.amount}</StyledTd>
+                  <StyledTd>{tx.payer}</StyledTd>
+                </TableRow>
+              ))}
+            </tbody>
+          </StyledTable>
         </TabPanel>
         <TabPanel value={tabValue} index={2}>
           <StyledHeading>Other Content</StyledHeading>

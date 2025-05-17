@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Jars from './pages/Jars';
 import Profile from './pages/Profile';
+import UserDashboard from './pages/UserDashboard';
+import { UserProvider } from './context/DatabaseUsers';
 
 function App() {
 
@@ -22,19 +24,20 @@ function App() {
 
 
   return (
-    
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<SignInCard />} />
-        <Route path="/" element={<Layout />}>
-          {/* <Route path="" element={<Home />} /> */}
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="jars" element={<Jars/>} />
-          <Route path="profile" element={<Profile/>}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<SignInCard />} />
+          <Route path="/" element={<Layout />}>
+            {/* <Route path="" element={<Home />} /> */}
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="jars" element={<Jars/>} />
+            <Route path="profile" element={<Profile/>}/>
+            <Route path="test" element={<UserDashboard/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 
