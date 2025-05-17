@@ -8,7 +8,6 @@
   width: 220px;
   background: linear-gradient(135deg, #537D5D 0%, #9EBC8A 100%); /* pickle green gradient */
   box-shadow: 2px 0 12px 0 rgba(83, 125, 93, 0.08);
-  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -64,7 +63,6 @@
 
 .content {
   flex-grow: 1;
-  padding: 2rem 2rem 2rem 2.5rem; /* add left padding for spacing from navbar */
   background: #f9f9f9;
   min-height: 100vh;
 }
