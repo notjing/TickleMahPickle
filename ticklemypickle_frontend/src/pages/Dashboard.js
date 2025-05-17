@@ -9,11 +9,30 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { useEffect, useState } from "react";
 import './styles.css'
 
 function Dashboard() {
+
+    //database logic.
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        fetch("http://localhost:5000/api/users") 
+        .then(res => res.json())
+        .then(data => setUsers(data))
+        .catch(err => console.error(err));
+    }, []);
+
   return (
     <div className="dashboard">
+
+        {/* return all the people in the database */}
+        <ul>
+            {users.map((user, idx) => (
+            <li key={idx}>{user.firstName} {user.lastName}</li>
+            ))}
+        </ul>
+
 
         <div className="main-content">
                 <div className="balance-summary">
