@@ -16,6 +16,7 @@ import {
 import { styled } from "@mui/system";
 import * as icons from "@mui/icons-material";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Mood, TrendingUp, BarChart } from '@mui/icons-material';
 
 
 const colors = {
@@ -208,7 +209,7 @@ const debtHistory = [
 const stats = [
   { title: "Total Money Owed", value: "$124.56" },
   { title: "Total Money Owed To You", value: "$75.43" },
-  { title: "Net Balance", value: "$49.13" }
+  { title: "Number of tickles", value: "69" }
 ];
 
 
@@ -321,25 +322,25 @@ function Jars() {
           </StyledTable>
         </TabPanel>
 
-        <TabPanel value={tabValue} index={2}> {/* Other Content Tab */}
+        <TabPanel value={tabValue} index={2}>
   {/* Row 1: Mood Tracker */}
   <Grid container spacing={2}>
     <Grid item xs={12} sx={{ mb: 2 }}>
       <Card sx={{ ...cardStyle, minHeight: 150 }}>
         <CardContent>
+          <StyledH2>
+            🥒How are we feeling?
+          </StyledH2>
           <Typography
+            variant="body1"
             sx={{
-              fontSize: "1.3rem",
-              fontWeight: 700,
-              color: "#193b02",
-              textAlign: "center",
-              marginBottom: 1
+              textAlign: 'center',
+              fontFamily: 'Raleway, sans-serif',
+              color: '#444',
             }}
           >
-            How are we feeling?
-          </Typography>
-          <Typography variant="body1" sx={{ textAlign: "center" }}>
-            This is a placeholder for a mood tracker, sentiment analysis, or general group vibes summary.
+            Debt's running a little high, no? Better get on WaterlooWorks and find a job... 
+            Said no one ever. WaterlooWorks broken ahh site.
           </Typography>
         </CardContent>
       </Card>
@@ -351,20 +352,26 @@ function Jars() {
     {stats.map(({ title, value }) => (
       <Grid item xs={12} md={3} key={title}>
         <Card sx={cardStyle}>
-          <CardContent sx={{ width: "100%", padding: 0, textAlign: "center" }}>
-            <Typography sx={{ fontSize: "1.1rem", color: "#537D5D", fontWeight: 700 }}>
-              {title}
-            </Typography>
+          <CardContent sx={{ width: "100%", padding: 2, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: "2.2rem",
-                fontWeight: 800,
-                color: "#193b02",
-                marginTop: "0.5rem"
+                fontSize: "1.1rem",
+                color: "#537D5D",
+                fontWeight: 700,
+                fontFamily: 'Raleway, sans-serif',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 1,
               }}
             >
-              {value}
+              <TrendingUp /> {title}
             </Typography>
+            <StyledH2
+              
+            >
+              {value}
+            </StyledH2>
           </CardContent>
         </Card>
       </Grid>
@@ -372,36 +379,39 @@ function Jars() {
   </Grid>
 
   {/* Row 3: Debts Over Time chart (full width, boxed) */}
-  <Box xs={12}>
-      <Grid item xs={12}>
-        <Card sx={{ ...cardStyle, minHeight: 320, width: "100%" }}>
-          <CardHeader
-            title="Debts Over Time"
-            sx={{
-              color: "#193b02",
-              fontWeight: 700,
-              fontSize: "1.3rem",
-              textAlign: "center",
-              paddingBottom: 0,
-              marginBottom: 2
-            }}
-          />
-          <CardContent sx={{ width: "100%", paddingTop: 0 }}>
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={debtHistory}>
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="John" stroke="#8884d8" />
-                <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </Grid>
+  <Box sx={{ width: '100%' }}>
+    <Grid item xs={12}>
+      <Card sx={{ ...cardStyle, minHeight: 320, width: "100%" }}>
+        <CardHeader
+          avatar={<BarChart sx={{ color: "#193b02", fontSize: "3rem" }} />}
+          title={
+            <StyledH2
+            >
+              Debts Over Time
+            </StyledH2>
+          }
+          sx={{
+            paddingBottom: 0,
+            marginBottom: 2,
+          }}
+        />
+        <CardContent sx={{ width: "100%", paddingTop: 0 }}>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={debtHistory}>
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="John" stroke="#8884d8" />
+              <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </Grid>
   </Box>
 </TabPanel>
+
 
       </MainContent>
     </Container>

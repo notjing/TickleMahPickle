@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import DatabaseUsers from "../context/DatabaseUsers.js";
 import useTransactions from "../context/TransactionContext.js";
-
+import TableRow from "@mui/material/TableRow";
 import './styles.css'
 
 function Dashboard() {
@@ -44,9 +44,9 @@ function Dashboard() {
       </div>
       {/* return all the people in the database */}
       <ul>
-        {users.map((user, idx) => (
+        {/* {users.map((user, idx) => (
           <li key={idx}>{user.firstName} {user.lastName}</li>
-        ))}
+        ))} */}
       </ul>
       {/* Top row: 3 summary cards */}
       <div style={{
