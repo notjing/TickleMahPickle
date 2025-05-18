@@ -2,10 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
-import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -22,20 +20,21 @@ const Card = styled(MuiCard)(({ theme }) => ({
   justifyContent: 'center',
   width: '90%',
   maxWidth: '400px',
-  padding: theme.spacing(2), // reduced padding
-  gap: theme.spacing(1), // reduced gap
+  padding: theme.spacing(4),
+  gap: theme.spacing(2),
   margin: '0 auto',
   borderRadius: 12,
   backdropFilter: 'blur(8px)',
   boxShadow: 'hsla(220, 30%, 5%, 0.1) 0px 5px 15px 0px',
   margin: '20px auto',
-  backgroundColor: 'rgba(255, 255, 255, 0.5)', // more transparent
+  backgroundColor: 'rgba(255, 255, 255, 0.41)',
+  fontFamily: 'Raleway, sans-serif',
   [theme.breakpoints.up('sm')]: {
     width: '380px',
-    padding: theme.spacing(1.5), // reduced padding for sm+
+    padding: theme.spacing(4),
   },
   ...theme.applyStyles('dark', {
-    backgroundColor: 'rgba(30, 30, 30, 0.7)', // slightly more transparent in dark mode
+    backgroundColor: 'rgba(30, 30, 30, 0.7)',
     boxShadow: 'hsla(220, 30%, 5%, 15px 0px',
   }),
 }));
@@ -44,7 +43,12 @@ const CompactTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputBase-root': {
     height: 42,
   },
-  marginBottom: theme.spacing(0.5),
+  marginBottom: theme.spacing(1),
+  fontFamily: 'Raleway, sans-serif',
+}));
+
+const CustomFormLabel = styled(FormLabel)(({ theme }) => ({
+  fontFamily: 'Raleway, sans-serif'
 }));
 
 export default function SignInCard() {
@@ -52,73 +56,44 @@ export default function SignInCard() {
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-
   const [signUpOpen, setSignUpOpen] = useState(false);
-  const { users, addUser, refresh, checkUserByCredentials  } = useUsers();
-  const { userId, setUserId } = useContext(UserContext);
+  const { users, checkUserByCredentials } = useUsers();
+  const { setUserId } = useContext(UserContext);
 
   const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-         return;
-    }
+    if (emailError || passwordError) return;
 
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
     const userEmail = data.get('email');
     const userPswd = data.get('password');
 
-    console.log(Object.fromEntries(data.entries()));
-    
-    
     checkUserByCredentials(userEmail, userPswd);
 
-    for(let i = 0; i < users.length; i++) {
-      if(users[i].email === userEmail && users[i].password === userPswd) {
-        console.log("User found, id: ", users[i]._id);
-        console.log("name: ", users[i].firstName);
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].email === userEmail && users[i].password === userPswd) {
         setUserId(users[i]._id);
         break;
       }
     }
   };
 
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    let isValid = true;
-
-    // if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-    //   setEmailError(true);
-    //   setEmailErrorMessage('Please enter a valid email address.');
-    //   isValid = false;
-    // } else {
-    //   setEmailError(false);
-    //   setEmailErrorMessage('');
-    // }
-
-    // if (!password.value || password.value.length < 6) {
-    //   setPasswordError(true);
-    //   setPasswordErrorMessage('Password must be at least 6 characters long.');
-    //   isValid = false;
-    // } else {
-    //   setPasswordError(false);
-    //   setPasswordErrorMessage('');
-    // }
-
-    return isValid;
-  };
-
-  return (
-    signUpOpen ? (
-      <SignUpCard returnToSignIn={() => {setSignUpOpen(false)}}></SignUpCard>
-    ) : (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', position: 'relative', p: 0, m: 0  }}>
+  return signUpOpen ? (
+    <SignUpCard returnToSignIn={() => setSignUpOpen(false)} />
+  ) : (
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', p: 0, m: 0 }}>
       <Card variant="outlined">
         <Typography
           component="h1"
           variant="h5"
-          sx={{ width: '100%', textAlign: 'center', mb: 1, fontSize: '1.5rem' }}
+          sx={{
+            width: '100%',
+            textAlign: 'center',
+            mb: 1,
+            fontSize: '2.5rem',
+            fontWeight: 1000,
+            fontFamily: '"Alumni Sans Pinstripe", sans-serif'
+          }}
         >
           Sign In
         </Typography>
@@ -126,17 +101,16 @@ export default function SignInCard() {
           component="form"
           onSubmit={handleSubmit}
           noValidate
-          sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 1.5 }}
+          sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
         >
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="email">Email</FormLabel>
+            <CustomFormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="email">Email</CustomFormLabel>
             <CompactTextField
               error={emailError}
               helperText={emailErrorMessage}
               id="email"
               type="email"
               name="email"
-              // placeholder="your@email.com"
               autoComplete="email"
               required
               fullWidth
@@ -146,12 +120,11 @@ export default function SignInCard() {
             />
           </FormControl>
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="password">Password</FormLabel>
+            <CustomFormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="password">Password</CustomFormLabel>
             <CompactTextField
               error={passwordError}
               helperText={passwordErrorMessage}
               name="password"
-              // placeholder="••••••"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -162,35 +135,28 @@ export default function SignInCard() {
               color={passwordError ? 'error' : 'primary'}
             />
           </FormControl>
-          {/* <FormControlLabel
-            control={<Checkbox size="small" value="remember" color="primary" />}
-            label={<Typography variant="body2">Remember me</Typography>}
-            sx={{ mt: 0.5, mb: 0.5 }}
-          /> */}
-          <Button 
-            type="submit" 
-            fullWidth 
-            variant="contained" 
-            onClick={validateInputs}
-            sx={{ 
-              borderRadius: '6px', 
-              backgroundColor: "green",
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              borderRadius: '6px',
+              backgroundColor: 'green',
               height: '40px',
               fontSize: '0.875rem',
-              mt: 1
+              mt: 2,
+              fontFamily: 'Raleway, sans-serif'
             }}
           >
             Sign in
           </Button>
-          <Typography variant="body2" sx={{ textAlign: 'center', mt: 1 }}>
+          <Typography variant="body2" sx={{ textAlign: 'center', mt: 2, fontFamily: 'Raleway, sans-serif' }}>
             Don't have an account?{' '}
             <Link
               href="#"
               variant="body2"
-              sx={{ color: "green" }}
-              onClick={() => {
-                setSignUpOpen(true);
-              }}
+              sx={{ color: 'green', fontFamily: 'Raleway, sans-serif' }}
+              onClick={() => setSignUpOpen(true)}
             >
               Sign up
             </Link>
@@ -198,6 +164,5 @@ export default function SignInCard() {
         </Box>
       </Card>
     </Box>
-    )
   );
 }
