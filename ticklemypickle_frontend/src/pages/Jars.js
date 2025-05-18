@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import * as icons from "@mui/icons-material";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from "recharts";
 import { Mood, TrendingUp, BarChart } from '@mui/icons-material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -222,7 +222,8 @@ const debtHistory = [
 const stats = [
   { title: "Total Money Owed", value: "$124.56" },
   { title: "Total Money Owed To You", value: "$75.43" },
-  { title: "Number of tickles", value: "69" }
+  { title: "Number of tickles", value: "69" },
+  { title: "Number of pickles", value: "[insert member count]" }, // New card
 ];
 
 
@@ -505,94 +506,86 @@ function Jars() {
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
-  {/* Row 1: Mood Tracker */}
-  <Grid container spacing={2}>
-    <Grid item xs={12} sx={{ mb: 2 }}>
-      <Card sx={{ ...cardStyle, minHeight: 150 }}>
-        <CardContent>
-          <StyledH2>
-            <img src={process.env.PUBLIC_URL + '/bank.png'} alt="Mood Tracker" style={{ width: 28, height: 28, marginRight: 6, verticalAlign: 'middle' }} /> How are we feeling?
-          </StyledH2>
-          <Typography
-            variant="body1"
-            sx={{
-              textAlign: 'center',
-              fontFamily: 'Raleway, sans-serif',
-              color: '#444',
-            }}
-          >
-            Debt's running a little high, no? Better get on WaterlooWorks and find a job... 
-            Said no one ever. WaterlooWorks broken ahh site.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-  </Grid>
+          {/* Row 2: Stats Cards */}
+          <Grid container spacing={2} sx={{ mb: 2, flexWrap: 'nowrap' }}>
+            {stats.map(({ title, value }, idx) => (
+              <Grid item xs={12} md={3} key={title} sx={{ display: 'flex' }}>
+                <Card sx={cardStyle}>
+                  <CardContent sx={{ width: "100%", padding: 0.4, textAlign: "center" }}>
+                    <Typography
+                      sx={{
+                        fontSize: "1.1rem",
+                        color: "#537D5D",
+                        fontWeight: 700,
+                        fontFamily: 'Raleway, sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <TrendingUp /> {title}
+                    </Typography>
+                    <StyledH2>
+                      {value}
+                    </StyledH2>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
-  {/* Row 2: Stats Cards */}
-  <Grid container spacing={2} sx={{ mb: 2 }}>
-    {stats.map(({ title, value }) => (
-      <Grid item xs={12} md={3} key={title}>
-        <Card sx={cardStyle}>
-          <CardContent sx={{ width: "100%", padding: 0.4, textAlign: "center" }}>
-            <Typography
-              sx={{
-                fontSize: "1.1rem",
-                color: "#537D5D",
-                fontWeight: 700,
-                fontFamily: 'Raleway, sans-serif',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1,
-              }}
-            >
-              <TrendingUp /> {title}
-            </Typography>
-            <StyledH2
-              
-            >
-              {value}
-            </StyledH2>
-          </CardContent>
-        </Card>
-      </Grid>
-    ))}
-  </Grid>
-
-  {/* Row 3: Debts Over Time chart (full width, boxed) */}
-  <Box sx={{ width: '100%'}}>
-    <Grid item xs={12}>
-      <Card sx={{ ...cardStyle, minHeight: 320 }}>
-        <CardHeader
-          avatar={<BarChart sx={{ color: "#193b02", fontSize: "3rem" }} />}
-          title={
-            <StyledH2
-            >
-              Debts Over Time
-            </StyledH2>
-          }
-          sx={{
-            paddingBottom: 0,
-            marginBottom: 2,
-          }}
-        />
-        <CardContent sx={{ width: "100%", paddingTop: 0 }}>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={debtHistory}>
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="John" stroke="#8884d8" />
-              <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-    </Grid>
-  </Box>
-</TabPanel>
+          {/* Row 3: Debts Over Time chart (full width, boxed) */}
+          <Box sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: 3,
+          }}>
+            <Card sx={{
+              width: '95%',
+              background: 'rgba(158, 188, 138, 0.78)',
+              borderRadius: '36px',
+              boxShadow: '0 8px 32px 0 rgba(39, 54, 42, 0.18)',
+              p: 4,
+              position: 'relative',
+              minHeight: 420,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <icons.BarChart sx={{ fontSize: 48, color: '#537D5D', mr: 1 }} />
+                <Typography
+                  sx={{
+                    fontFamily: 'Alumni Sans Pinstripe, sans-serif',
+                    fontSize: '3.2rem',
+                    fontWeight: 700,
+                    color: '#193b02',
+                    letterSpacing: 1,
+                  }}
+                >
+                  Debts Over Time
+                </Typography>
+              </Box>
+              <ResponsiveContainer width="100%" height={320}>
+                <LineChart data={debtHistory} margin={{ top: 24, right: 32, left: 8, bottom: 8 }}>
+                  <CartesianGrid strokeDasharray="6 6" stroke="#b7c9a3" />
+                  <XAxis dataKey="date" tick={{ fontFamily: 'Raleway, sans-serif', fontSize: 16, fill: '#537D5D' }} axisLine={{ stroke: '#537D5D' }} tickLine={false} />
+                  <YAxis tick={{ fontFamily: 'Raleway, sans-serif', fontSize: 16, fill: '#537D5D' }} axisLine={{ stroke: '#537D5D' }} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{ background: '#f6ffe6', borderRadius: 12, border: '1px solid #b7c9a3', fontFamily: 'Raleway, sans-serif', color: '#537D5D' }}
+                    labelStyle={{ fontWeight: 700, color: '#537D5D' }}
+                  />
+                  <Legend iconType="circle" wrapperStyle={{ fontFamily: 'Raleway, sans-serif', fontSize: 18, color: '#537D5D', paddingTop: 8 }} />
+                  <Line type="monotone" dataKey="John" stroke="#6a7bff" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#6a7bff', strokeWidth: 3 }} activeDot={{ r: 9, fill: '#6a7bff', stroke: '#fff', strokeWidth: 3 }} />
+                  <Line type="monotone" dataKey="Jane" stroke="#4ec9b0" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#4ec9b0', strokeWidth: 3 }} activeDot={{ r: 9, fill: '#4ec9b0', stroke: '#fff', strokeWidth: 3 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Card>
+          </Box>
+        </TabPanel>
 
         {/* Tickle Dialog */}
         <Dialog open={openTickle} onClose={handleCloseTickle}>
