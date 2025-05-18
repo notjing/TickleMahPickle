@@ -11,6 +11,7 @@ import { styled } from "@mui/system";
 import { TrendingUp, Group, AttachMoney, AccessTime, History } from "@mui/icons-material";
 import useUser from "../context/DatabaseUsers";
 import useTransaction from "../context/TransactionContext";
+import useJar from "../context/JarsContext";
 import parseTransactions from "../Methods/parseTransactions";
 
 const colors = {
@@ -104,14 +105,17 @@ const StyledDescription = styled("Typography")({
 export default function Dashboard() {
 
   const { users, addUser, refresh, checkUserByCredentials, userExistsByEmail } = useUser();
+  const { jars, addJar, refresh: refreshJars } = useJar();
   const userId = localStorage.getItem('userId');
   const user = users.find(user => user._id === userId);
   const { transactions, addTransaction, refresh: refreshTransactions } = useTransaction();
   const [parsedTransactionsDueSoon, setParsedTransactionsDueSoon] = useState([]);
   const [parsedTransactionsTransactionHistory, setParsedTransactionsTransactionHistory] = useState([]);
+
+  
   useEffect(() => {
-    setParsedTransactionsDueSoon(parseTransactions(transactions, userId, users, false));
-    setParsedTransactionsTransactionHistory(parseTransactions(transactions, userId, users, true));
+    setParsedTransactionsDueSoon(parseTransactions(transactions, jars, userId, users, false));
+    setParsedTransactionsTransactionHistory(parseTransactions(transactions, jars, userId, users, true));
   }, [transactions, users]);
 
   return (

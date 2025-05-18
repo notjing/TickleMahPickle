@@ -1,8 +1,9 @@
 import React from 'react'
 
-const parseTransactions = (transactions, userId, users, wantPaid) => {
+const parseTransactions = (transactions, jars, userId, users, wantPaid) => {
   console.log("transactions", transactions);
   console.log("users", users);
+  console.log("jars", jars);
 
   return transactions
     .filter((transaction) => {
@@ -28,9 +29,12 @@ const parseTransactions = (transactions, userId, users, wantPaid) => {
         : "Unknown User";
 
       const transactionType = fromUser && fromUser._id === userId ? "Pay" : "Receive";
+      
+      const jarName = jars.find(jar => jar._id === transaction.jar)?.name || "Unknown Jar";
 
       return {
         ...transaction,
+        jar: jarName,
         amt: transaction.amt * (transactionType === "Pay" ? -1 : 1),
         name: fromUser && fromUser._id === userId ? toName : fromName,
         date: formattedDate
