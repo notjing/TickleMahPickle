@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
 import jarsContext from '../context/JarsContext.js';
@@ -18,6 +18,14 @@ const Layout = () => {
   ];
   const { jars, createJar, refresh } = jarsContext();  
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log(jars);
+    }, 3000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="layout">
       <nav className="sidebar">
@@ -73,10 +81,10 @@ const Layout = () => {
                   zIndex: 10,
                 }}
               >
-                {userJars.map(jar => (
+                {jars.map(jar => (
                   <Link
-                    key={jar.id}
-                    to="/Jars"
+                    key={jar._id}
+                    to={`/jars/${jar._id}`}
                     style={{
                       display: 'block',
                       padding: '0.7rem 1.2rem',

@@ -94,6 +94,17 @@ async function connectToMongo() {
       }
     });
 
+
+    app.get("/api/jars", async (req, res) => {
+      try {
+        const jars = await jarsCollection.find({}).toArray();
+        res.json(jars);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch transactions" });
+      }
+    });
+
     // Create a new jar with member emails (convert to user IDs)
     app.post("/api/jars", async (req, res) => {
       try {

@@ -31,7 +31,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             {/* <Route path="" element={<Home />} /> */}
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="jars" element={<Jars/>} />
+            <Route path="jars/:id" element={<Jars/>} />
             <Route path="profile" element={<Profile/>}/>
             <Route path="test" element={<UserDashboard/>}/>
           </Route>
