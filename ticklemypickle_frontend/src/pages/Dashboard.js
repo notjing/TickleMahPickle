@@ -116,8 +116,8 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <StyledHeading>Welcome back {user && user.firstName ? user.firstName : "[first name]"}! 🥒</StyledHeading>
-      <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
+      <StyledHeading>Welcome back {user && user.firstname ? user.firstname : "[first name]"}! 🥒</StyledHeading>
+      <Divider sx={{ borderColor: colors.dark, mb: 2 }} />  
           <br></br>
 
       {/* Top Row - 3 Cards */}
