@@ -459,10 +459,10 @@ function Jars() {
             <tbody>
               {members.map((member, i) => (
                 <TableRow key={member._id} index={i}>
-                  <StyledTd>{member.firstname + " " + member.lastname}</StyledTd>
+                  <StyledTd>{member.firstName + " " + member.lastName}</StyledTd>
                   <StyledTd>{member.email}</StyledTd>
-                  <StyledTd>{member.money_owed_to}</StyledTd>
-                  <StyledTd>{member.money_owed}</StyledTd>
+                  <StyledTd>{member.moneyOwedTo}</StyledTd>
+                  <StyledTd>{member.moneyOwed}</StyledTd>
                   <StyledTd>
                     <TickleButton variant="outlined" size="small" onClick={() => handleOpenTickle(member)}>😉 Tickle</TickleButton>
                     <KickButton variant="outlined" size="small" onClick={() => handleOpenKick(member)}>Kick</KickButton>
