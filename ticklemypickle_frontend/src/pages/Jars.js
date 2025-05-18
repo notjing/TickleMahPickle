@@ -28,7 +28,6 @@ import handleSimplify from './HandleSimplify';
 import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
-
 import jarsContext from '../context/JarsContext.js';
 
 
@@ -246,7 +245,6 @@ function Jars() {
   const [requestMoneyDate, setRequestMoneyDate] = useState(null);
 
   const { transactions, addTransaction, refresh } = useTransactions();
-
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -290,14 +288,16 @@ function Jars() {
       date: requestDate,
       amt: requestAmount,
       type: "Request",
-      jar: "insert jar id here",
+      jar: id,
       paid: false
     })
+    console.log("Calling addTransactionsToJar with:", id, createdTransaction._id);
 
+    addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
 
 
-  // const { jars, createJar, addTransactionsToJar} = jarsContext();  
+  const { jars, createJar, addTransactionsToJar} = jarsContext();  
 
 
 
