@@ -48,16 +48,7 @@ async function connectToMongo() {
         }
     });
 
-    //transactions
-    app.get("/api/transactions", async (req, res) => {
-      try {
-        const transactions = await transactionCollection.find({}).toArray();
-        res.json(transactions);
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Failed to fetch transactions" });
-      }
-    });
+  
 
 
     //POST FUNCTIONS
@@ -107,6 +98,7 @@ async function connectToMongo() {
       }
     });
 
+      //transactions
     app.get("/api/transactions", async (req, res) => {
       try {
         const transactions = await transactionCollection.find({}).toArray();
