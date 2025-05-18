@@ -113,15 +113,9 @@ export default function SignInSide(props) {
         alt="Dancing Pickle"
         style={{
           position: 'fixed',
-<<<<<<< HEAD
-          left: 24,
-          bottom: 24,
-          width: 180,
-=======
           right: 24,
           top: 24,
           width: 100,
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
           height: 'auto',
           zIndex: 2000,
           pointerEvents: 'none',

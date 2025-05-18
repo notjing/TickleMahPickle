@@ -98,7 +98,7 @@ const Layout = () => {
                   }
                 }}
               >
-                {userJars.map(jar => (
+                {jars.map(jar => (
                   <Link
                     key={jar._id}
                     to={`/jars/${jar._id}`}

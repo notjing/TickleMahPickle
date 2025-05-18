@@ -276,10 +276,10 @@ function Jars() {
     setRequestDate(null);
   };
 
-  const createTransaction = () => {
+  const createTransaction = async () => {
     console.log("Creating transaction...");
     console.log("Date," + requestDate);
-    addTransaction({
+    const createdTransaction = await addTransaction({
       from: localStorage.getItem('userId'),
       to: "toID",
       date: requestDate,
