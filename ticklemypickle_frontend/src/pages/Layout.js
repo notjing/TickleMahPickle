@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
-import jarsContext from '../context/JarsContext.js';
+import useJars from '../context/JarsContext.js';
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -15,17 +15,17 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
-  const { jars, createJar, addTransactionsToJar, refresh } = jarsContext();  
+  const { jars, createJar, addTransactionsToJar, refresh } = useJars();  
   // const [currentJarId, setCurrentJarId] = useState(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log(jars);
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log(jars);
+  //   }, 3000);
 
-    // Cleanup the interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
+  //   // Cleanup the interval on component unmount
+  //   return () => clearInterval(interval);
+  // }, []);
   return (
     <div className="layout">
       <nav className="sidebar">
