@@ -163,11 +163,10 @@ const TabContentBox = styled(Box)({
 
 const cardData = [
   { title: "Total Members", value: 8, icon: <icons.Group /> },
-  { title: "Total Debt", value: "$124.56", icon: <icons.AttachMoney /> },
+  { title: "Total Debt", value: "$124.56", icon: <img src={process.env.PUBLIC_URL + '/debt.png'} alt="debt" style={{ width: 32, height: 32, verticalAlign: 'middle' }} /> },
   { title: "Most Active", value: "Jane Smith", icon: <icons.TrendingUp /> },
   { title: "Info", value: "Updated 1h ago", icon: <icons.Info /> }
 ];
-
 
 const IconLabel = ({ icon, label }) => (
   <Box display="flex" alignItems="center" gap={1}>
@@ -241,6 +240,9 @@ function Jars() {
   const [requestAmount, setRequestAmount] = useState('');
   const [requestDate, setRequestDate] = useState(null);
   const [openSimplify, setOpenSimplify] = useState(false);
+  const [openRequestMoney, setOpenRequestMoney] = useState(false);
+  const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
+  const [requestMoneyDate, setRequestMoneyDate] = useState(null);
 
   const { transactions, addTransaction, refresh } = useTransactions();
 
@@ -317,8 +319,16 @@ function Jars() {
           <StyledTabs
             value={tabValue}
             onChange={handleTabChange}
-            indicatorColor="secondary"
+            indicatorColor="primary"
             textColor="inherit"
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: colors.dark,
+                height: 4,
+                borderRadius: 2,
+                boxShadow: '0 2px 8px rgba(39, 54, 42, 0.18)',
+              }
+            }}
           >
             <CompactTab icon={<icons.AccountCircle />} iconPosition="start" label="Members" />
             <CompactTab icon={<icons.Receipt />} iconPosition="start" label="Transactions" />
@@ -415,7 +425,25 @@ function Jars() {
                       }}
                       onClick={() => handleOpenRequest(member)}
                     >
-                      💸 Request Money
+                      Pay Money
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontFamily: 'Raleway, sans-serif',
+                        color: colors.dark,
+                        borderColor: colors.dark,
+                        marginLeft: '0.5rem',
+                        textTransform: 'none',
+                        fontWeight: 600
+                      }}
+                      onClick={() => {
+                        setRequestTarget(member);
+                        setOpenRequestMoney(true);
+                      }}
+                    >
+                      Request Money
                     </Button>
                   </StyledTd>
                 </TableRow>
@@ -434,7 +462,7 @@ function Jars() {
                 <StyledTh><IconLabel icon={<icons.CalendarToday />} label="Date" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.SyncAlt />} label="Type" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Description />} label="Description" /></StyledTh>
-                <StyledTh><IconLabel icon={<icons.MonetizationOn />} label="Amount" /></StyledTh>
+                <StyledTh><IconLabel icon={<img src={process.env.PUBLIC_URL + '/debt.png'} alt="Amount" style={{ width: 28, height: 28, marginRight: 6, verticalAlign: 'middle' }} />} label="Amount" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Person />} label="Borrower" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Group />} label="Borrowed From" /></StyledTh>
               </tr>
@@ -452,7 +480,12 @@ function Jars() {
               ].map((tx, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{tx.date}</StyledTd>
-                  <StyledTd style={{ color: tx.type === "Debt Created" ? "red" : "green" }}>
+                  <StyledTd style={{ color: tx.type === "Debt Created" ? "red" : "green", display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {tx.type === "Debt Created" ? (
+                      <img src={process.env.PUBLIC_URL + '/debt.png'} alt="debt" style={{ width: 22, height: 22, verticalAlign: 'middle' }} />
+                    ) : (
+                      <img src={process.env.PUBLIC_URL + '/moneyGain.png'} alt="money gain" style={{ width: 22, height: 22, verticalAlign: 'middle' }} />
+                    )}
                     {tx.type}
                   </StyledTd>
                   <StyledTd>{tx.description}</StyledTd>
@@ -472,7 +505,7 @@ function Jars() {
       <Card sx={{ ...cardStyle, minHeight: 150 }}>
         <CardContent>
           <StyledH2>
-            🥒How are we feeling?
+            <img src={process.env.PUBLIC_URL + '/bank.png'} alt="Mood Tracker" style={{ width: 28, height: 28, marginRight: 6, verticalAlign: 'middle' }} /> How are we feeling?
           </StyledH2>
           <Typography
             variant="body1"
@@ -583,12 +616,12 @@ function Jars() {
           </DialogActions>
         </Dialog>
 
-        {/* Request Money Dialog */}
+        {/* Pay Money Dialog */}
         <Dialog open={openRequest} onClose={handleCloseRequest}>
-          <DialogTitle>Request Money</DialogTitle>
+          <DialogTitle>Pay Money</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+              {requestTarget ? `Pay money to ${requestTarget.name}?` : ''}
             </Typography>
             <TextField
               label="Amount ($)"
@@ -682,13 +715,113 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {
-              
-              
-              // addTransactionsToJar("jar ID", "transaction ID");
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Pay</Button>
+          </DialogActions>
+        </Dialog>
 
-              handleCloseRequest();
-              createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+        {/* Request Money Dialog */}
+        <Dialog open={openRequestMoney} onClose={() => setOpenRequestMoney(false)}>
+          <DialogTitle>Request Money</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+            </Typography>
+            <TextField
+              label="Amount ($)"
+              type="number"
+              value={requestMoneyAmount}
+              onChange={e => setRequestMoneyAmount(e.target.value)}
+              fullWidth
+              margin="normal"
+              placeholder="Enter amount"
+              InputProps={{
+                inputProps: { min: 0, step: 1 },
+                startAdornment: <span style={{ color: colors.dark, fontWeight: 700, marginRight: 4 }}>$</span>,
+                sx: {
+                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  '& label.Mui-focused': {
+                    color: colors.dark,
+                  },
+                  '& .MuiInputBase-input:focus': {
+                    color: colors.dark,
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  background: '#f7fbe7',
+                  borderRadius: '8px',
+                }
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiInputBase-input:focus': {
+                  color: colors.dark,
+                },
+                '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                fontSize: '1.3rem',
+                fontWeight: 700,
+                background: '#f7fbe7',
+                borderRadius: '8px',
+              }}
+              inputProps={{
+                min: 0,
+                step: 1,
+                style: {
+                  textAlign: 'left',
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: colors.dark,
+                  letterSpacing: '0.03em',
+                  padding: '12px 8px',
+                }
+              }}
+            />
+            <Box
+              sx={{
+                mt: 2,
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected:hover': {
+                  backgroundColor: '#40634a',
+                },
+                '& .MuiPickersDay-root:focus': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected.Mui-focusVisible': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root:hover': {
+                  backgroundColor: '#e8e8c8',
+                },
+              }}
+            >
+              <BasicDatePicker value={requestMoneyDate} onChange={setRequestMoneyDate} />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenRequestMoney(false)} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={() => {
+              setOpenRequestMoney(false);
+              // Implement request money logic here
+            }} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 
