@@ -157,23 +157,28 @@ export default function Dashboard() {
       <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
   <Box sx={{ flex: 1 }}>
     <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
-      <CardContent sx={{ textAlign: "center" }}>
-        <div style={{
-                background: 'rgba(83,125,93,0.13)',
-                borderRadius: '50%',
-                width: 56,
-                height: 56,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: '1.2rem',
-                fontSize: '2.2rem',
-                color: '#537D5D',
-                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)',
-                margin: "auto",
-              }}>
-                <span role="img" aria-label="money with wings">💸</span>
-              </div>
+      <CardContent sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 0 }}>
+        <Box sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          mb: 0.3
+        }}>
+          <div style={{
+            background: 'rgba(83,125,93,0.13)',
+            borderRadius: '50%',
+            width: 64,
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+          }}>
+            <img src={process.env.PUBLIC_URL + '/debt.png'} alt="debt" style={{ width: 44, height: 44, objectFit: 'contain', display: 'block' }} />
+          </div>
+        </Box>
         <StyledH2>${user && user.moneyOwed !== undefined && user.moneyOwed !== null ? user.moneyOwed : "[moneyOwed]"}</StyledH2>
         <StyledDescription>Total Money Owed</StyledDescription>
       </CardContent>
@@ -181,23 +186,28 @@ export default function Dashboard() {
   </Box>
   <Box sx={{ flex: 1 }}>
     <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
-      <CardContent sx={{ textAlign: "center" }}>
-        <div style={{
-                background: 'rgba(83,125,93,0.13)',
-                borderRadius: '50%',
-                width: 56,
-                height: 56,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: '1.2rem',
-                fontSize: '2.2rem',
-                color: '#537D5D',
-                margin: "auto",
-                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
-              }}>
-                <span role="img" aria-label="money bag">💰</span>
-              </div>
+      <CardContent sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 0 }}>
+        <Box sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          mb: 0.3
+        }}>
+          <div style={{
+            background: 'rgba(83,125,93,0.13)',
+            borderRadius: '50%',
+            width: 64,
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+          }}>
+            <img src={process.env.PUBLIC_URL + '/moneyGain.png'} alt="money gain" style={{ width: 44, height: 44, objectFit: 'contain', display: 'block' }} />
+          </div>
+        </Box>
         <StyledH2>${user && user.moneyOwedTo !== undefined && user.moneyOwedTo !== null ? user.moneyOwedTo : "[moneyOwedTo]"}</StyledH2>
         <StyledDescription>Total Money Owed To You</StyledDescription>
       </CardContent>
@@ -205,24 +215,28 @@ export default function Dashboard() {
   </Box>
   <Box sx={{ flex: 1 }}>
     <Card sx={{ ...cardStyle, width: "100%", height: "100%" }}>
-      <CardContent sx={{ textAlign: "center" }}>
-        <div style={{
-                background: 'rgba(83,125,93,0.13)',
-                borderRadius: '50%',
-                width: 56,
-                height: 56,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: '1.2rem',
-                fontSize: '2.2rem',
-                margin: "auto",
-                color: '#537D5D',
-                boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
-              }}>
-                <span role="img" aria-label="balance scale">⚖️</span>
-              </div>
-
+      <CardContent sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 0 }}>
+        <Box sx={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          mb: 0.3
+        }}>
+          <div style={{
+            background: 'rgba(83,125,93,0.13)',
+            borderRadius: '50%',
+            width: 64,
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px 0 rgba(83,125,93,0.08)'
+          }}>
+            <img src={process.env.PUBLIC_URL + '/bank.png'} alt="bank" style={{ width: 44, height: 44, objectFit: 'contain', display: 'block' }} />
+          </div>
+        </Box>
         <StyledH2>${user && user.moneyOwedTo && user.moneyOwed !== undefined? user.moneyOwedTo - user.moneyOwed: "[user.moneyOwedTo - user.moneyOwed]"}</StyledH2>
         <StyledDescription>Net Balance</StyledDescription>
       </CardContent>
