@@ -281,16 +281,29 @@ function Jars() {
       const allTransactions = transactions.filter(transaction => transaction.jar === id);
       let negProfit = [];
       let posProfit = [];
-      let people = 
+      let profits = [];
+      let people = getJarMembers(id, users);
+
+      for(let i = 0; i < people.length; i++) {
+        profits.push({id: people[i]._id, profit: 0});
+      }
 
       allTransactions.forEach(transaction => {
-        const profit = transaction.owedToMe - transaction.iOwe;
-        if (profit < 0) {
-          negProfit.push({ email: transaction.email, profit });
-        } else if (profit > 0) {
-          posProfit.push({ email: transaction.email, profit });
-        }
+       const fromProfit = profits.find(p => p.id === transaction.from);
+        const toProfit = profits.find(p => p.id === transaction.to);
+
+        if (fromProfit) fromProfit.profit -= transaction.amt;
+        if (toProfit) toProfit.profit += transaction.amt;
+
       });
+
+      for (let i = 0; i < profits.length; i++) {
+        if (profits[i].profit < 0) {
+          negProfit.push({id: people[i]._id, profit: profits[i].profit});
+        } else if (profits[i].profit > 0) {
+          posProfit.push({id: people[i]._id, profit: profits[i].profit});
+        }
+      }
 
       const finalTransactions = [];
 
@@ -307,8 +320,8 @@ function Jars() {
         if (totalProfit > 0) {
           // negProfit[0] is receiver, posProfit[0] is giver
           finalTransactions.push({
-            from: posProfit[0].email,
-            to: negProfit[0].email,
+            from: posProfit[0]._id,
+            to: negProfit[0]._id,
             amount: Math.abs(totalProfit)
           });
           negProfit[0].profit = 0;
@@ -316,8 +329,8 @@ function Jars() {
         } else if (totalProfit < 0) {
           // negProfit[0] is giver, posProfit[0] is receiver
           finalTransactions.push({
-            from: negProfit[0].email,
-            to: posProfit[0].email,
+            from: negProfit[0]._id,
+            to: posProfit[0]._id,
             amount: Math.abs(totalProfit)
           });
           posProfit[0].profit = 0;
@@ -325,8 +338,8 @@ function Jars() {
         } else {
           // Both are settled
           finalTransactions.push({
-            from: negProfit[0].email,
-            to: posProfit[0].email,
+            from: negProfit[0]._id,
+            to: posProfit[0]._id,
             amount: Math.abs(totalProfit)
           });
           posProfit[0].profit = 0;
@@ -336,6 +349,7 @@ function Jars() {
       setOpenSimplify(false);
       // transactions now contains the minimal set of payments needed
       // You can use or display this array as needed
+
     };
 
   const handleCreateTransactionAndUpdateJar = async (jarId) => {
