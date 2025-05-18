@@ -75,17 +75,29 @@
   width: calc(100% - 16px);
   margin: 0 8px;
   box-sizing: border-box;
+  /* Remove transform and box-shadow on focus if another nav is hovered */
+  z-index: 1;
 }
 
-.sidebar a:hover:has(img){
-  background: transparent;
+.sidebar a:focus {
+  outline: none;
 }
 
-.sidebar a:hover, .sidebar a:focus {
+.sidebar a.active, .sidebar a:active {
   background: #e8e8c8;
   color: #537D5D;
   box-shadow: 0 2px 8px 0 rgba(83, 125, 93, 0.10);
   transform: translateY(-2px) scale(1.04);
+  z-index: 2;
+}
+
+.sidebar a:hover:not(:active):not(:focus-visible),
+.sidebar a:focus-visible:not(:active) {
+  background: #e8e8c8;
+  color: #537D5D;
+  box-shadow: 0 2px 8px 0 rgba(83, 125, 93, 0.10);
+  transform: translateY(-2px) scale(1.04);
+  z-index: 2;
 }
 
 .content {
