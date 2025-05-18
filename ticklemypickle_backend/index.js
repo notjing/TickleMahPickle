@@ -35,6 +35,7 @@ async function connectToMongo() {
     });
 
     app.get("/api/users/email/:email", async (req, res) => {
+
       try {
         const email = decodeURIComponent(req.params.email);
         console.log(email);
@@ -45,6 +46,7 @@ async function connectToMongo() {
         res.status(500).json({ error: "Internal server error" });
       }
     });
+
 
     app.post("/api/users", async (req, res) => {
       try {

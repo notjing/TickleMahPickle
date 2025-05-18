@@ -40,9 +40,8 @@ const colors = {
 };
 
 const MainContent = styled(Box)({
-  backgroundColor: colors.background,
   padding: 0,
-  height: "100vh",
+  height: "100%",
   width: "100%",
   fontFamily: "Raleway, sans-serif",
   overflow: "auto",
@@ -52,7 +51,7 @@ const MainContent = styled(Box)({
 const Container = styled(Box)({
   display: "flex",
   fontFamily: "Raleway, sans-serif",
-  height: "100vh",
+  height: "100%",
   width: "100%",
   margin: 0,
   padding: 0,
@@ -79,7 +78,7 @@ const StyledTable = styled("table")({
   width: "100%",
   borderCollapse: "collapse",
   borderRadius: "12px",
-  overflow: "hidden"
+  overflow: "hidden",
 });
 
 const StyledTh = styled("th")({
@@ -153,13 +152,8 @@ const KickButton = styled(Button)({
 });
 
 const TabContentBox = styled(Box)({
-  backgroundImage: "url('https://i.ibb.co/d0W13q5W/bg.png')",
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
   minHeight: "calc(100vh - 150px)",
   width: "100%",
-  padding: 10
 });
 
 const cardData = [
@@ -186,7 +180,7 @@ function TabPanel(props) {
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
       {...other}
-      style={{ flexGrow: 1, display: value === index ? "block" : "none" }}
+      style={{ flexGrow: 1, display: value === index ? "block" : "none", padding: "1rem" }}
     >
       <TabContentBox>{children}</TabContentBox>
     </div>
@@ -282,6 +276,7 @@ function Jars() {
       date: requestDate,
       amt: requestAmount,
       type: "Request",
+      jar: "insert jar id here"
     })
   }
 
@@ -292,6 +287,7 @@ function Jars() {
   return (
     <Container>
       <MainContent>
+        <div sx={{borderRadius: 1000, overflow: "hidden"}}>
         <HeaderBar>
           <GroupInfo>
             <Avatar sx={{ width: 56, height: 56 }} />
@@ -315,7 +311,7 @@ function Jars() {
             <CompactTab icon={<icons.MoreHoriz />} iconPosition="start" label="Other" />
           </StyledTabs>
         </Paper>
-
+</div>
         <TabPanel value={tabValue} index={0}> {/* Members Tab */}
           <StyledHeading>Members</StyledHeading>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
@@ -333,7 +329,19 @@ function Jars() {
             <tbody>
               {[
                 { name: "John Doe", email: "john@example.com", owedToMe: "$15.00", iOwe: "$0.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" }
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
+                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
               ].map((member, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{member.name}</StyledTd>
@@ -463,9 +471,9 @@ function Jars() {
   </Grid>
 
   {/* Row 3: Debts Over Time chart (full width, boxed) */}
-  <Box sx={{ width: '100%' }}>
+  <Box sx={{ width: '100%'}}>
     <Grid item xs={12}>
-      <Card sx={{ ...cardStyle, minHeight: 320, width: "100%" }}>
+      <Card sx={{ ...cardStyle, minHeight: 320 }}>
         <CardHeader
           avatar={<BarChart sx={{ color: "#193b02", fontSize: "3rem" }} />}
           title={

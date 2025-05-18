@@ -29,14 +29,14 @@ const Card = styled(MuiCard)(({ theme }) => ({
   backdropFilter: 'blur(8px)',
   boxShadow: 'hsla(220, 30%, 5%, 0.1) 0px 5px 15px 0px',
   margin: '20px auto',
-  backgroundColor: 'rgba(255, 255, 255, 0.7)', // slightly more transparent
+  backgroundColor: 'rgba(255, 255, 255, 0.5)', // more transparent
   [theme.breakpoints.up('sm')]: {
     width: '380px',
     padding: theme.spacing(1.5), // reduced padding for sm+
   },
   ...theme.applyStyles('dark', {
     backgroundColor: 'rgba(30, 30, 30, 0.7)', // slightly more transparent in dark mode
-    boxShadow: 'hsla(220, 30%, 5%, 0.3) 0px 5px 15px 0px',
+    boxShadow: 'hsla(220, 30%, 5%, 15px 0px',
   }),
 }));
 
@@ -113,7 +113,7 @@ export default function SignInCard() {
     signUpOpen ? (
       <SignUpCard returnToSignIn={() => {setSignUpOpen(false)}}></SignUpCard>
     ) : (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', top: '-90px' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', position: 'relative', p: 0, m: 0  }}>
       <Card variant="outlined">
         <Typography
           component="h1"

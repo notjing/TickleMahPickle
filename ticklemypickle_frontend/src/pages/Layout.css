@@ -1,9 +1,6 @@
 .layout {
   display: flex;
-  height: 100vh;
   flex-direction: row;
-  background: #f9f9f9 url('https://i.ibb.co/d0W13q5W/bg.png') center center / cover no-repeat;
-  background-attachment: fixed; /* make background image fixed on scroll */
 }
 
 .sidebar {
@@ -16,14 +13,14 @@
   border-radius: 24px; /* round all 4 corners */
   font-family: 'Raleway', sans-serif;
   position: sticky; /* fix navbar on scroll */
-  top: 24px; /* move sidebar off the top of the screen */
-  left: 24px; /* move sidebar off the left side of the screen */
+  left: 0; top: 1rem;
   height: calc(100vh - 48px); /* adjust height to account for top and bottom offset */
   margin-bottom: 24px;
   z-index: 10;
   min-width: 220px;
   max-width: 220px;
   box-sizing: border-box;
+  margin: 1rem;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
@@ -78,8 +75,8 @@
 
 .content {
   flex-grow: 1;
+  /* height: 10000px; */
   background: transparent; /* remove background color so image shows through */
-  min-height: 100vh;
 }
 
 .logo-link {
@@ -223,4 +220,10 @@
 
 * {
   margin: 0;
+  /* outline: 1mm ridge rgba(0, 255, 0, 1); */
+}
+
+html {
+  background: url('https://i.ibb.co/d0W13q5W/bg.png') center center / cover repeat;
+  background-attachment: fixed; /* make background image fixed on scroll */
 }
