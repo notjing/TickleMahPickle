@@ -244,7 +244,7 @@ function Jars() {
   const [openRequestMoney, setOpenRequestMoney] = useState(false);
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
 
-  const { transactions, addTransaction, deleteTransaction refresh } = useTransaction();
+  const { transactions, addTransaction, deleteTransaction, refresh } = useTransaction();
   const {jars, createJar, addTransactionsToJar, getJarMembers} = useJars();
 
   const handleTabChange = (event, newValue) => {
@@ -641,7 +641,7 @@ function Jars() {
           <DialogTitle>Send a Tickle</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {tickleTarget ? `Send a tickle to ${tickleTarget.name}?` : ''}
+              {tickleTarget ? `Send a tickle to Ethan?` : ''}
             </Typography>
           </DialogContent>
           <DialogActions>
