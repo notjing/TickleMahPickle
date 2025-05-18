@@ -151,17 +151,19 @@ async function connectToMongo() {
       }
     });
 
-     app.post("/api/transactions", async (req, res) => {
-        try {
-            const transaction = req.body;
-            console.log("Received transaction to add:", transaction);
-            const result = await transactionCollection.insertOne(transaction);
-            console.log("Insert result:", result);
-            res.status(201).json(result);
-        } catch (err) {
-            console.error('Insert error:', err);
-            res.status(500).json({ error: 'Insert failed' });
-        }
+    app.post("/api/transactions", async (req, res) => {
+      try {
+        const transaction = req.body;
+        console.log("Received transaction to add:", transaction);
+        const result = await transactionCollection.insertOne(transaction);
+        // Fetch the inserted transaction document
+        const insertedTransaction = await transactionCollection.findOne({ _id: result.insertedId });
+        console.log("Insert result:", result);
+        res.status(201).json(insertedTransaction);
+      } catch (err) {
+        console.error('Insert error:', err);
+        res.status(500).json({ error: 'Insert failed' });
+      }
     });
 
     // Start server after Mongo connection

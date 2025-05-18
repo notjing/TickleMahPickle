@@ -267,6 +267,12 @@ function Jars() {
     setRequestDate(null);
   };
 
+  const handleCreateTransactionAndUpdateJar = async (jarId) => {
+
+  }
+
+
+
   const createTransaction = () => {
     console.log("Creating transaction...");
     console.log("Date," + requestDate);
@@ -632,7 +638,10 @@ function Jars() {
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
             <Button onClick={() => {
-              // addTransactionsToJar("enter jar ID here (Jars.js) line 627", "trans ID");
+              
+              
+              addTransactionsToJar("jar ID", "transaction ID");
+
               handleCloseRequest();
               createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
