@@ -29,7 +29,7 @@ import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
 import jarsContext from '../context/JarsContext.js';
-
+import DatabaseUsers from '../context/DatabaseUsers.js'; 
 
 const colors = {
   dark: "#537D5D",
@@ -225,6 +225,8 @@ const stats = [
   { title: "Number of tickles", value: "69" }
 ];
 
+//in the jar there shold be a function to get all the users.
+// const [users, addUser, refresh, checkUserByCredentials, userExistsByEmail] = 
 
 function Jars() {
   const {id} = useParams();
@@ -293,10 +295,12 @@ function Jars() {
     addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
 
+  const { jars, createJar, addTransactionsToJar, getJarMembers} = jarsContext();  
+  const {users} = DatabaseUsers();
 
-  const { jars, createJar, addTransactionsToJar} = jarsContext();  
+  console.log(users);
 
-
+  const members =getJarMembers(id, users);
 
   return (
     <Container>
@@ -378,27 +382,12 @@ function Jars() {
               </tr>
             </thead>
             <tbody>
-              {[
-                { name: "John Doe", email: "john@example.com", owedToMe: "$15.00", iOwe: "$0.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-                { name: "Jane Smith", email: "jane@example.com", owedToMe: "$0.00", iOwe: "$10.00" },
-              ].map((member, i) => (
-                <TableRow key={i} index={i}>
-                  <StyledTd>{member.name}</StyledTd>
+              {members.map((member, i) => (
+                <TableRow key={member._id} index={i}>
+                  <StyledTd>{member.firstname + " " + member.lastname}</StyledTd>
                   <StyledTd>{member.email}</StyledTd>
-                  <StyledTd>{member.owedToMe}</StyledTd>
-                  <StyledTd>{member.iOwe}</StyledTd>
+                  <StyledTd>{member.money_owed_to}</StyledTd>
+                  <StyledTd>{member.money_owed}</StyledTd>
                   <StyledTd>
                     <TickleButton variant="outlined" size="small" onClick={() => handleOpenTickle(member)}>😉 Tickle</TickleButton>
                     <KickButton variant="outlined" size="small" onClick={() => handleOpenKick(member)}>Kick</KickButton>
