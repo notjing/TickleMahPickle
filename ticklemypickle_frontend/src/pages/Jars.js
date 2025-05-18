@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Tabs,
@@ -25,10 +25,12 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
 import handleSimplify from './HandleSimplify';
-
 import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
+
+import jarsContext from '../context/JarsContext.js';
+
 
 const colors = {
   dark: "#537D5D",
@@ -272,10 +274,13 @@ function Jars() {
     setRequestDate(null);
   };
 
-  const createTransaction = () => {
-    console.log("Creating transaction...");
-    console.log("Date," + requestDate);
-    addTransaction({
+  const handleCreateTransactionAndUpdateJar = async (jarId) => {
+
+  }
+
+  const createTransaction = async () => {
+
+    const createdTransaction = await addTransaction({
       from: localStorage.getItem('userId'),
       to: "toID",
       date: requestDate,
@@ -285,9 +290,12 @@ function Jars() {
       paid: false
     })
 
-    console.log(id);
-
   }
+
+
+  // const { jars, createJar, addTransactionsToJar} = jarsContext();  
+
+
 
   return (
     <Container>
@@ -673,7 +681,13 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+            <Button onClick={() => {
+              
+              
+              // addTransactionsToJar("jar ID", "transaction ID");
+
+              handleCloseRequest();
+              createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 
