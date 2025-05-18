@@ -21,29 +21,47 @@ const JarsContext = () => {
   };
 
   // This function creates a new jar with the given name and inviteEmails
-    const createJar = async (jarName, inviteEmails) => {
-      try {
-        const response = await fetch("http://localhost:5000/api/jars", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: jarName,
-            emails: inviteEmails
-          }),
-        });
-        if (!response.ok) throw new Error("Failed to create jar");
-        const result = await response.json();
-        // Optionally handle result.success or result.jarId
-        return result;
-      } catch (err) {
-        console.error("Error creating jar:", err);
-        throw err;
-      }
-    };
+  const createJar = async (jarName, inviteEmails) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/jars", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: jarName,
+          emails: inviteEmails
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to create jar");
+      const result = await response.json();
+      // Optionally handle result.success or result.jarId
+      return result;
+    } catch (err) {
+      console.error("Error creating jar:", err);
+      throw err;
+    }
+  };
+
+  // Add transaction IDs to an existing jar
+  const addTransactionsToJar = async (jarId, transactionIds) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/jars/add-transactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jarId, transactionIds }),
+      });
+      if (!response.ok) throw new Error("Failed to add transactions to jar");
+      const result = await response.json();
+      refresh();
+      return result;
+    } catch (err) {
+      console.error("Error adding transactions to jar:", err);
+      throw err;
+    }
+  };
 
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
-  return { jars, createJar, refresh };
+  return { jars, createJar, refresh, addTransactionsToJar };
 };
 
 export default JarsContext;

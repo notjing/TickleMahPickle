@@ -118,6 +118,27 @@ async function connectToMongo() {
       }
     });
 
+    // Add transaction IDs to an existing jar
+    app.post("/api/jars/add-transactions", async (req, res) => {
+      try {
+        const { jarId, transactionIds } = req.body; // expects { jarId: '...', transactionIds: ['...', ...] }
+        if (!jarId || !Array.isArray(transactionIds)) {
+          return res.status(400).json({ error: "jarId and transactionIds are required" });
+        }
+        const result = await jarsCollection.updateOne(
+          { _id: new require('mongodb').ObjectId(jarId) },
+          { $addToSet: { transactions: { $each: transactionIds } } }
+        );
+        if (result.matchedCount === 0) {
+          return res.status(404).json({ error: "Jar not found" });
+        }
+        res.json({ success: true, modifiedCount: result.modifiedCount });
+      } catch (err) {
+        console.error("Error adding transactions to jar:", err);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     app.get("/api/transactions", async (req, res) => {
       try {
         const transactions = await transactionCollection.find({}).toArray();

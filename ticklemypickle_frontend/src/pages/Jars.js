@@ -24,8 +24,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
-
 import useTransactions from "../context/TransactionContext";
+import jarsContext from '../context/JarsContext.js';
 
 const colors = {
   dark: "#537D5D",
@@ -284,6 +284,10 @@ function Jars() {
       type: "Request",
     })
   }
+
+  const { jars, createJar, addTransactionsToJar} = jarsContext();  
+  
+
 
   return (
     <Container>
@@ -619,7 +623,10 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+            <Button onClick={() => {
+              // addTransactionsToJar("enter jar ID here (Jars.js) line 627", "trans ID");
+              handleCloseRequest();
+              createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 

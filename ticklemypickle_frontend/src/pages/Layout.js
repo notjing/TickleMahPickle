@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
 import jarsContext from '../context/JarsContext.js';
-import DatabaseUsers from '../context/DatabaseUsers.js';
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -16,7 +15,7 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
-  const { jars, createJar, refresh } = jarsContext();  
+  const { jars, createJar, addTransactionsToJar, refresh } = jarsContext();  
 
   return (
     <div className="layout">
