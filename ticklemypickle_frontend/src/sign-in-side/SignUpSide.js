@@ -20,23 +20,26 @@ export default function SignInSide(props) {
             flex: 1,
             display: { xs: 'none', md: 'flex' },
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'flex-start', // Move content up
             alignItems: 'center',
             minHeight: '100vh',
             px: 4,
             backgroundColor: 'transparent',
+            pt: 10, // Add top padding for more space above
           }}
         >
           <Typography
-            variant="h2"
+            variant="h1"
             sx={{
               fontFamily: 'Alumni Sans Pinstripe, Raleway, sans-serif',
               fontWeight: 900,
-              fontSize: '3.5rem',
+              fontSize: { xs: '2.5rem', md: '5rem', lg: '6rem' },
               color: '#537D5D',
               mb: 2,
               textAlign: 'center',
-              letterSpacing: 1.5
+              letterSpacing: 1.5,
+              pt: { xs: 8, md: 12, lg: 16 }, // Move title down by increasing top padding
+              lineHeight: 1.05,
             }}
           >
             TickleMahPickle
@@ -49,7 +52,7 @@ export default function SignInSide(props) {
               fontSize: '1.5rem',
               color: '#73946B',
               textAlign: 'center',
-              maxWidth: 340
+              maxWidth: 340,
             }}
           >
             When you in a pickle, tickle loan
