@@ -144,6 +144,8 @@ async function connectToMongo() {
       }
     });
 
+    const {ObjectId} = require("mongodb");
+
     // HERERERERERERERERE Add transaction IDs to an existing jar 
     app.post("/api/jars/add-transactions", async (req, res) => {
       try {
@@ -152,8 +154,8 @@ async function connectToMongo() {
           return res.status(400).json({ error: "jarId and transactionIds are required" });
         }
         const result = await jarsCollection.updateOne(
-          { _id: new require('mongodb').ObjectId(jarId) },
-          { $addToSet: { transactions: { $each: transactionIds } } }
+          { _id: new ObjectId(jarId)},
+          { $addToSet: { transactions: new ObjectId(transactionId) } }
         );
         if (result.matchedCount === 0) {
           return res.status(404).json({ error: "Jar not found" });
