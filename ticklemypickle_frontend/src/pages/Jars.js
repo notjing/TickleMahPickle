@@ -309,7 +309,30 @@ function Jars() {
         </Paper>
 </div>
         <TabPanel value={tabValue} index={0}> {/* Members Tab */}
-          <StyledHeading>Members</StyledHeading>
+          <Box display="flex" alignItems="flex-end" justifyContent="space-between">
+            <StyledHeading>Members</StyledHeading>
+            <Button
+              variant="contained"
+              sx={{
+                mb: 1.5, // Move button down
+                backgroundColor: colors.dark,
+                color: '#fff',
+                fontFamily: 'Raleway, sans-serif',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                borderRadius: '12px',
+                textTransform: 'none',
+                boxShadow: '0 2px 8px rgba(39, 54, 42, 0.12)',
+                '&:hover': {
+                  backgroundColor: '#40634a',
+                },
+                height: '3.2rem',
+                alignSelf: 'flex-end',
+              }}
+            >
+              Simplify Transactions
+            </Button>
+          </Box>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
           <br></br>
           <StyledTable>
