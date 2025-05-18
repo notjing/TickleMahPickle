@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
 import jarsContext from '../context/JarsContext.js';
+import DatabaseUsers from '../context/DatabaseUsers.js';
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -15,8 +16,7 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
-  const { jars, createJar, addTransactionsToJar, refresh } = jarsContext();  
-  // const [currentJarId, setCurrentJarId] = useState(null);
+  const { jars, createJar, refresh } = jarsContext();  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -134,8 +134,8 @@ const Layout = () => {
               gap: 18,
             }}
           >
-            <span style={{ fontSize: 38, color: '#537D5D', fontWeight: 900, lineHeight: 1}}>+</span>
-            <span style={{ fontSize: 22, color: '#537D5D', fontWeight: 700, lineHeight: 1, marginLeft: -10}}>Create Jar</span>
+            <span style={{ fontSize: 38, color: '#537D5D', fontWeight: 900, lineHeight: 1, marginRight: 8 }}>+</span>
+            <span style={{ fontSize: 22, color: '#537D5D', fontWeight: 700, lineHeight: 1}}>Create Jar</span>
           </button>
         </div>
         {/* Create Jar Modal */}

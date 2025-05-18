@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Box,
   Tabs,
@@ -24,13 +24,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
-import handleSimplify from './HandleSimplify';
+
 import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
-
-import jarsContext from '../context/JarsContext.js';
-
 
 const colors = {
   dark: "#537D5D",
@@ -240,7 +237,6 @@ function Jars() {
   const [requestTarget, setRequestTarget] = useState(null);
   const [requestAmount, setRequestAmount] = useState('');
   const [requestDate, setRequestDate] = useState(null);
-  const [openSimplify, setOpenSimplify] = useState(false);
 
   const { transactions, addTransaction, refresh } = useTransactions();
 
@@ -275,13 +271,10 @@ function Jars() {
     setRequestDate(null);
   };
 
-  const handleCreateTransactionAndUpdateJar = async (jarId) => {
-
-  }
-
-  const createTransaction = async () => {
-
-    const createdTransaction = await addTransaction({
+  const createTransaction = () => {
+    console.log("Creating transaction...");
+    console.log("Date," + requestDate);
+    addTransaction({
       from: localStorage.getItem('userId'),
       to: "toID",
       date: requestDate,
@@ -291,20 +284,17 @@ function Jars() {
       paid: false
     })
 
+    console.log(id);
+
   }
-
-
-  // const { jars, createJar, addTransactionsToJar} = jarsContext();  
-
-
 
   return (
     <Container>
       <MainContent>
-        <div style={{borderRadius: 20, overflow: "hidden"}}>
+        <div sx={{borderRadius: 1000, overflow: "hidden"}}>
         <HeaderBar>
           <GroupInfo>
-            <Avatar sx={{ width: 56, height: 56 }} src={process.env.PUBLIC_URL + '/jarOfPickles.jpg'} />
+            <Avatar sx={{ width: 56, height: 56 }} />
             <GroupName>Group Name</GroupName>
           </GroupInfo>
           <PlaceholderDetails>
@@ -327,44 +317,7 @@ function Jars() {
         </Paper>
 </div>
         <TabPanel value={tabValue} index={0}> {/* Members Tab */}
-          <Box display="flex" alignItems="flex-end" justifyContent="space-between">
-            <StyledHeading>Members</StyledHeading>
-            <Button
-              variant="contained"
-              sx={{
-                mb: 1.5, // Move button down
-                backgroundColor: colors.dark,
-                color: '#fff',
-                fontFamily: 'Raleway, sans-serif',
-                fontWeight: 700,
-                fontSize: '1.1rem',
-                borderRadius: '12px',
-                textTransform: 'none',
-                boxShadow: '0 2px 8px rgba(39, 54, 42, 0.12)',
-                '&:hover': {
-                  backgroundColor: '#40634a',
-                },
-                height: '3.2rem',
-                alignSelf: 'flex-end',
-              }}
-              onClick={() => setOpenSimplify(true)}
-            >
-              Simplify Transactions
-            </Button>
-          </Box>
-          {/* Simplify Transactions Confirmation Dialog */}
-          <Dialog open={openSimplify} onClose={() => setOpenSimplify(false)}>
-            <DialogTitle>Are you sure?</DialogTitle>
-            <DialogContent>
-              <Typography gutterBottom>
-                This action will attempt to simplify all group transactions. <b>This is irreversible.</b> Are you sure you want to continue?
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenSimplify(false)} sx={{ color: colors.dark }}>Cancel</Button>
-              <Button onClick={() => handleSimplify(setOpenSimplify)} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
-            </DialogActions>
-          </Dialog>
+          <StyledHeading>Members</StyledHeading>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
           <br></br>
           <StyledTable>
@@ -682,13 +635,7 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {
-              
-              
-              // addTransactionsToJar("jar ID", "transaction ID");
-
-              handleCloseRequest();
-              createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 
