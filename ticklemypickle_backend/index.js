@@ -34,6 +34,19 @@ async function connectToMongo() {
       }
     });
 
+
+    // API endpoint to get all jars
+    app.get("/api/jars", async (req, res) => {
+      try {
+        const jars = await usersCollection.find({}).toArray();
+        res.json(jars);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch jars" });
+      }
+    });
+
+
     app.get("/api/users/email/:email", async (req, res) => {
 
       try {
@@ -131,6 +144,27 @@ async function connectToMongo() {
       }
     });
 
+    // HERERERERERERERERE Add transaction IDs to an existing jar 
+    app.post("/api/jars/add-transactions", async (req, res) => {
+      try {
+        const { jarId, transactionIds } = req.body; // expects { jarId: '...', transactionIds: ['...', ...] }
+        if (!jarId || !Array.isArray(transactionIds)) {
+          return res.status(400).json({ error: "jarId and transactionIds are required" });
+        }
+        const result = await jarsCollection.updateOne(
+          { _id: new require('mongodb').ObjectId(jarId) },
+          { $addToSet: { transactions: { $each: transactionIds } } }
+        );
+        if (result.matchedCount === 0) {
+          return res.status(404).json({ error: "Jar not found" });
+        }
+        res.json({ success: true, modifiedCount: result.modifiedCount });
+      } catch (err) {
+        console.error("Error adding transactions to jar:", err);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     app.get("/api/transactions", async (req, res) => {
       try {
         const transactions = await transactionCollection.find({}).toArray();
@@ -141,17 +175,19 @@ async function connectToMongo() {
       }
     });
 
-     app.post("/api/transactions", async (req, res) => {
-        try {
-            const transaction = req.body;
-            console.log("Received transaction to add:", transaction);
-            const result = await transactionCollection.insertOne(transaction);
-            console.log("Insert result:", result);
-            res.status(201).json(result);
-        } catch (err) {
-            console.error('Insert error:', err);
-            res.status(500).json({ error: 'Insert failed' });
-        }
+    app.post("/api/transactions", async (req, res) => {
+      try {
+        const transaction = req.body;
+        console.log("Received transaction to add:", transaction);
+        const result = await transactionCollection.insertOne(transaction);
+        // Fetch the inserted transaction document
+        const insertedTransaction = await transactionCollection.findOne({ _id: result.insertedId });
+        console.log("Insert result:", result);
+        res.status(201).json(insertedTransaction);
+      } catch (err) {
+        console.error('Insert error:', err);
+        res.status(500).json({ error: 'Insert failed' });
+      }
     });
 
     // Start server after Mongo connection

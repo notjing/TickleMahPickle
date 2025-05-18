@@ -89,7 +89,7 @@ export default function SignInSide(props) {
           position: 'fixed',
           left: 24,
           bottom: 24,
-          width: 180,
+          width: 100,
           height: 'auto',
           zIndex: 2000,
           pointerEvents: 'none',
