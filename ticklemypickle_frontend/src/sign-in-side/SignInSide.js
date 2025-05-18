@@ -109,19 +109,6 @@ export default function SignInSide(props) {
         }}
       />
       <img
-        src={process.env.PUBLIC_URL + '/pickle.gif'}
-        alt="Dancing Pickle"
-        style={{
-          position: 'fixed',
-          right: 24,
-          top: 24,
-          width: 100,
-          height: 'auto',
-          zIndex: 2000,
-          pointerEvents: 'none',
-        }}
-      />
-      <img
         src={process.env.PUBLIC_URL + '/bottom.png'}
         alt="pickles"
         style={{
@@ -130,7 +117,7 @@ export default function SignInSide(props) {
           bottom: 0,
           width: "100%",
           height: 'auto',
-          zIndex: 2000,
+          zIndex: 0,
           pointerEvents: 'none',
         }}
       />

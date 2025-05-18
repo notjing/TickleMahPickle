@@ -59,9 +59,17 @@ const JarsContext = () => {
   }
 };
 
+// Assumes you have a `users` array available in your context or passed in as a parameter
+const getJarMembers = (jarId, users) => {
+  const jar = jars.find(j => j._id === jarId);
+  if (!jar || !Array.isArray(jar.members)) return [];
+  // jar.members is assumed to be an array of user IDs
+  return users.filter(user => jar.members.includes(user._id));
+};
+
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
-  return { jars, createJar, refresh, addTransactionsToJar };
+  return { jars, createJar, refresh, addTransactionsToJar, getJarMembers };
 };
 
 export default JarsContext;
