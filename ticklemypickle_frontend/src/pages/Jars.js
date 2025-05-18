@@ -288,9 +288,8 @@ function Jars() {
       jar: id,
       paid: false
     })
-    // console.log(createdTransaction.insertedId);
-    console.log("Created transaction:", createdTransaction._id);
-    console.log("Jar ID:", id);
+    console.log("Calling addTransactionsToJar with:", id, createdTransaction._id);
+
     addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
 

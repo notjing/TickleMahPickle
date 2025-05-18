@@ -45,9 +45,9 @@ const JarsContext = () => {
  const addTransactionsToJar = async (jarId, transactionId) => {
   try {
     const response = await fetch("http://localhost:5000/api/jars/add-transactions", {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jarId, transactionIds: [transactionId] }), // always send as array
+      body: JSON.stringify({ jarId, transactionId }), // always send as array
     });
     if (!response.ok) throw new Error("Failed to add transactions to jar");
     const result = await response.json();

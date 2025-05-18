@@ -134,28 +134,34 @@ async function connectToMongo() {
     });
 
     // HERERERERERERERERE Add transaction IDs to an existing jar 
-    app.post("/api/jars/add-transactions", async (req, res) => {
+const { ObjectId } = require('mongodb');
+
+app.put("/api/jars/add-transactions", async (req, res) => {
   try {
-    let { jarId, transactionId } = req.body; // expects { jarId: '...', transactionId: '...' }
+    let { jarId, transactionId } = req.body;
+
     if (!jarId || !transactionId) {
       return res.status(400).json({ error: "jarId and transactionId are required" });
     }
-    // Ensure transactionId is always an array for $addToSet/$each
-    const transactionIds = [transactionId];
 
     const result = await jarsCollection.updateOne(
-      { _id: new require('mongodb').ObjectId(jarId) },
-      { $addToSet: { transactions: { $each: transactionIds } } }
+      { _id: new ObjectId(jarId) },
+      { $addToSet: { transactions: new ObjectId(transactionId) } }
     );
+
     if (result.matchedCount === 0) {
       return res.status(404).json({ error: "Jar not found" });
     }
+
     res.json({ success: true, modifiedCount: result.modifiedCount });
+
   } catch (err) {
-    console.error("Error adding transactions to jar:", err);
+    console.error("Error adding transactions to jar:", err.message);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
 
     app.get("/api/transactions", async (req, res) => {
       try {
