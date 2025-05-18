@@ -283,7 +283,7 @@ function Jars() {
   return (
     <Container>
       <MainContent>
-        <div sx={{borderRadius: 1000, overflow: "hidden"}}>
+        <div style={{borderRadius: 20, overflow: "hidden"}}>
         <HeaderBar>
           <GroupInfo>
             <Avatar sx={{ width: 56, height: 56 }} />
