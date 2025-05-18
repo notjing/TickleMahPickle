@@ -244,8 +244,9 @@ function Jars() {
   const [openRequestMoney, setOpenRequestMoney] = useState(false);
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
 
-  const { transactions, addTransaction, refresh } = useTransaction();
+  const { transactions, addTransaction, deleteTransaction refresh } = useTransaction();
   const {jars, createJar, addTransactionsToJar, getJarMembers} = useJars();
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -442,7 +443,7 @@ function Jars() {
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setOpenSimplify(false)} sx={{ color: colors.dark }}>Cancel</Button>
-              <Button onClick={() => handleSimplify(setOpenSimplify)} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
+              <Button onClick={() => {handleSimplify(setOpenSimplify); deleteTransaction(id);}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
             </DialogActions>
           </Dialog>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
