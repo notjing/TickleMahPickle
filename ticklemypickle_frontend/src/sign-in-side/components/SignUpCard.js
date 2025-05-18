@@ -19,21 +19,22 @@ const Card = styled(MuiCard)(({ theme }) => ({
   justifyContent: 'center',
   width: '90%',
   maxWidth: '400px',
-  padding: theme.spacing(2), // reduced padding
-  gap: theme.spacing(1), // reduced gap
+  padding: theme.spacing(4),
+  gap: theme.spacing(2),
   margin: '0 auto',
   borderRadius: 12,
-  backgroundColor: 'rgba(255, 255, 255, 0.5)', // more transparent
   backdropFilter: 'blur(8px)',
   boxShadow: 'hsla(220, 30%, 5%, 0.1) 0px 5px 15px 0px',
   margin: '20px auto',
+  backgroundColor: 'rgba(255, 255, 255, 0.41)',
+  fontFamily: 'Raleway, sans-serif',
   [theme.breakpoints.up('sm')]: {
     width: '380px',
-    padding: theme.spacing(1.5), // reduced padding for sm+
+    padding: theme.spacing(4),
   },
   ...theme.applyStyles('dark', {
-    backgroundColor: 'rgba(30, 30, 30, 0.7)', // slightly more transparent in dark mode
-    boxShadow: 'hsla(220, 30%, 5%, 0.3) 0px 5px 15px 0px',
+    backgroundColor: 'rgba(30, 30, 30, 0.7)',
+    boxShadow: 'hsla(220, 30%, 5%, 15px 0px',
   }),
 }));
 
@@ -41,7 +42,12 @@ const CompactTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputBase-root': {
     height: 42,
   },
-  marginBottom: theme.spacing(0.5),
+  marginBottom: theme.spacing(1),
+  fontFamily: 'Raleway, sans-serif',
+}));
+
+const CustomFormLabel = styled(FormLabel)(({ theme }) => ({
+  fontFamily: 'Raleway, sans-serif'
 }));
 
 export default function SignInCard({returnToSignIn}) {
@@ -146,12 +152,19 @@ export default function SignInCard({returnToSignIn}) {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', p: 0, m: 0 }}>
+    <Box sx={{ zIndex: "100", minHeight: '100vh', height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', p: 0, m: 0 }}>
       <Card variant="outlined">
-        <Typography
+       <Typography
           component="h1"
           variant="h5"
-          sx={{ width: '100%', textAlign: 'center', mb: 1, fontSize: '1.5rem' }}
+          sx={{
+            width: '100%',
+            textAlign: 'center',
+            mb: 1,
+            fontSize: '2.5rem',
+            fontWeight: 1000,
+            fontFamily: '"Alumni Sans Pinstripe", sans-serif'
+          }}
         >
           Sign Up
         </Typography>
@@ -162,7 +175,7 @@ export default function SignInCard({returnToSignIn}) {
           sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 1.5 }}
         >
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="firstName">First Name</FormLabel>
+            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5, fontFamily: "Raleway" }} htmlFor="firstName">First Name</FormLabel>
             <CompactTextField
               error={firstNameError}
               helperText={firstNameErrorMessage}
@@ -179,7 +192,7 @@ export default function SignInCard({returnToSignIn}) {
           </FormControl>
           
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="lastName">Last Name</FormLabel>
+            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5, fontFamily: "Raleway" }} htmlFor="lastName">Last Name</FormLabel>
             <CompactTextField
               error={lastNameError}
               helperText={lastNameErrorMessage}
@@ -196,7 +209,7 @@ export default function SignInCard({returnToSignIn}) {
           </FormControl>
           
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="phone">Phone Number</FormLabel>
+            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5, fontFamily: "Raleway" }} htmlFor="phone">Phone Number</FormLabel>
             <CompactTextField
               error={phoneError}
               helperText={phoneErrorMessage}
@@ -213,7 +226,7 @@ export default function SignInCard({returnToSignIn}) {
           </FormControl>
           
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="email">Email</FormLabel>
+            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5, fontFamily: "Raleway" }} htmlFor="email">Email</FormLabel>
             <CompactTextField
               error={emailError}
               helperText={emailErrorMessage}
@@ -231,7 +244,7 @@ export default function SignInCard({returnToSignIn}) {
           </FormControl>
           
           <FormControl>
-            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5 }} htmlFor="password">Password</FormLabel>
+            <FormLabel sx={{ fontSize: '0.875rem', mb: 0.5, fontFamily: "Raleway" }} htmlFor="password">Password</FormLabel>
             <CompactTextField
               error={passwordError}
               helperText={passwordErrorMessage}
@@ -263,13 +276,14 @@ export default function SignInCard({returnToSignIn}) {
               backgroundColor: "green",
               height: '40px',
               fontSize: '0.875rem',
-              mt: 1
+              mt: 1,
+              fontFamily: "Raleway"
             }}
           >
             Sign Up
           </Button>
           
-          <Typography variant="body2" sx={{ textAlign: 'center', mt: 1 }}>
+          <Typography variant="body2" sx={{ textAlign: 'center', mt: 1, fontFamily: "Raleway" }}>
             Have an account?{' '}
             <Link
               href="#"

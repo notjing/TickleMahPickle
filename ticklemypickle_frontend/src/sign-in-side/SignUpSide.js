@@ -9,10 +9,10 @@ export default function SignInSide(props) {
   return (
     <>
       <CssBaseline enableColorScheme />
-      <style>{`body { overflow: hidden !important; }`}</style>
+      <style>{`body { overflow: hidden !important; z-index: 100 !important;}`}</style>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
-        sx={{ height: '100vh', width: '100vw', alignItems: 'stretch', backgroundColor: '#D2D0A0' }}
+        sx={{ zIndex: "100", height: '100vh', width: '100vw', alignItems: 'stretch', backgroundColor: '#D2D0A0' }}
       >
         {/* Left side: Title and Slogan */}
         <Box
