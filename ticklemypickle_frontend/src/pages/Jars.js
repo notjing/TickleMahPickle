@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Tabs,
@@ -25,8 +25,12 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
 import handleSimplify from './HandleSimplify';
-
 import useTransactions from "../context/TransactionContext";
+import { use } from "react";
+import { useParams } from "react-router-dom";
+
+import jarsContext from '../context/JarsContext.js';
+
 
 const colors = {
   dark: "#537D5D",
@@ -223,6 +227,8 @@ const stats = [
 
 
 function Jars() {
+  const {id} = useParams();
+  console.log(id); //jars ID
   const [tabValue, setTabValue] = useState(0);
 
   const [openTickle, setOpenTickle] = useState(false);
@@ -271,18 +277,28 @@ function Jars() {
     setRequestDate(null);
   };
 
-  const createTransaction = () => {
-    console.log("Creating transaction...");
-    console.log("Date," + requestDate);
-    addTransaction({
+  const handleCreateTransactionAndUpdateJar = async (jarId) => {
+
+  }
+
+  const createTransaction = async () => {
+
+    const createdTransaction = await addTransaction({
       from: localStorage.getItem('userId'),
       to: "toID",
       date: requestDate,
       amt: requestAmount,
       type: "Request",
-      jar: "insert jar id here"
+      jar: "insert jar id here",
+      paid: false
     })
+
   }
+
+
+  // const { jars, createJar, addTransactionsToJar} = jarsContext();  
+
+
 
   return (
     <Container>

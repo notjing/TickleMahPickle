@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
 import jarsContext from '../context/JarsContext.js';
-import DatabaseUsers from '../context/DatabaseUsers.js';
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -16,8 +15,17 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
-  const { jars, createJar, refresh } = jarsContext();  
+  const { jars, createJar, addTransactionsToJar, refresh } = jarsContext();  
+  // const [currentJarId, setCurrentJarId] = useState(null);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log(jars);
+    }, 3000);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="layout">
       <nav className="sidebar">
@@ -73,10 +81,10 @@ const Layout = () => {
                   zIndex: 10,
                 }}
               >
-                {userJars.map(jar => (
+                {jars.map(jar => (
                   <Link
-                    key={jar.id}
-                    to="/Jars"
+                    key={jar._id}
+                    to={`/jars/${jar._id}`}
                     style={{
                       display: 'block',
                       padding: '0.7rem 1.2rem',
