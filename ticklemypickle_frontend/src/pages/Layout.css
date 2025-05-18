@@ -32,24 +32,34 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* center all nav items horizontally */
+  align-items: center;
+  gap: 0; /* Remove default gap, we'll use margin for li */
 }
 
 .sidebar li {
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   width: 100%;
   transition: background 0.2s, color 0.2s;
   border-radius: 12px;
-  text-align: center; /* center text in each nav item */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 56px;
+  box-sizing: border-box;
 }
 
 .sidebar li.title {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2.5rem;
   color: #193b02;
   background: none;
-  text-align: center; /* ensure title is centered */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 56px;
+  margin-bottom: 0;
 }
 
 .sidebar a {
@@ -61,16 +71,33 @@
   padding: 0.75rem 1rem;
   border-radius: 8px;
   transition: background 0.2s, color 0.2s;
-  text-align: center; /* center link text */
+  text-align: center;
+  width: calc(100% - 16px);
+  margin: 0 8px;
+  box-sizing: border-box;
+  /* Remove transform and box-shadow on focus if another nav is hovered */
+  z-index: 1;
 }
 
-.sidebar a:hover:has(img){
-  background: transparent;
+.sidebar a:focus {
+  outline: none;
 }
 
-.sidebar a:hover {
+.sidebar a.active, .sidebar a:active {
   background: #e8e8c8;
   color: #537D5D;
+  box-shadow: 0 2px 8px 0 rgba(83, 125, 93, 0.10);
+  transform: translateY(-2px) scale(1.04);
+  z-index: 2;
+}
+
+.sidebar a:hover:not(:active):not(:focus-visible),
+.sidebar a:focus-visible:not(:active) {
+  background: #e8e8c8;
+  color: #537D5D;
+  box-shadow: 0 2px 8px 0 rgba(83, 125, 93, 0.10);
+  transform: translateY(-2px) scale(1.04);
+  z-index: 2;
 }
 
 .content {
@@ -159,7 +186,8 @@
   color: #193b02;
   font-size: 1.15rem;
   font-weight: 500;
-  width: 100%;
+  width: calc(100% - 16px);
+  margin: 0 8px;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   text-align: center;
@@ -167,6 +195,11 @@
   transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.18s;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .jars-menu-btn:hover, .jars-menu-btn:focus {
   background: #e8e8c8;

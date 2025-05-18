@@ -36,23 +36,33 @@ const Layout = () => {
             </Link>
           </li>
           <li className="title"><Link to="/dashboard">TMP Dashboard</Link></li>
-          <li style={{ position: 'relative' }}>
+          <li style={{ position: 'relative', zIndex: 1, margin: 0, padding: 0 }}
+            onMouseEnter={() => { setJarsMenuOpen(true); }}
+            onMouseLeave={e => {
+              // Only close if mouse is not moving to the dropdown
+              if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) {
+                setJarsMenuOpen(false);
+              }
+            }}
+          >
             <button
               className="jars-menu-btn"
               style={{
-                background: 'none',
-                border: 'none',
-                color: '#193b02',
-                fontSize: '1.15rem',
+                background: jarsMenuOpen ? '#e8e8c8' : 'none',
+                color: jarsMenuOpen ? '#537D5D' : '#193b02',
                 fontWeight: 500,
-                width: '100%',
+                width: 'calc(100% - 16px)', // reduce width to fit inside navbar padding
+                margin: '0 8px', // add horizontal margin to align highlight with navbar
                 padding: '0.75rem 1rem',
                 borderRadius: 8,
                 textAlign: 'center',
                 cursor: 'pointer',
                 transition: 'background 0.2s, color 0.2s',
                 position: 'relative',
-                zIndex: 2
+                zIndex: 2,
+                border: 'none',
+                fontSize: '1.15rem',
+                boxSizing: 'border-box',
               }}
               onClick={e => {
                 setJarsMenuOpen(v => !v);
@@ -71,7 +81,7 @@ const Layout = () => {
                   position: 'absolute',
                   left: '100%',
                   top: 0,
-                  marginLeft: 8,
+                  marginLeft: 0, // Move popout closer to navbar
                   minWidth: 180,
                   background: '#fff',
                   border: '1px solid #9EBC8A',
@@ -80,8 +90,15 @@ const Layout = () => {
                   padding: '0.5rem 0',
                   zIndex: 10,
                 }}
+                onMouseEnter={() => setJarsMenuOpen(true)}
+                onMouseLeave={e => {
+                  // Only close if mouse is not moving back to the parent li
+                  if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) {
+                    setJarsMenuOpen(false);
+                  }
+                }}
               >
-                {jars.map(jar => (
+                {userJars.map(jar => (
                   <Link
                     key={jar._id}
                     to={`/jars/${jar._id}`}
