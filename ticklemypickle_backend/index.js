@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
-const uri = "mongodb+srv://jerrychen4096:mongo@cluster0.vtbrvp2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://andrewchen7101:mongo@cluster0.vtbrvp2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const client = new MongoClient(uri);
 

@@ -244,7 +244,7 @@ function Jars() {
   const [openRequestMoney, setOpenRequestMoney] = useState(false);
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
 
-  const { transactions, addTransaction, deleteTransaction refresh } = useTransaction();
+  const { transactions, addTransaction, deleteTransaction, refresh } = useTransaction();
   const {jars, createJar, addTransactionsToJar, getJarMembers} = useJars();
 
   const handleTabChange = (event, newValue) => {
