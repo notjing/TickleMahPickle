@@ -4,16 +4,25 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import SignInCard from './components/SignInCard';
+import TypingEffect from "./components/TypingEffect";
 
 export default function SignInSide(props) {
   return (
     <>
       <CssBaseline enableColorScheme />
-      <style>{`body { overflow: hidden !important; }`}</style>
+      <style>{`body { overflow: hidden !important;}`}</style>
       <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        sx={{ height: '100vh', width: '100vw', alignItems: 'stretch', backgroundColor: '#D2D0A0' }}
-      >
+  direction={{ xs: 'column', md: 'row' }}
+  sx={{
+    height: '100vh',
+    width: '100vw',
+    alignItems: 'stretch',
+    backgroundColor: '#D2D0A0',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }}
+>
         {/* Left side: Title and Slogan */}
         <Box
           sx={{
@@ -27,38 +36,43 @@ export default function SignInSide(props) {
             backgroundColor: 'transparent',
           }}
         >
-          <Typography
-            variant="h2"
+          <Box
             sx={{
-              fontFamily: 'Alumni Sans Pinstripe, Raleway, sans-serif',
-              fontWeight: 900,
-              fontSize: '3.5rem',
-              color: '#537D5D',
               mb: 2,
-              textAlign: 'center',
-              letterSpacing: 1.5
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
             }}
           >
-            TickleMahPickle
-          </Typography>
+            <img
+              src={process.env.PUBLIC_URL + '/title.png'}
+              alt="TickleMahPickle Logo Title"
+              style={{
+                maxWidth: '100%',
+                width: "80%",
+                height: 'auto',
+              }}
+            />
+          </Box>
+
           <Typography
             variant="h5"
             sx={{
               fontFamily: 'Raleway, sans-serif',
               fontWeight: 500,
-              fontSize: '1.5rem',
+              fontSize: '2rem',
               color: '#73946B',
               textAlign: 'center',
-              maxWidth: 340
             }}
           >
-            When you in a pickle, tickle loan
+            <TypingEffect></TypingEffect>
           </Typography>
         </Box>
         {/* Right side: Sign Up Card (centered vertically and horizontally) */}
         <Box
           sx={{
-            flex: 1,
+            flex: 0.7,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -69,7 +83,6 @@ export default function SignInSide(props) {
         >
           <Box
             sx={{
-              width: '100%',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -83,13 +96,45 @@ export default function SignInSide(props) {
         </Box>
       </Stack>
       <img
+        src={process.env.PUBLIC_URL + '/logo.png'}
+        alt="Logo"
+        style={{
+          position: 'fixed',
+          top: 15,
+          left: 15,
+          width: 130,
+          height: 'auto',
+          zIndex: 2000,
+          pointerEvents: 'none',
+        }}
+      />
+      <img
         src={process.env.PUBLIC_URL + '/pickle.gif'}
         alt="Dancing Pickle"
         style={{
           position: 'fixed',
+<<<<<<< HEAD
           left: 24,
           bottom: 24,
           width: 180,
+=======
+          right: 24,
+          top: 24,
+          width: 100,
+>>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
+          height: 'auto',
+          zIndex: 2000,
+          pointerEvents: 'none',
+        }}
+      />
+      <img
+        src={process.env.PUBLIC_URL + '/bottom.png'}
+        alt="pickles"
+        style={{
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          width: "100%",
           height: 'auto',
           zIndex: 2000,
           pointerEvents: 'none',
