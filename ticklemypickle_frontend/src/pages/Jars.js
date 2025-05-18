@@ -233,6 +233,7 @@ function Jars() {
   const [requestTarget, setRequestTarget] = useState(null);
   const [requestAmount, setRequestAmount] = useState('');
   const [requestDate, setRequestDate] = useState(null);
+  const [openSimplify, setOpenSimplify] = useState(false);
 
   const { transactions, addTransaction, refresh } = useTransactions();
 
@@ -329,10 +330,24 @@ function Jars() {
                 height: '3.2rem',
                 alignSelf: 'flex-end',
               }}
+              onClick={() => setOpenSimplify(true)}
             >
               Simplify Transactions
             </Button>
           </Box>
+          {/* Simplify Transactions Confirmation Dialog */}
+          <Dialog open={openSimplify} onClose={() => setOpenSimplify(false)}>
+            <DialogTitle>Are you sure?</DialogTitle>
+            <DialogContent>
+              <Typography gutterBottom>
+                This action will attempt to simplify all group transactions. <b>This is irreversible.</b> Are you sure you want to continue?
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpenSimplify(false)} sx={{ color: colors.dark }}>Cancel</Button>
+              <Button onClick={() => setOpenSimplify(false)} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
+            </DialogActions>
+          </Dialog>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
           <br></br>
           <StyledTable>
