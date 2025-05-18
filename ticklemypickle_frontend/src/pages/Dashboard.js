@@ -116,7 +116,7 @@ export default function Dashboard() {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <StyledHeading>Welcome back {user && user.firstname ? user.firstname : "[first name]"}! 🥒</StyledHeading>
+      <StyledHeading>Welcome back {user && user.firstName ? user.firstName : "[first name]"}! 🥒</StyledHeading>
       <Divider sx={{ borderColor: colors.dark, mb: 2 }} />  
           <br></br>
 
