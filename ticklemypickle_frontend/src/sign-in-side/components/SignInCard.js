@@ -81,7 +81,7 @@ export default function SignInCard() {
   return signUpOpen ? (
     <SignUpCard returnToSignIn={() => setSignUpOpen(false)} />
   ) : (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', p: 0, m: 0 }}>
+    <Box sx={{ zIndex: "100", minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', p: 0, m: 0 }}>
       <Card variant="outlined">
         <Typography
           component="h1"
