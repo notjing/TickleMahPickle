@@ -116,6 +116,7 @@ export default function Dashboard() {
   useEffect(() => {
     setParsedTransactionsDueSoon(parseTransactions(transactions, jars, userId, users, false));
     setParsedTransactionsTransactionHistory(parseTransactions(transactions, jars, userId, users, true));
+    console.log(parsedTransactionsDueSoon);
   }, [transactions, users]);
 
   return (
@@ -208,7 +209,7 @@ export default function Dashboard() {
             <img src={process.env.PUBLIC_URL + '/bank.png'} alt="bank" style={{ width: 44, height: 44, objectFit: 'contain', display: 'block' }} />
           </div>
         </Box>
-        <StyledH2>${user && user.moneyOwedTo && user.moneyOwed !== undefined? user.moneyOwedTo - user.moneyOwed: "[user.moneyOwedTo - user.moneyOwed]"}</StyledH2>
+        <StyledH2>${(user && user.moneyOwedTo && user.moneyOwed) !== undefined? user.moneyOwedTo - user.moneyOwed: "[user.moneyOwedTo - user.moneyOwed]"}</StyledH2>
         <StyledDescription>Net Balance</StyledDescription>
       </CardContent>
     </Card>

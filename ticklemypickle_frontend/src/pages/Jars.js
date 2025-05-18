@@ -27,7 +27,7 @@ import BasicDatePicker from '../Components/calendar';
 import useTransaction from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
-import jarsContext from '../context/JarsContext.js';
+import useJars from '../context/JarsContext.js';
 import DatabaseUsers from '../context/DatabaseUsers.js'; 
 
 const colors = {
@@ -245,6 +245,7 @@ function Jars() {
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
 
   const { transactions, addTransaction, refresh } = useTransaction();
+  const {jars, createJar, addTransactionsToJar, getJarMembers} = useJars();
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -280,6 +281,7 @@ function Jars() {
       const allTransactions = transactions.filter(transaction => transaction.jar === id);
       let negProfit = [];
       let posProfit = [];
+      let people = 
 
       allTransactions.forEach(transaction => {
         const profit = transaction.owedToMe - transaction.iOwe;
@@ -355,8 +357,7 @@ function Jars() {
 
     addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
-
-  const { jars, createJar, addTransactionsToJar, getJarMembers} = jarsContext();  
+ 
   const {users} = DatabaseUsers();
 
   console.log(users);
