@@ -286,7 +286,7 @@ function Jars() {
         <div style={{borderRadius: 20, overflow: "hidden"}}>
         <HeaderBar>
           <GroupInfo>
-            <Avatar sx={{ width: 56, height: 56 }} />
+            <Avatar sx={{ width: 56, height: 56 }} src={process.env.PUBLIC_URL + '/jarOfPickles.jpg'} />
             <GroupName>Group Name</GroupName>
           </GroupInfo>
           <PlaceholderDetails>
