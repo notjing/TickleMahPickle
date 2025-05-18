@@ -22,6 +22,7 @@ async function connectToMongo() {
     const usersCollection = db.collection("testcollection");
     const transactionCollection = db.collection("testTransactions");
     const jarsCollection = db.collection("testJars");
+
     //GET FUNCTIONS
     // API endpoint to get all users
     app.get("/api/users", async (req, res) => {
@@ -156,7 +157,7 @@ async function connectToMongo() {
         res.status(500).json({ error: "Internal server error" });
       }
     });
-    
+
     app.get("/api/transactions", async (req, res) => {
       try {
         const transactions = await transactionCollection.find({}).toArray();

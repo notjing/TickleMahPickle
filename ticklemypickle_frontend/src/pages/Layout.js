@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
-<<<<<<< HEAD
-import jarsContext from '../context/JarsContext.js';
-import DatabaseUsers from '../context/DatabaseUsers.js';
-=======
 import useJars from '../context/JarsContext.js';
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -20,12 +15,8 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
-<<<<<<< HEAD
-  const { jars, createJar, refresh } = jarsContext();  
-=======
   const { jars, createJar, addTransactionsToJar, refresh } = useJars();  
   // const [currentJarId, setCurrentJarId] = useState(null);
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
 
   // useEffect(() => {
   //   const interval = setInterval(() => {

@@ -28,11 +28,8 @@ import BasicDatePicker from '../Components/calendar';
 import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import jarsContext from '../context/JarsContext.js';
 
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
 
 const colors = {
   dark: "#537D5D",
@@ -242,13 +239,10 @@ function Jars() {
   const [requestTarget, setRequestTarget] = useState(null);
   const [requestAmount, setRequestAmount] = useState('');
   const [requestDate, setRequestDate] = useState(null);
-<<<<<<< HEAD
-=======
   const [openSimplify, setOpenSimplify] = useState(false);
   const [openRequestMoney, setOpenRequestMoney] = useState(false);
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
   const [requestMoneyDate, setRequestMoneyDate] = useState(null);
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
 
   const { transactions, addTransaction, refresh } = useTransactions();
   const handleTabChange = (event, newValue) => {
@@ -296,16 +290,6 @@ function Jars() {
     })
     console.log("Calling addTransactionsToJar with:", id, createdTransaction._id);
 
-<<<<<<< HEAD
-    console.log(id);
-
-  }
-
-  return (
-    <Container>
-      <MainContent>
-        <div sx={{borderRadius: 1000, overflow: "hidden"}}>
-=======
     addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
 
@@ -324,7 +308,6 @@ function Jars() {
           marginLeft: '1rem', // Align with sidebar left margin
           marginRight: '1rem', // Align with table and sidebar right margin
         }}>
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
         <HeaderBar>
           <GroupInfo>
             <Avatar sx={{ width: 56, height: 56 }} />
@@ -691,9 +674,6 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-<<<<<<< HEAD
-            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
-=======
             <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Pay</Button>
           </DialogActions>
         </Dialog>
@@ -801,7 +781,6 @@ function Jars() {
               setOpenRequestMoney(false);
               // Implement request money logic here
             }} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
           </DialogActions>
         </Dialog>
 

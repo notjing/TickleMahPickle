@@ -21,27 +21,7 @@ const JarsContext = () => {
   };
 
   // This function creates a new jar with the given name and inviteEmails
-<<<<<<< HEAD
-    const createJar = async (jarName, inviteEmails) => {
-      try {
-        const response = await fetch("http://localhost:5000/api/jars", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: jarName,
-            emails: inviteEmails
-          }),
-        });
-        if (!response.ok) throw new Error("Failed to create jar");
-        const result = await response.json();
-        // Optionally handle result.success or result.jarId
-        return result;
-      } catch (err) {
-        console.error("Error creating jar:", err);
-        throw err;
-      }
-    };
-=======
+
   const createJar = async (jarName, inviteEmails) => {
     try {   
       const response = await fetch("http://localhost:5000/api/jars", {
@@ -79,7 +59,6 @@ const JarsContext = () => {
     throw err;
   }
 };
->>>>>>> 8aff61d6cbf85d9cb78d748d92d543337a4ce012
 
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
