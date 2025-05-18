@@ -641,7 +641,7 @@ function Jars() {
           <DialogTitle>Send a Tickle</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {tickleTarget ? `Send a tickle to ${tickleTarget.name}?` : ''}
+              {tickleTarget ? `Send a tickle to Ethan?` : ''}
             </Typography>
           </DialogContent>
           <DialogActions>
