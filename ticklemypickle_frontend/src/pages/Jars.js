@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import * as icons from "@mui/icons-material";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from "recharts";
 import { Mood, TrendingUp, BarChart } from '@mui/icons-material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -28,7 +28,6 @@ import handleSimplify from './HandleSimplify';
 import useTransactions from "../context/TransactionContext";
 import { use } from "react";
 import { useParams } from "react-router-dom";
-
 import jarsContext from '../context/JarsContext.js';
 
 
@@ -163,11 +162,10 @@ const TabContentBox = styled(Box)({
 
 const cardData = [
   { title: "Total Members", value: 8, icon: <icons.Group /> },
-  { title: "Total Debt", value: "$124.56", icon: <icons.AttachMoney /> },
+  { title: "Total Debt", value: "$124.56", icon: <img src={process.env.PUBLIC_URL + '/debt.png'} alt="debt" style={{ width: 32, height: 32, verticalAlign: 'middle' }} /> },
   { title: "Most Active", value: "Jane Smith", icon: <icons.TrendingUp /> },
   { title: "Info", value: "Updated 1h ago", icon: <icons.Info /> }
 ];
-
 
 const IconLabel = ({ icon, label }) => (
   <Box display="flex" alignItems="center" gap={1}>
@@ -223,7 +221,8 @@ const debtHistory = [
 const stats = [
   { title: "Total Money Owed", value: "$124.56" },
   { title: "Total Money Owed To You", value: "$75.43" },
-  { title: "Number of tickles", value: "69" }
+  { title: "Number of tickles", value: "69" },
+  { title: "Number of pickles", value: "[insert member count]" }, // New card
 ];
 
 
@@ -241,9 +240,11 @@ function Jars() {
   const [requestAmount, setRequestAmount] = useState('');
   const [requestDate, setRequestDate] = useState(null);
   const [openSimplify, setOpenSimplify] = useState(false);
+  const [openRequestMoney, setOpenRequestMoney] = useState(false);
+  const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
+  const [requestMoneyDate, setRequestMoneyDate] = useState(null);
 
   const { transactions, addTransaction, refresh } = useTransactions();
-
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -287,21 +288,29 @@ function Jars() {
       date: requestDate,
       amt: requestAmount,
       type: "Request",
-      jar: "insert jar id here",
+      jar: id,
       paid: false
     })
+    console.log("Calling addTransactionsToJar with:", id, createdTransaction._id);
 
+    addTransactionsToJar(id, createdTransaction._id); //adds transaction to appropriate jar
   }
 
 
-  // const { jars, createJar, addTransactionsToJar} = jarsContext();  
+  const { jars, createJar, addTransactionsToJar} = jarsContext();  
 
 
 
   return (
     <Container>
       <MainContent>
-        <div style={{borderRadius: 20, overflow: "hidden"}}>
+        <div style={{
+          borderRadius: 20,
+          overflow: "hidden",
+          marginTop: '1rem', // Align with sidebar top margin
+          marginLeft: '1rem', // Align with sidebar left margin
+          marginRight: '1rem', // Align with table and sidebar right margin
+        }}>
         <HeaderBar>
           <GroupInfo>
             <Avatar sx={{ width: 56, height: 56 }} src={process.env.PUBLIC_URL + '/jarOfPickles.jpg'} />
@@ -317,8 +326,16 @@ function Jars() {
           <StyledTabs
             value={tabValue}
             onChange={handleTabChange}
-            indicatorColor="secondary"
+            indicatorColor="primary"
             textColor="inherit"
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: colors.dark,
+                height: 4,
+                borderRadius: 2,
+                boxShadow: '0 2px 8px rgba(39, 54, 42, 0.18)',
+              }
+            }}
           >
             <CompactTab icon={<icons.AccountCircle />} iconPosition="start" label="Members" />
             <CompactTab icon={<icons.Receipt />} iconPosition="start" label="Transactions" />
@@ -415,7 +432,25 @@ function Jars() {
                       }}
                       onClick={() => handleOpenRequest(member)}
                     >
-                      💸 Request Money
+                      Pay Money
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        fontFamily: 'Raleway, sans-serif',
+                        color: colors.dark,
+                        borderColor: colors.dark,
+                        marginLeft: '0.5rem',
+                        textTransform: 'none',
+                        fontWeight: 600
+                      }}
+                      onClick={() => {
+                        setRequestTarget(member);
+                        setOpenRequestMoney(true);
+                      }}
+                    >
+                      Request Money
                     </Button>
                   </StyledTd>
                 </TableRow>
@@ -434,7 +469,7 @@ function Jars() {
                 <StyledTh><IconLabel icon={<icons.CalendarToday />} label="Date" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.SyncAlt />} label="Type" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Description />} label="Description" /></StyledTh>
-                <StyledTh><IconLabel icon={<icons.MonetizationOn />} label="Amount" /></StyledTh>
+                <StyledTh><IconLabel icon={<img src={process.env.PUBLIC_URL + '/debt.png'} alt="Amount" style={{ width: 28, height: 28, marginRight: 6, verticalAlign: 'middle' }} />} label="Amount" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Person />} label="Borrower" /></StyledTh>
                 <StyledTh><IconLabel icon={<icons.Group />} label="Borrowed From" /></StyledTh>
               </tr>
@@ -452,7 +487,12 @@ function Jars() {
               ].map((tx, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{tx.date}</StyledTd>
-                  <StyledTd style={{ color: tx.type === "Debt Created" ? "red" : "green" }}>
+                  <StyledTd style={{ color: tx.type === "Debt Created" ? "red" : "green", display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {tx.type === "Debt Created" ? (
+                      <img src={process.env.PUBLIC_URL + '/debt.png'} alt="debt" style={{ width: 22, height: 22, verticalAlign: 'middle' }} />
+                    ) : (
+                      <img src={process.env.PUBLIC_URL + '/moneyGain.png'} alt="money gain" style={{ width: 22, height: 22, verticalAlign: 'middle' }} />
+                    )}
                     {tx.type}
                   </StyledTd>
                   <StyledTd>{tx.description}</StyledTd>
@@ -466,94 +506,86 @@ function Jars() {
         </TabPanel>
 
         <TabPanel value={tabValue} index={2}>
-  {/* Row 1: Mood Tracker */}
-  <Grid container spacing={2}>
-    <Grid item xs={12} sx={{ mb: 2 }}>
-      <Card sx={{ ...cardStyle, minHeight: 150 }}>
-        <CardContent>
-          <StyledH2>
-            🥒How are we feeling?
-          </StyledH2>
-          <Typography
-            variant="body1"
-            sx={{
-              textAlign: 'center',
-              fontFamily: 'Raleway, sans-serif',
-              color: '#444',
-            }}
-          >
-            Debt's running a little high, no? Better get on WaterlooWorks and find a job... 
-            Said no one ever. WaterlooWorks broken ahh site.
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-  </Grid>
+          {/* Row 2: Stats Cards */}
+          <Grid container spacing={2} sx={{ mb: 2, flexWrap: 'nowrap' }}>
+            {stats.map(({ title, value }, idx) => (
+              <Grid item xs={12} md={3} key={title} sx={{ display: 'flex' }}>
+                <Card sx={cardStyle}>
+                  <CardContent sx={{ width: "100%", padding: 0.4, textAlign: "center" }}>
+                    <Typography
+                      sx={{
+                        fontSize: "1.1rem",
+                        color: "#537D5D",
+                        fontWeight: 700,
+                        fontFamily: 'Raleway, sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <TrendingUp /> {title}
+                    </Typography>
+                    <StyledH2>
+                      {value}
+                    </StyledH2>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
 
-  {/* Row 2: Stats Cards */}
-  <Grid container spacing={2} sx={{ mb: 2 }}>
-    {stats.map(({ title, value }) => (
-      <Grid item xs={12} md={3} key={title}>
-        <Card sx={cardStyle}>
-          <CardContent sx={{ width: "100%", padding: 0.4, textAlign: "center" }}>
-            <Typography
-              sx={{
-                fontSize: "1.1rem",
-                color: "#537D5D",
-                fontWeight: 700,
-                fontFamily: 'Raleway, sans-serif',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1,
-              }}
-            >
-              <TrendingUp /> {title}
-            </Typography>
-            <StyledH2
-              
-            >
-              {value}
-            </StyledH2>
-          </CardContent>
-        </Card>
-      </Grid>
-    ))}
-  </Grid>
-
-  {/* Row 3: Debts Over Time chart (full width, boxed) */}
-  <Box sx={{ width: '100%'}}>
-    <Grid item xs={12}>
-      <Card sx={{ ...cardStyle, minHeight: 320 }}>
-        <CardHeader
-          avatar={<BarChart sx={{ color: "#193b02", fontSize: "3rem" }} />}
-          title={
-            <StyledH2
-            >
-              Debts Over Time
-            </StyledH2>
-          }
-          sx={{
-            paddingBottom: 0,
-            marginBottom: 2,
-          }}
-        />
-        <CardContent sx={{ width: "100%", paddingTop: 0 }}>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={debtHistory}>
-              <XAxis dataKey="date" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="John" stroke="#8884d8" />
-              <Line type="monotone" dataKey="Jane" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-    </Grid>
-  </Box>
-</TabPanel>
+          {/* Row 3: Debts Over Time chart (full width, boxed) */}
+          <Box sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mt: 3,
+          }}>
+            <Card sx={{
+              width: '95%',
+              background: 'rgba(158, 188, 138, 0.78)',
+              borderRadius: '36px',
+              boxShadow: '0 8px 32px 0 rgba(39, 54, 42, 0.18)',
+              p: 4,
+              position: 'relative',
+              minHeight: 420,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <icons.BarChart sx={{ fontSize: 48, color: '#537D5D', mr: 1 }} />
+                <Typography
+                  sx={{
+                    fontFamily: 'Alumni Sans Pinstripe, sans-serif',
+                    fontSize: '3.2rem',
+                    fontWeight: 700,
+                    color: '#193b02',
+                    letterSpacing: 1,
+                  }}
+                >
+                  Debts Over Time
+                </Typography>
+              </Box>
+              <ResponsiveContainer width="100%" height={320}>
+                <LineChart data={debtHistory} margin={{ top: 24, right: 32, left: 8, bottom: 8 }}>
+                  <CartesianGrid strokeDasharray="6 6" stroke="#b7c9a3" />
+                  <XAxis dataKey="date" tick={{ fontFamily: 'Raleway, sans-serif', fontSize: 16, fill: '#537D5D' }} axisLine={{ stroke: '#537D5D' }} tickLine={false} />
+                  <YAxis tick={{ fontFamily: 'Raleway, sans-serif', fontSize: 16, fill: '#537D5D' }} axisLine={{ stroke: '#537D5D' }} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{ background: '#f6ffe6', borderRadius: 12, border: '1px solid #b7c9a3', fontFamily: 'Raleway, sans-serif', color: '#537D5D' }}
+                    labelStyle={{ fontWeight: 700, color: '#537D5D' }}
+                  />
+                  <Legend iconType="circle" wrapperStyle={{ fontFamily: 'Raleway, sans-serif', fontSize: 18, color: '#537D5D', paddingTop: 8 }} />
+                  <Line type="monotone" dataKey="John" stroke="#6a7bff" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#6a7bff', strokeWidth: 3 }} activeDot={{ r: 9, fill: '#6a7bff', stroke: '#fff', strokeWidth: 3 }} />
+                  <Line type="monotone" dataKey="Jane" stroke="#4ec9b0" strokeWidth={3} dot={{ r: 6, fill: '#fff', stroke: '#4ec9b0', strokeWidth: 3 }} activeDot={{ r: 9, fill: '#4ec9b0', stroke: '#fff', strokeWidth: 3 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Card>
+          </Box>
+        </TabPanel>
 
         {/* Tickle Dialog */}
         <Dialog open={openTickle} onClose={handleCloseTickle}>
@@ -583,12 +615,12 @@ function Jars() {
           </DialogActions>
         </Dialog>
 
-        {/* Request Money Dialog */}
+        {/* Pay Money Dialog */}
         <Dialog open={openRequest} onClose={handleCloseRequest}>
-          <DialogTitle>Request Money</DialogTitle>
+          <DialogTitle>Pay Money</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+              {requestTarget ? `Pay money to ${requestTarget.name}?` : ''}
             </Typography>
             <TextField
               label="Amount ($)"
@@ -682,13 +714,113 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {
-              
-              
-              // addTransactionsToJar("jar ID", "transaction ID");
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Pay</Button>
+          </DialogActions>
+        </Dialog>
 
-              handleCloseRequest();
-              createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+        {/* Request Money Dialog */}
+        <Dialog open={openRequestMoney} onClose={() => setOpenRequestMoney(false)}>
+          <DialogTitle>Request Money</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>
+              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+            </Typography>
+            <TextField
+              label="Amount ($)"
+              type="number"
+              value={requestMoneyAmount}
+              onChange={e => setRequestMoneyAmount(e.target.value)}
+              fullWidth
+              margin="normal"
+              placeholder="Enter amount"
+              InputProps={{
+                inputProps: { min: 0, step: 1 },
+                startAdornment: <span style={{ color: colors.dark, fontWeight: 700, marginRight: 4 }}>$</span>,
+                sx: {
+                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  '& label.Mui-focused': {
+                    color: colors.dark,
+                  },
+                  '& .MuiInputBase-input:focus': {
+                    color: colors.dark,
+                  },
+                  '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: colors.dark,
+                  },
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  background: '#f7fbe7',
+                  borderRadius: '8px',
+                }
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiInputBase-input:focus': {
+                  color: colors.dark,
+                },
+                '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                fontSize: '1.3rem',
+                fontWeight: 700,
+                background: '#f7fbe7',
+                borderRadius: '8px',
+              }}
+              inputProps={{
+                min: 0,
+                step: 1,
+                style: {
+                  textAlign: 'left',
+                  fontSize: '1.3rem',
+                  fontWeight: 700,
+                  color: colors.dark,
+                  letterSpacing: '0.03em',
+                  padding: '12px 8px',
+                }
+              }}
+            />
+            <Box
+              sx={{
+                mt: 2,
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: colors.dark,
+                },
+                '& label.Mui-focused': {
+                  color: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected:hover': {
+                  backgroundColor: '#40634a',
+                },
+                '& .MuiPickersDay-root:focus': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root.Mui-selected.Mui-focusVisible': {
+                  backgroundColor: colors.dark,
+                },
+                '& .MuiPickersDay-root:hover': {
+                  backgroundColor: '#e8e8c8',
+                },
+              }}
+            >
+              <BasicDatePicker value={requestMoneyDate} onChange={setRequestMoneyDate} />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpenRequestMoney(false)} sx={{ color: colors.dark }}>Cancel</Button>
+            <Button onClick={() => {
+              setOpenRequestMoney(false);
+              // Implement request money logic here
+            }} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
           </DialogActions>
         </Dialog>
 
