@@ -34,7 +34,19 @@ const TransactionContext = () => {
   };
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
-  return { transactions, addTransaction, refresh };
+  
+  //delete transactions
+    const deleteTransaction = async (transactionId) => {
+    const response = await fetch(`http://localhost:5000/api/transactions/${transactionId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Failed to delete transaction");
+    refresh();
+    return true;
+  };
+
+
+  return { transactions, addTransaction, deleteTransaction, refresh };
 };
 
 export default TransactionContext;
