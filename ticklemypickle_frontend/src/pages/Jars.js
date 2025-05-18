@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Tabs,
@@ -271,12 +271,9 @@ function Jars() {
 
   }
 
+  const createTransaction = async () => {
 
-
-  const createTransaction = () => {
-    console.log("Creating transaction...");
-    console.log("Date," + requestDate);
-    addTransaction({
+    const createdTransaction = await addTransaction({
       from: localStorage.getItem('userId'),
       to: "toID",
       date: requestDate,
@@ -284,9 +281,15 @@ function Jars() {
       type: "Request",
       jar: "insert jar id here"
     })
+
+    const transactionId = createdTransaction.insertedId;
+    console.log(transactionId);
   }
 
+
   const { jars, createJar, addTransactionsToJar} = jarsContext();  
+
+  // Periodic refresh every 3 seconds
   
 
 
@@ -640,7 +643,7 @@ function Jars() {
             <Button onClick={() => {
               
               
-              addTransactionsToJar("jar ID", "transaction ID");
+              // addTransactionsToJar("jar ID", "transaction ID");
 
               handleCloseRequest();
               createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>

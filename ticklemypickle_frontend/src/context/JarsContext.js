@@ -22,7 +22,7 @@ const JarsContext = () => {
 
   // This function creates a new jar with the given name and inviteEmails
   const createJar = async (jarName, inviteEmails) => {
-    try {
+    try {   
       const response = await fetch("http://localhost:5000/api/jars", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ const JarsContext = () => {
     }
   };
 
-  // Add transaction IDs to an existing jar
+  // HERHERHEHREHRHERHEHRHERHEHR Add transaction IDs to an existing jar 
   const addTransactionsToJar = async (jarId, transactionIds) => {
     try {
       const response = await fetch("http://localhost:5000/api/jars/add-transactions", {

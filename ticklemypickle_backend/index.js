@@ -34,6 +34,19 @@ async function connectToMongo() {
       }
     });
 
+
+    // API endpoint to get all jars
+    app.get("/api/jars", async (req, res) => {
+      try {
+        const jars = await usersCollection.find({}).toArray();
+        res.json(jars);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch jars" });
+      }
+    });
+
+
     app.get("/api/users/email/:email", async (req, res) => {
 
       try {
@@ -120,7 +133,7 @@ async function connectToMongo() {
       }
     });
 
-    // Add transaction IDs to an existing jar
+    // HERERERERERERERERE Add transaction IDs to an existing jar 
     app.post("/api/jars/add-transactions", async (req, res) => {
       try {
         const { jarId, transactionIds } = req.body; // expects { jarId: '...', transactionIds: ['...', ...] }

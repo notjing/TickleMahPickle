@@ -16,6 +16,7 @@ const Layout = () => {
     { name: 'Pickleball Club', id: 3 }
   ];
   const { jars, createJar, addTransactionsToJar, refresh } = jarsContext();  
+  // const [currentJarId, setCurrentJarId] = useState(null);
 
   return (
     <div className="layout">

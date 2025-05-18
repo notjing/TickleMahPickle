@@ -21,15 +21,17 @@ const TransactionContext = () => {
   };
 
   // Function to insert a transaction
-  const addTransaction = (newTransaction) => {
-    fetch("http://localhost:5000/api/transactions", {
+  const addTransaction = async (newTransaction) => {
+    const response = await fetch("http://localhost:5000/api/transactions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newTransaction),
-    })
-    .then(() => refresh());
+    });
+    if (!response.ok) throw new Error("Failed to add transaction");
+    const createdTransaction = await response.json();
+    refresh();
+    return createdTransaction;
   };
-
   // Add more helper methods here (updateUser, deleteUser, etc.)
 
   return { transactions, addTransaction, refresh };
