@@ -27,6 +27,8 @@ import BasicDatePicker from '../Components/calendar';
 import handleSimplify from './HandleSimplify';
 
 import useTransactions from "../context/TransactionContext";
+import { use } from "react";
+import { useParams } from "react-router-dom";
 
 const colors = {
   dark: "#537D5D",
@@ -224,6 +226,7 @@ const stats = [
 
 
 function Jars() {
+  const {id} = useParams();
   const [tabValue, setTabValue] = useState(0);
 
   const [openTickle, setOpenTickle] = useState(false);
@@ -278,8 +281,12 @@ function Jars() {
       date: requestDate,
       amt: requestAmount,
       type: "Request",
-      jar: "insert jar id here"
+      jar: "insert jar id here",
+      paid: false
     })
+
+    console.log(id);
+
   }
 
   return (

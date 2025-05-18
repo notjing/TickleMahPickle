@@ -11,6 +11,7 @@ import { styled } from "@mui/system";
 import { TrendingUp, Group, AttachMoney, AccessTime, History } from "@mui/icons-material";
 import useUser from "../context/DatabaseUsers";
 import useTransaction from "../context/TransactionContext";
+import parseTransactions from "../Methods/parseTransactions";
 
 const colors = {
   dark: "#537D5D",
@@ -96,43 +97,7 @@ const StyledDescription = styled("Typography")({
     color: colors.notSoLight
 });
 
-const parseTransactions = (transactions, userId, users) => {
-  console.log("transactions", transactions);
-  console.log("users", users);
 
-  return transactions
-    .filter((transaction) => {
-      const fromID = transaction.from;
-      const toID = transaction.to;
-      return fromID === userId || toID === userId;
-    })
-    .map(transaction => {
-      const date = new Date(transaction.date);
-      const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-      const fromID = transaction.from;
-      const toID = transaction.to;
-
-      const fromUser = users.find(user => user && user._id === fromID);
-      const toUser = users.find(user => user && user._id === toID);
-
-      // Check for existence before accessing names
-      const fromName = (fromUser && fromUser.firstName && fromUser.lastName)
-        ? `${fromUser.firstName} ${fromUser.lastName}`
-        : "Unknown User";
-      const toName = (toUser && toUser.firstName && toUser.lastName)
-        ? `${toUser.firstName} ${toUser.lastName}`
-        : "Unknown User";
-
-      const transactionType = fromUser && fromUser._id === userId ? "Pay" : "Receive";
-
-      return {
-        ...transaction,
-        amt: transaction.amt * (transactionType === "Pay" ? -1 : 1),
-        name: fromUser && fromUser._id === userId ? toName : fromName,
-        date: formattedDate
-      };
-    });
-}
 
 
 
@@ -142,9 +107,11 @@ export default function Dashboard() {
   const userId = localStorage.getItem('userId');
   const user = users.find(user => user._id === userId);
   const { transactions, addTransaction, refresh: refreshTransactions } = useTransaction();
-  const [parsedTransactions, setParsedTransactions] = useState([]);
+  const [parsedTransactionsDueSoon, setParsedTransactionsDueSoon] = useState([]);
+  const [parsedTransactionsTransactionHistory, setParsedTransactionsTransactionHistory] = useState([]);
   useEffect(() => {
-    setParsedTransactions(parseTransactions(transactions, userId, users));
+    setParsedTransactionsDueSoon(parseTransactions(transactions, userId, users, false));
+    setParsedTransactionsTransactionHistory(parseTransactions(transactions, userId, users, true));
   }, [transactions, users]);
 
   return (
@@ -250,7 +217,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {parsedTransactions.map((row, i) => (
+              {parsedTransactionsDueSoon.map((row, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{row.amt}</StyledTd>
                   <StyledTd>{row.jar}</StyledTd>
@@ -280,8 +247,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {[{ type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"},
-                { type: "ib", jar: "jerries jar", name: "jerrie", date: "april 1, 2024"}].map((row, i) => (
+              {parsedTransactionsTransactionHistory.map((row, i) => (
                 <TableRow key={i} index={i}>
                   <StyledTd>{row.type}</StyledTd>
                   <StyledTd>{row.jar}</StyledTd>
