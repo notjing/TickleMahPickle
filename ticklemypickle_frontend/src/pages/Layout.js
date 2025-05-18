@@ -38,7 +38,12 @@ const Layout = () => {
           <li className="title"><Link to="/dashboard">TMP Dashboard</Link></li>
           <li style={{ position: 'relative', zIndex: 1, margin: 0, padding: 0 }}
             onMouseEnter={() => { setJarsMenuOpen(true); }}
-            onMouseLeave={() => { setJarsMenuOpen(false); }}
+            onMouseLeave={e => {
+              // Only close if mouse is not moving to the dropdown
+              if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) {
+                setJarsMenuOpen(false);
+              }
+            }}
           >
             <button
               className="jars-menu-btn"
@@ -76,7 +81,7 @@ const Layout = () => {
                   position: 'absolute',
                   left: '100%',
                   top: 0,
-                  marginLeft: 8,
+                  marginLeft: 0, // Move popout closer to navbar
                   minWidth: 180,
                   background: '#fff',
                   border: '1px solid #9EBC8A',
@@ -84,6 +89,13 @@ const Layout = () => {
                   boxShadow: '0 4px 16px 0 rgba(83, 125, 93, 0.10)',
                   padding: '0.5rem 0',
                   zIndex: 10,
+                }}
+                onMouseEnter={() => setJarsMenuOpen(true)}
+                onMouseLeave={e => {
+                  // Only close if mouse is not moving back to the parent li
+                  if (!e.relatedTarget || !e.currentTarget.contains(e.relatedTarget)) {
+                    setJarsMenuOpen(false);
+                  }
                 }}
               >
                 {userJars.map(jar => (
