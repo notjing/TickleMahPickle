@@ -242,7 +242,6 @@ function Jars() {
   const [openSimplify, setOpenSimplify] = useState(false);
   const [openRequestMoney, setOpenRequestMoney] = useState(false);
   const [requestMoneyAmount, setRequestMoneyAmount] = useState('');
-  const [requestMoneyDate, setRequestMoneyDate] = useState(null);
 
   const { transactions, addTransaction, refresh } = useTransactions();
   const handleTabChange = (event, newValue) => {
@@ -432,7 +431,7 @@ function Jars() {
                       }}
                       onClick={() => handleOpenRequest(member)}
                     >
-                      Pay Money
+                      Owe Money
                     </Button>
                     <Button
                       variant="outlined"
@@ -450,7 +449,7 @@ function Jars() {
                         setOpenRequestMoney(true);
                       }}
                     >
-                      Request Money
+                      Pay Money
                     </Button>
                   </StyledTd>
                 </TableRow>
@@ -615,12 +614,12 @@ function Jars() {
           </DialogActions>
         </Dialog>
 
-        {/* Pay Money Dialog */}
+        {/* Owe Money Dialog */}
         <Dialog open={openRequest} onClose={handleCloseRequest}>
-          <DialogTitle>Pay Money</DialogTitle>
+          <DialogTitle>Owe Money</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {requestTarget ? `Pay money to ${requestTarget.name}?` : ''}
+              {requestTarget ? `Owe money to ${requestTarget.name}?` : ''}
             </Typography>
             <TextField
               label="Amount ($)"
@@ -714,16 +713,16 @@ function Jars() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseRequest} sx={{ color: colors.dark }}>Cancel</Button>
-            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Pay</Button>
+            <Button onClick={() => {handleCloseRequest(); createTransaction();}} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Confirm</Button>
           </DialogActions>
         </Dialog>
 
         {/* Request Money Dialog */}
         <Dialog open={openRequestMoney} onClose={() => setOpenRequestMoney(false)}>
-          <DialogTitle>Request Money</DialogTitle>
+          <DialogTitle>Pay Money</DialogTitle>
           <DialogContent>
             <Typography gutterBottom>
-              {requestTarget ? `Request money from ${requestTarget.name}?` : ''}
+              {requestTarget ? `Pay money to ${requestTarget.name}?` : ''}
             </Typography>
             <TextField
               label="Amount ($)"
@@ -786,41 +785,13 @@ function Jars() {
                 }
               }}
             />
-            <Box
-              sx={{
-                mt: 2,
-                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: colors.dark,
-                },
-                '& label.Mui-focused': {
-                  color: colors.dark,
-                },
-                '& .MuiPickersDay-root.Mui-selected': {
-                  backgroundColor: colors.dark,
-                },
-                '& .MuiPickersDay-root.Mui-selected:hover': {
-                  backgroundColor: '#40634a',
-                },
-                '& .MuiPickersDay-root:focus': {
-                  backgroundColor: colors.dark,
-                },
-                '& .MuiPickersDay-root.Mui-selected.Mui-focusVisible': {
-                  backgroundColor: colors.dark,
-                },
-                '& .MuiPickersDay-root:hover': {
-                  backgroundColor: '#e8e8c8',
-                },
-              }}
-            >
-              <BasicDatePicker value={requestMoneyDate} onChange={setRequestMoneyDate} />
-            </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setOpenRequestMoney(false)} sx={{ color: colors.dark }}>Cancel</Button>
             <Button onClick={() => {
               setOpenRequestMoney(false);
               // Implement request money logic here
-            }} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Request</Button>
+            }} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Pay</Button>
           </DialogActions>
         </Dialog>
 
