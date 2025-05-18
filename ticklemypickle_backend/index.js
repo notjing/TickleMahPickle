@@ -22,6 +22,7 @@ async function connectToMongo() {
     const usersCollection = db.collection("testcollection");
     const transactionCollection = db.collection("testTransactions");
     const jarsCollection = db.collection("testJars");
+    
     //GET FUNCTIONS
     // API endpoint to get all users
     app.get("/api/users", async (req, res) => {
@@ -96,9 +97,11 @@ async function connectToMongo() {
 
 
     app.get("/api/jars", async (req, res) => {
+      console.log("backend check: ", jars)
       try {
         const jars = await jarsCollection.find({}).toArray();
         res.json(jars);
+        
       } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to fetch transactions" });
