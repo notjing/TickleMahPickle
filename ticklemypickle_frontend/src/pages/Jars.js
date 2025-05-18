@@ -24,6 +24,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import BasicDatePicker from '../Components/calendar';
+import handleSimplify from './HandleSimplify';
 
 import useTransactions from "../context/TransactionContext";
 
@@ -345,7 +346,7 @@ function Jars() {
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setOpenSimplify(false)} sx={{ color: colors.dark }}>Cancel</Button>
-              <Button onClick={() => setOpenSimplify(false)} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
+              <Button onClick={() => handleSimplify(setOpenSimplify)} variant="contained" sx={{ backgroundColor: colors.dark, '&:hover': { backgroundColor: '#40634a' } }}>Yes, Simplify</Button>
             </DialogActions>
           </Dialog>
           <Divider sx={{ borderColor: colors.dark, mb: 2 }} />
