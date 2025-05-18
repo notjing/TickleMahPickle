@@ -279,13 +279,13 @@ function Jars() {
       const allTransactions = transactions.filter(transaction => transaction.jar === id);
       let negProfit = [];
       let posProfit = [];
-      
+
       allTransactions.forEach(transaction => {
-        const profit = member.owedToMe - member.iOwe;
+        const profit = transaction.owedToMe - transaction.iOwe;
         if (profit < 0) {
-          negProfit.push({ email: member.email, profit });
+          negProfit.push({ email: transaction.email, profit });
         } else if (profit > 0) {
-          posProfit.push({ email: member.email, profit });
+          posProfit.push({ email: transaction.email, profit });
         }
       });
 
