@@ -34,6 +34,9 @@ const DatabaseUsers = () => {
     }
   };
 
+  // const getAllUsers = () => {
+  //   return users;
+  // };
 
   // Function to insert a user
   const addUser = async (newUser) => {
