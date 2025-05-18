@@ -234,7 +234,7 @@ const Layout = () => {
           </div>
         )}
       </nav>
-      <main className="content">
+      <main className="content" style={{}}>
         <Outlet />
       </main>
     </div>
