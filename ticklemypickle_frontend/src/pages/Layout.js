@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './Layout.css'; 
+import jarsContext from '../context/JarsContext.js';
+import DatabaseUsers from '../context/DatabaseUsers.js';
 
 const Layout = () => {
   const [showCreateJar, setShowCreateJar] = useState(false);
@@ -14,6 +16,7 @@ const Layout = () => {
     { name: 'Vacation Fund', id: 2 },
     { name: 'Pickleball Club', id: 3 }
   ];
+  const { jars, createJar, refresh } = jarsContext();  
 
   return (
     <div className="layout">
@@ -198,6 +201,14 @@ const Layout = () => {
                   }}
                   onClick={() => {
                     // Here you would handle jar creation and invited emails
+
+                    //for each email, find the ID and add into jars 
+
+                    createJar(jarName, inviteEmails);
+                    // for(let i = 0; i < inviteEmails.length; i++) {
+                    // }
+                    // jarsContext.
+
                     setShowCreateJar(false);
                     setJarName("");
                     setInviteEmails([]);
@@ -223,7 +234,7 @@ const Layout = () => {
           </div>
         )}
       </nav>
-      <main className="content">
+      <main className="content" style={{}}>
         <Outlet />
       </main>
     </div>

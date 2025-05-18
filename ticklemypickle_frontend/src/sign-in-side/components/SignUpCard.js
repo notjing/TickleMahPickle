@@ -23,7 +23,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
   gap: theme.spacing(1), // reduced gap
   margin: '0 auto',
   borderRadius: 12,
-  backgroundColor: 'rgba(255, 255, 255, 0.7)', // slightly more transparent
+  backgroundColor: 'rgba(255, 255, 255, 0.5)', // more transparent
   backdropFilter: 'blur(8px)',
   boxShadow: 'hsla(220, 30%, 5%, 0.1) 0px 5px 15px 0px',
   margin: '20px auto',
@@ -146,7 +146,7 @@ export default function SignInCard({returnToSignIn}) {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', top: '-90px' }}>
+    <Box sx={{ minHeight: '100vh', height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', p: 0, m: 0 }}>
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -266,7 +266,7 @@ export default function SignInCard({returnToSignIn}) {
               mt: 1
             }}
           >
-            Sign in
+            Sign Up
           </Button>
           
           <Typography variant="body2" sx={{ textAlign: 'center', mt: 1 }}>
