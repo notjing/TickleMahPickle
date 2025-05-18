@@ -226,6 +226,7 @@ const stats = [
 
 function Jars() {
   const {id} = useParams();
+  console.log(id); //jars ID
   const [tabValue, setTabValue] = useState(0);
 
   const [openTickle, setOpenTickle] = useState(false);
