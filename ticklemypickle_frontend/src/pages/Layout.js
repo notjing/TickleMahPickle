@@ -126,8 +126,8 @@ const Layout = () => {
               gap: 18,
             }}
           >
-            <span style={{ fontSize: 38, color: '#537D5D', fontWeight: 900, lineHeight: 1, marginRight: 8 }}>+</span>
-            <span style={{ fontSize: 22, color: '#537D5D', fontWeight: 700, lineHeight: 1}}>Create Jar</span>
+            <span style={{ fontSize: 38, color: '#537D5D', fontWeight: 900, lineHeight: 1}}>+</span>
+            <span style={{ fontSize: 22, color: '#537D5D', fontWeight: 700, lineHeight: 1, marginLeft: -10}}>Create Jar</span>
           </button>
         </div>
         {/* Create Jar Modal */}
